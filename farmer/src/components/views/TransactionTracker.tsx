@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { apiGet } from '@/lib/api';
+import AgreementModal from '../AgreementModal';
 
 interface TransactionTrackerProps {
   farmerId: string;
@@ -38,6 +39,23 @@ export default function TransactionTracker({ farmerId }: TransactionTrackerProps
   const [proposals, setProposals] = useState<TrackedProposal[]>([]);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<TrackedProposal | null>(null);
+  const [showAgreement, setShowAgreement] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [contractData, setContractData] = useState<any>(null);
+  const [contractLoading, setContractLoading] = useState(false);
+
+  const openAgreement = async (proposalId: string) => {
+    setShowAgreement(true);
+    setContractLoading(true);
+    setContractData(null);
+    const res = await apiGet(`/api/contracts/proposal/${proposalId}`);
+    if (res.success && res.data) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const d = res.data as any;
+      setContractData(d.contract || null);
+    }
+    setContractLoading(false);
+  };
 
   useEffect(() => {
     const fetch = async () => {
@@ -147,9 +165,25 @@ export default function TransactionTracker({ farmerId }: TransactionTrackerProps
                   {selected.orderId?.buyerName || 'Buyer'} · {selected.proposedQuantity} kg
                 </div>
               </div>
-              <span className={`badge ${paid ? 'badge-success' : 'badge-warning'}`}>
-                {paid ? 'Paid' : 'Pending'}
-              </span>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.5rem' }}>
+                <span className={`badge ${paid ? 'badge-success' : 'badge-warning'}`}>
+                  {paid ? 'Paid' : 'Pending'}
+                </span>
+                {(selected.status !== 'SENT' && selected.status !== 'REJECTED') && (
+                  <button 
+                    onClick={() => openAgreement(selected._id)}
+                    style={{
+                      fontSize: '0.75rem', padding: '0.35rem 0.75rem', 
+                      background: 'var(--primary-light)', color: 'var(--primary-dark)',
+                      border: '1px solid var(--primary)', borderRadius: 'var(--radius-sm)',
+                      cursor: 'pointer', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.3rem'
+                    }}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    Agreement
+                  </button>
+                )}
+              </div>
             </div>
 
             {/* Amount row */}
@@ -274,6 +308,15 @@ export default function TransactionTracker({ farmerId }: TransactionTrackerProps
             </div>
           )}
         </div>
+      )}
+      
+      {showAgreement && (
+        <AgreementModal 
+          isOpen={showAgreement} 
+          onClose={() => { setShowAgreement(false); setContractData(null); }} 
+          contract={contractData}
+          loading={contractLoading}
+        />
       )}
     </div>
   );
