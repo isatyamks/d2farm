@@ -9,6 +9,7 @@ import FarmerProfile from '@/components/views/FarmerProfile';
 import Onboarding from '@/components/views/Onboarding';
 import DeepTechEngine from '@/components/views/DeepTechEngine';
 import { syncOfflineData } from '@/lib/api';
+import InstallPrompt from '@/components/InstallPrompt';
 
 export default function App() {
   const [currentView, setCurrentView] = useState('dashboard');
@@ -129,6 +130,9 @@ export default function App() {
           {renderView()}
         </div>
       </div>
+
+      {/* Install App Prompt */}
+      <InstallPrompt />
 
       {/* Bottom Navigation */}
       <BottomNav currentView={currentView} setCurrentView={setCurrentView} />
