@@ -3,7 +3,6 @@
 export default function Topbar({ currentView }: { currentView: string }) {
         const titles: Record<string, string> = {
             market: 'Market Insights',
-            transport: 'Transport & Logistics',
             proposals: 'Farmer Proposals',
             planner: 'Demand Planner',
             orders: 'Order Placement',

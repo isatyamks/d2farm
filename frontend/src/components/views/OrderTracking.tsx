@@ -17,18 +17,9 @@ export default function OrderTracking() {
 
     return (
         <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '1.5rem', borderBottom: '2px solid var(--border-color)', paddingBottom: '1rem' }}>
-                <div>
-                    <h3 style={{ margin: 0, fontSize: '1.4rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <i className="ph ph-truck"></i> Transport Tracking
-                    </h3>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
-                        Core logistics status for Order #4092.
-                    </p>
-                </div>
-            </div>
 
             {/* Minimal Horizontal Sub-Navigation Tabs */}
+
             <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.5rem' }}>
                 <button 
                     onClick={() => setActiveTab('overview')}
@@ -159,7 +150,7 @@ export default function OrderTracking() {
                                 </div>
                             )}
 
-                            <p style={{ margin: '0 0 1.5rem 0', fontSize: '1rem', color: 'var(--text-main)', fontStyle: 'italic', background: 'white', padding: '1rem', borderRadius: '8px', borderLeft: '3px solid var(--primary)' }}>
+                            <p style={{ margin: '0 0 1.5rem 0', fontSize: '1rem', color: 'var(--text-main)', fontStyle: 'italic', background: 'white', padding: '1rem', borderRadius: '8px' }}>
                                 "Fresh Rice (Basmati) ready for dispatch."
                             </p>
 

@@ -202,7 +202,16 @@ export default function OrderPlacement() {
                                 <input type="radio" name="partial" /> Cancel entirely
                             </label>
                         </div>
-                        <button className="btn btn-outline" style={{ width: '100%', marginTop: '1rem', justifyContent: 'center' }}>Submit Decision</button>
+                        <button
+                            className="btn btn-outline"
+                            style={{ width: '100%', marginTop: '1rem', justifyContent: 'center' }}
+                            onClick={() => {
+                                const sel = (document.querySelector('input[name="partial"]:checked') as HTMLInputElement)?.labels?.[0]?.textContent?.trim();
+                                alert(`Decision submitted: ${sel || 'Accept 420kg'}`);
+                            }}
+                        >
+                            Submit Decision
+                        </button>
                     </div>
                 </div>
             </div>

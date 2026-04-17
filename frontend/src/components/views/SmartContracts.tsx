@@ -136,7 +136,7 @@ export default function SmartContracts() {
                                 ) : pending.map(p => (
                                     <div key={p._id} className="card-glass"
                                         onClick={() => setSelected(selected?._id === p._id ? null : p)}
-                                        style={{ marginBottom: '0.75rem', cursor: 'pointer', borderLeft: '4px solid var(--warning)', background: selected?._id === p._id ? '#FFFBEB' : undefined }}>
+                                        style={{ marginBottom: '0.75rem', cursor: 'pointer', boxShadow: selected?._id === p._id ? '0 0 0 2px var(--primary)' : undefined, background: selected?._id === p._id ? '#FFFBEB' : undefined }}>
                                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
                                             <div style={{ display: 'flex', gap: '0.85rem', alignItems: 'center' }}>
                                                 <div className="item-img" style={{ background: 'var(--warning-light)', fontSize: '1.2rem', flexShrink: 0 }}>🌾</div>
@@ -180,7 +180,7 @@ export default function SmartContracts() {
                                     : active.map(p => (
                                         <div key={p._id} className="item-row"
                                             onClick={() => setSelected(selected?._id === p._id ? null : p)}
-                                            style={{ cursor: 'pointer', borderLeft: '4px solid var(--primary)', background: selected?._id === p._id ? 'var(--primary-light)' : 'white', marginBottom: '0.5rem' }}>
+                                            style={{ cursor: 'pointer', boxShadow: selected?._id === p._id ? '0 0 0 2px var(--primary)' : undefined, background: selected?._id === p._id ? 'var(--primary-light)' : 'white', marginBottom: '0.5rem' }}>
                                             <div className="item-main" style={{ flex: 1 }}>
                                                 <div className="item-img" style={{ background: 'var(--primary-light)' }}>🌾</div>
                                                 <div>
@@ -237,9 +237,7 @@ export default function SmartContracts() {
                 <div style={{ position: 'sticky', top: '1rem' }}>
                     {selected ? (
                         // ── Contract Detail
-                        <div className="card-glass fade-in" style={{
-                            borderTop: `4px solid ${selected.status === 'SENT' ? 'var(--warning)' : selected.status === 'REJECTED' ? 'var(--danger)' : 'var(--primary)'}`
-                        }}>
+                        <div className="card-glass fade-in">
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
                                 <span style={{ fontWeight: 700, fontSize: '0.9rem' }}>Contract Detail</span>
                                 <button className="btn btn-outline" style={{ padding: '0.3rem 0.6rem', fontSize: '0.8rem' }} onClick={() => setSelected(null)}>
