@@ -30,6 +30,17 @@ const Order = require('./models/Order');
 const User = require('./models/User');
 const Crop = require('./models/Crop');
 
+// Farmer Platform Routes
+const farmerRoutes = require('./routes/farmerRoutes');
+const listingRoutes = require('./routes/listingRoutes');
+const proposalRoutes = require('./routes/proposalRoutes');
+const matchRoutes = require('./routes/matchRoutes');
+
+app.use('/api/farmer', farmerRoutes);
+app.use('/api/listings', listingRoutes);
+app.use('/api/proposals', proposalRoutes);
+app.use('/api/match', matchRoutes);
+
 app.get('/api/system/health', (req, res) => {
     res.status(200).json({ status: 'SECURE', message: 'D2Farm High-Performance Node Backend Active' });
 });
