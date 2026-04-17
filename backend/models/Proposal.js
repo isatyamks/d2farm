@@ -47,7 +47,7 @@ const proposalSchema = new mongoose.Schema({
   totalValue: { type: Number, default: 0 },
   paymentStatus: {
     type: String,
-    enum: ['PENDING', 'PARTIAL', 'COMPLETED'],
+    enum: ['PENDING', 'PARTIAL', 'ESCROW_LOCKED', 'COMPLETED'],
     default: 'PENDING'
   },
 

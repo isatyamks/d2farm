@@ -13,8 +13,10 @@ const farmerProfileSchema = new mongoose.Schema({
 
   // Custodial Wallet (Blockchain Lite — farmer never sees private keys)
   wallet: {
-    custodialAddress: { type: String }, // Auto-generated on registration
-    balance: { type: Number, default: 0 },
+    custodialAddress: { type: String },
+    balance: { type: Number, default: 0 },           // Total credited (locked + withdrawable)
+    lockedBalance: { type: Number, default: 0 },     // Escrow hold — cannot withdraw
+    withdrawableBalance: { type: Number, default: 0 }, // Free to withdraw
     currency: { type: String, default: 'INR' }
   },
 

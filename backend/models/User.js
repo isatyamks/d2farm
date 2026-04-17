@@ -19,8 +19,9 @@ const userSchema = new mongoose.Schema({
   
   // Wallet System
   wallet: {
-    balance: { type: Number, default: 0 },
-    creditLimit: { type: Number, default: 0 }, // Unlocked by high trust score
+    balance: { type: Number, default: 50000 },        // Available to spend
+    lockedBalance: { type: Number, default: 0 },      // Escrowed (deducted but not yet paid out)
+    creditLimit: { type: Number, default: 0 },
     currency: { type: String, default: 'INR' }
   },
   
