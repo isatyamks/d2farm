@@ -62,23 +62,50 @@ export default function MarketInsights() {
 
     return (
         <div>
-            {/* Top 3 Crop Widgets Data Map */}
-            <div className="grid-cols-4 mb-6">
-                {summaries.slice(0, 4).map((item) => (
-                    <div key={item.id} className="card-glass" style={{ borderTop: `4px solid ${item.trend.includes('SCARCITY') ? 'var(--danger)' : 'var(--success)'}` }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <h4 style={{ fontWeight: 600, fontSize: '0.9rem' }}>{item.crop}</h4>
+            {/* Minimal Square Ticker Dashboard */}
+            <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '2rem', overflowX: 'auto', paddingBottom: '0.5rem' }}>
+                {summaries.slice(0, 4).map((item) => {
+                    const isScarcity = item.trend.includes('SCARCITY');
+                    return (
+                        <div key={item.id} className="card-glass hover-scale" style={{ 
+                            flex: '0 0 auto', 
+                            width: '140px', 
+                            height: '140px', 
+                            padding: '1rem',
+                            display: 'flex', 
+                            flexDirection: 'column', 
+                            justifyContent: 'center', 
+                            alignItems: 'center', 
+                            textAlign: 'center',
+                            borderRadius: '16px',
+                            border: `1px solid ${isScarcity ? 'rgba(239,68,68,0.3)' : 'rgba(16,185,129,0.3)'}`,
+                            background: isScarcity ? 'rgba(239,68,68,0.02)' : 'rgba(16,185,129,0.02)',
+                            boxShadow: '0 4px 20px rgba(0,0,0,0.03)'
+                        }}>
+                            <h4 style={{ fontWeight: 600, fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                {item.crop.split(' ')[0]}
+                            </h4>
+                            <div style={{ fontSize: '1.8rem', fontWeight: 700, margin: '0.5rem 0', color: 'var(--text-main)', display: 'flex', alignItems: 'baseline', gap: '2px' }}>
+                                ₹{item.currentPrice.toFixed(0)}
+                                <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 500 }}>/kg</span>
+                            </div>
+                            <div style={{ 
+                                fontSize: '0.7rem', 
+                                fontWeight: 700, 
+                                padding: '2px 8px', 
+                                borderRadius: '12px',
+                                background: isScarcity ? 'rgba(239,68,68,0.1)' : 'rgba(16,185,129,0.1)',
+                                color: isScarcity ? 'var(--danger)' : 'var(--success)' 
+                            }}>
+                                {isScarcity ? '▲ SCARCITY' : '▼ ABUNDANT'}
+                            </div>
                         </div>
-                        <div style={{ fontSize: '1.4rem', fontWeight: 700, margin: '0.5rem 0' }}>₹{item.currentPrice.toFixed(2)}<span style={{ fontSize: '0.8rem', color:'var(--text-muted)'}}>/kg</span></div>
-                        <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-                            Future Peak: <span style={{ color: item.trend.includes('SCARCITY') ? 'var(--danger)' : 'var(--success)', fontWeight: 600 }}>₹{item.predictedFuturePrice.toFixed(2)}</span>
-                        </div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
 
-            <div className="card-glass mb-6" style={{ padding: '1.5rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '1.5rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '1rem' }}>
+            <div style={{ marginBottom: '2rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '1.5rem', borderBottom: '2px solid var(--border-color)', paddingBottom: '1rem' }}>
                     <div>
                         <h3 style={{ margin: 0, fontSize: '1.4rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                             <span style={{ display: 'inline-block', width: '10px', height: '10px', borderRadius: '50%', background: 'var(--success)', animation: 'pulse 1.5s infinite' }}></span>
