@@ -12,7 +12,6 @@ export default function Sidebar({ currentView, setCurrentView }: SidebarProps) {
         { id: 'proposals', icon: 'ph-handshake', label: 'Farmer Proposals' },
         { id: 'orders', icon: 'ph-shopping-cart', label: 'Order Placement' },
         { id: 'contracts', icon: 'ph-link', label: 'Smart Contracts' },
-        { id: 'tracking', icon: 'ph-truck', label: 'Order Tracking' },
         { id: 'market', icon: 'ph-trend-up', label: 'Market Insights' },
         { id: 'wallet', icon: 'ph-wallet', label: 'Payments & Wallet' },
     ];

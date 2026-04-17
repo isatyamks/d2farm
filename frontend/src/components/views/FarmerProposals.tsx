@@ -372,7 +372,7 @@ export default function FarmerProposals() {
     const handleAccept = async (id: string) => {
         setActing(id);
         try {
-            const res = await fetch(`${API}/api/proposals/${id}/accept-contract`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: '{}' });
+            const res = await fetch(`${API}/api/proposals/${id}/confirm-acceptance`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: '{}' });
             if (res.ok) { await fetchProposals(); }
             else { const e = await res.json(); alert(e.message || 'Failed to accept.'); }
         } catch { alert('Network error.'); }

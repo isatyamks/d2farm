@@ -168,7 +168,7 @@ router.put('/:id/status', async (req, res) => {
 
 // ─── PUT /api/proposals/:id/accept-contract ───
 // Buyer accepts: 2% escrow held in farmer wallet as LOCKED (not withdrawable until delivery)
-router.put('/:id/accept-contract', async (req, res) => {
+router.put('/:id/confirm-acceptance', async (req, res) => {
   console.log(`📡 [API] PUT /api/proposals/${req.params.id}/accept-contract received`);
   try {
     const proposal = await Proposal.findById(req.params.id).populate('orderId');
