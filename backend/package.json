@@ -8,10 +8,12 @@
     "dev": "nodemon server.js"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "cors": "^2.8.5",
     "dotenv": "^16.6.1",
     "express": "^4.18.2",
-    "mongoose": "^7.5.0"
+    "mongoose": "^7.5.0",
+    "qrcode": "^1.5.4"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"

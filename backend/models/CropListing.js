@@ -53,7 +53,10 @@ const cropListingSchema = new mongoose.Schema({
   blockchainHash: { type: String, default: null },
 
   // Offline sync tracking
-  syncedAt: { type: Date, default: null }
+  syncedAt: { type: Date, default: null },
+
+  // AI Quality Inspection Report
+  qualityReport: { type: Object, default: null }
 }, {
   timestamps: true
 });
