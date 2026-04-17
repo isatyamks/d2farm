@@ -142,7 +142,7 @@ export default function DeepTechEngine({ farmerId }: { farmerId: string }) {
                                 {/* Hero card: colour changes based on actual trend */}
                                 <div className="card-hero" style={{
                                     background: isBullish
-                                        ? 'linear-gradient(145deg, #059669 0%, #10B981 100%)'
+                                        ? 'linear-gradient(145deg, var(--primary-dark) 0%, var(--primary) 100%)'
                                         : 'linear-gradient(145deg, #DC2626 0%, #EF4444 100%)',
                                     marginBottom: '1rem'
                                 }}>

@@ -145,7 +145,7 @@ export default function CropListing({ farmerId }: CropListingProps) {
   const methodColor = (m: string) => {
     if (m === 'ORGANIC') return { bg: '#DCFCE7', color: '#15803D' };
     if (m === 'HYDROPONIC') return { bg: '#DBEAFE', color: '#1D4ED8' };
-    return { bg: '#F1F5F9', color: '#475569' };
+    return { bg: 'var(--surface-bg)', color: 'var(--text-muted)' };
   };
 
   return (
@@ -198,15 +198,15 @@ export default function CropListing({ farmerId }: CropListingProps) {
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.5rem', marginBottom: '0.65rem' }}>
-                  <div style={{ background: '#F8FAFC', padding: '0.5rem', borderRadius: 'var(--radius-sm)', textAlign: 'center' }}>
+                  <div style={{ background: 'var(--surface-bg)', padding: '0.5rem', borderRadius: 'var(--radius-sm)', textAlign: 'center' }}>
                     <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Quantity</div>
                     <div style={{ fontWeight: 700, fontSize: '0.95rem' }}>{listing.totalQuantity.toLocaleString()} {listing.unit}</div>
                   </div>
-                  <div style={{ background: '#F8FAFC', padding: '0.5rem', borderRadius: 'var(--radius-sm)', textAlign: 'center' }}>
+                  <div style={{ background: 'var(--surface-bg)', padding: '0.5rem', borderRadius: 'var(--radius-sm)', textAlign: 'center' }}>
                     <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Price</div>
                     <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--primary-dark)' }}>₹{listing.pricePerUnit}/{listing.unit}</div>
                   </div>
-                  <div style={{ background: '#F8FAFC', padding: '0.5rem', borderRadius: 'var(--radius-sm)', textAlign: 'center' }}>
+                  <div style={{ background: 'var(--surface-bg)', padding: '0.5rem', borderRadius: 'var(--radius-sm)', textAlign: 'center' }}>
                     <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>MOQ</div>
                     <div style={{ fontWeight: 700, fontSize: '0.95rem' }}>{listing.moqRange?.min || 1}{listing.unit}</div>
                   </div>

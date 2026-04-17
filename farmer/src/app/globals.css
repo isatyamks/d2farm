@@ -9,20 +9,20 @@
 /* ─── Custom Properties ─── */
 :root {
   /* Core Palette */
-  --primary: #10B981;
-  --primary-dark: #059669;
-  --primary-light: #D1FAE5;
-  --primary-glow: rgba(16, 185, 129, 0.25);
+  --primary: #388E3C;
+  --primary-dark: #1B5E20;
+  --primary-light: #E8F5E9;
+  --primary-glow: rgba(56, 142, 60, 0.25);
 
-  --surface-bg: #F8FAFC;
-  --card-bg: rgba(255, 255, 255, 0.92);
+  --surface-bg: #F4F7F4;
+  --card-bg: rgba(255, 255, 255, 0.95);
   --card-bg-solid: #ffffff;
 
-  --text-main: #0F172A;
-  --text-muted: #64748B;
+  --text-main: #1F2926;
+  --text-muted: #5B6B68;
   --text-inverse: #FFFFFF;
 
-  --border-color: #E2E8F0;
+  --border-color: #D3E0D6;
 
   /* Status Colors */
   --success: #22C55E;
@@ -38,8 +38,8 @@
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
   --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.1);
-  --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.05);
-  --shadow-glow: 0 0 20px rgba(16, 185, 129, 0.2);
+  --shadow-card: 0 8px 30px rgba(27, 94, 32, 0.05); /* Earthy shadow */
+  --shadow-glow: 0 0 20px rgba(56, 142, 60, 0.2);
 
   /* Radii */
   --radius-sm: 10px;
@@ -257,10 +257,16 @@ body {
   border-radius: var(--radius-lg);
   padding: 1.25rem;
   box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.card-solid:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-light);
 }
 
 .card-hero {
-  background: linear-gradient(145deg, #059669 0%, #10B981 50%, #34D399 100%);
+  background: linear-gradient(145deg, var(--primary-dark) 0%, var(--primary) 50%, #81C784 100%);
   border-radius: var(--radius-lg);
   padding: 1.5rem;
   color: white;
@@ -280,11 +286,34 @@ body {
 }
 
 .card-dark {
-  background: linear-gradient(145deg, #0F172A 0%, #1E293B 100%);
+  background: linear-gradient(145deg, #1B5E20 0%, #0F3311 100%);
   border-radius: var(--radius-lg);
   padding: 1.25rem;
   color: white;
   box-shadow: var(--shadow-lg);
+}
+
+.card-wallet {
+  background: linear-gradient(145deg, var(--primary-dark) 0%, #144517 100%);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  color: white;
+  box-shadow: 0 16px 40px rgba(27, 94, 32, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-wallet::after {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -20%;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
 }
 
 /* ─── Big Buttons (Farmer-friendly) ─── */
@@ -310,13 +339,13 @@ body {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
   color: white;
-  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+  box-shadow: 0 4px 14px rgba(56, 142, 60, 0.35);
 }
 
 .btn-primary:hover {
-  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+  box-shadow: 0 6px 20px rgba(56, 142, 60, 0.45);
   transform: translateY(-1px);
 }
 
@@ -425,7 +454,7 @@ body {
 /* ─── Toggle Switch ─── */
 .toggle-group {
   display: flex;
-  background: #F1F5F9;
+  background: #E8EDE8;
   border-radius: var(--radius-md);
   padding: 4px;
   gap: 4px;
@@ -741,7 +770,7 @@ body {
 
 @keyframes pulse-dot {
   0%, 100% { box-shadow: 0 0 0 4px var(--primary-glow); }
-  50% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0.1); }
+  50% { box-shadow: 0 0 0 8px rgba(56, 142, 60, 0.1); }
 }
 
 @keyframes fadeSlideUp {
