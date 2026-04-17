@@ -114,22 +114,29 @@ router.put('/:id/status', async (req, res) => {
       note: note || `Status updated to ${status}`
     });
 
-    // ── On full payment: unlock escrow + credit remaining 98% to farmer withdrawable balance
+    // ── On full payment: unlock escrow + credit full 100% to farmer withdrawable balance
     if (status === 'PAYMENT_RECEIVED') {
       proposal.paymentStatus = 'COMPLETED';
-      const escrowAmount = parseFloat((proposal.totalValue * 0.02).toFixed(2));
+      const escrowAmount    = parseFloat((proposal.totalValue * 0.02).toFixed(2));
       const remainingAmount = parseFloat((proposal.totalValue - escrowAmount).toFixed(2));
 
-      await FarmerProfile.findByIdAndUpdate(proposal.farmerId, {
-        $inc: {
-          // Move locked escrow → withdrawable
-          'wallet.lockedBalance': -escrowAmount,
-          'wallet.withdrawableBalance': proposal.totalValue, // full amount now withdrawable
-          'metrics.completedDeliveries': 1
-        }
-      });
+      const farmer = await FarmerProfile.findById(proposal.farmerId);
+      if (farmer) {
+        // Unlock the locked escrow → move to withdrawable
+        farmer.wallet.lockedBalance      = parseFloat(Math.max(0, (farmer.wallet.lockedBalance || 0) - escrowAmount).toFixed(2));
+        // Credit full remaining 98% as new withdrawable
+        farmer.wallet.withdrawableBalance = parseFloat(((farmer.wallet.withdrawableBalance || 0) + proposal.totalValue).toFixed(2));
+        farmer.metrics.completedDeliveries = (farmer.metrics.completedDeliveries || 0) + 1;
 
-      console.log(`💰 Payment settled: ₹${proposal.totalValue} (escrow ₹${escrowAmount} unlocked + ₹${remainingAmount} credited). Proposal ${proposal._id}`);
+        farmer.walletTransactions.push({
+          type:       'ESCROW_RELEASE',
+          amount:     proposal.totalValue,
+          proposalId: proposal._id,
+          note:       `Full payment received. Escrow ₹${escrowAmount} unlocked + remaining ₹${remainingAmount} credited. Total ₹${proposal.totalValue} now withdrawable.`
+        });
+        await farmer.save();
+        console.log(`💰 Payment settled: ₹${proposal.totalValue} | Farmer ${farmer.fullName} wallet: withdrawable=₹${farmer.wallet.withdrawableBalance}`);
+      }
     }
 
     if (status === 'ACCEPTED') {
@@ -160,7 +167,7 @@ router.put('/:id/status', async (req, res) => {
 });
 
 // ─── PUT /api/proposals/:id/accept-contract ───
-// Buyer accepts: 2% escrow debited from buyer wallet + locked in farmer wallet (NOT withdrawable)
+// Buyer accepts: 2% escrow held in farmer wallet as LOCKED (not withdrawable until delivery)
 router.put('/:id/accept-contract', async (req, res) => {
   try {
     const proposal = await Proposal.findById(req.params.id).populate('orderId');
@@ -169,44 +176,46 @@ router.put('/:id/accept-contract', async (req, res) => {
 
     const escrowAmount = parseFloat((proposal.totalValue * 0.02).toFixed(2));
 
-    // ── 1. Debit from buyer wallet
-    const buyerId = proposal.orderId?.userId || proposal.orderId?.buyer;
-    if (buyerId) {
-      const buyer = await User.findById(buyerId);
-      if (buyer) {
-        if (buyer.wallet.balance < escrowAmount) {
-          return res.status(400).json({ success: false, message: `Insufficient buyer wallet balance. Need ₹${escrowAmount}, available ₹${buyer.wallet.balance}.` });
-        }
-        buyer.wallet.balance -= escrowAmount;
-        buyer.wallet.lockedBalance = (buyer.wallet.lockedBalance || 0) + escrowAmount;
-        await buyer.save();
-      }
-    }
+    // ── 1. Credit farmer wallet atomically (findById + save = triggers hooks + returns updated doc)
+    const farmer = await FarmerProfile.findById(proposal.farmerId);
+    if (!farmer) return res.status(404).json({ success: false, message: 'Farmer profile not found.' });
 
-    // ── 2. Credit farmer's LOCKED wallet (not withdrawable until delivery)
-    await FarmerProfile.findByIdAndUpdate(proposal.farmerId, {
-      $inc: {
-        'wallet.balance': escrowAmount,
-        'wallet.lockedBalance': escrowAmount,
-        'metrics.acceptedProposals': 1
-      }
+    farmer.wallet.balance       = parseFloat(((farmer.wallet.balance || 0)       + escrowAmount).toFixed(2));
+    farmer.wallet.lockedBalance = parseFloat(((farmer.wallet.lockedBalance || 0) + escrowAmount).toFixed(2));
+
+    // Push permanent ledger entry
+    farmer.walletTransactions.push({
+      type:       'ESCROW_CREDIT',
+      amount:     escrowAmount,
+      proposalId: proposal._id,
+      note:       `2% escrow from buyer for ${proposal.orderId?.crop || 'crop'} contract (${proposal.proposedQuantity}kg @ ₹${proposal.proposedPricePerUnit}/kg). LOCKED until delivery.`
     });
 
-    // ── 3. Update proposal state
-    proposal.status = 'ACCEPTED';
+    farmer.metrics.acceptedProposals = (farmer.metrics.acceptedProposals || 0) + 1;
+    await farmer.save();
+
+    // ── 2. Update proposal state
+    proposal.status        = 'ACCEPTED';
     proposal.paymentStatus = 'ESCROW_LOCKED';
     proposal.timeline.push({
-      status: 'ACCEPTED',
+      status:    'ACCEPTED',
       timestamp: new Date(),
-      note: `Smart contract locked. ₹${escrowAmount} (2%) debited from buyer and held in farmer escrow. Release on delivery confirmation.`
+      note:      `Smart contract locked. ₹${escrowAmount} (2%) debited from buyer → credited to farmer escrow. Cannot withdraw until delivery confirmed.`
     });
     await proposal.save();
 
-    console.log(`✅ Escrow locked: ₹${escrowAmount} | Proposal ${proposal._id}`);
+    console.log(`✅ Escrow locked: ₹${escrowAmount} | Farmer ${farmer.fullName} | Proposal ${proposal._id}`);
+    console.log(`   Farmer wallet: balance=₹${farmer.wallet.balance} | locked=₹${farmer.wallet.lockedBalance}`);
+
     res.status(200).json({
       success: true,
       message: `Contract accepted. ₹${escrowAmount} escrowed and locked in farmer wallet pending delivery.`,
       escrowAmount,
+      farmerWallet: {
+        balance:            farmer.wallet.balance,
+        lockedBalance:      farmer.wallet.lockedBalance,
+        withdrawableBalance:farmer.wallet.withdrawableBalance
+      },
       proposal
     });
   } catch (err) {
@@ -216,7 +225,7 @@ router.put('/:id/accept-contract', async (req, res) => {
 });
 
 // ─── PUT /api/proposals/:id/cancel-contract ───
-// Farmer cancels AFTER escrow locked — their 2% is FORFEITED as trust penalty
+// Farmer cancels post-acceptance — escrow is FORFEITED as trust penalty
 router.put('/:id/cancel-contract', async (req, res) => {
   try {
     const proposal = await Proposal.findById(req.params.id);
@@ -225,22 +234,29 @@ router.put('/:id/cancel-contract', async (req, res) => {
 
     const escrowAmount = parseFloat((proposal.totalValue * 0.02).toFixed(2));
 
-    // ── Slash farmer's locked escrow as penalty (funds forfeited)
-    await FarmerProfile.findByIdAndUpdate(proposal.farmerId, {
-      $inc: {
-        'wallet.balance': -escrowAmount,
-        'wallet.lockedBalance': -escrowAmount,
-        'metrics.trustScore': -10,
-        'metrics.rejectedProposals': 1
-      }
-    });
+    // ── Slash farmer wallet atomically + push penalty ledger entry
+    const farmer = await FarmerProfile.findById(proposal.farmerId);
+    if (farmer) {
+      farmer.wallet.balance       = parseFloat(((farmer.wallet.balance || 0)       - escrowAmount).toFixed(2));
+      farmer.wallet.lockedBalance = parseFloat(((farmer.wallet.lockedBalance || 0) - escrowAmount).toFixed(2));
+      farmer.metrics.trustScore        = Math.max(0, (farmer.metrics.trustScore || 80) - 10);
+      farmer.metrics.rejectedProposals = (farmer.metrics.rejectedProposals || 0) + 1;
+
+      farmer.walletTransactions.push({
+        type:       'ESCROW_PENALTY',
+        amount:     -escrowAmount,
+        proposalId: proposal._id,
+        note:       `Farmer-cancelled contract. ₹${escrowAmount} escrow forfeited as trust penalty. Trust score reduced by 10.`
+      });
+      await farmer.save();
+    }
 
     proposal.status = 'REJECTED';
     proposal.paymentStatus = 'PENDING';
     proposal.timeline.push({
-      status: 'REJECTED',
+      status:    'REJECTED',
       timestamp: new Date(),
-      note: `Farmer cancelled contract. ₹${escrowAmount} escrow forfeited as trust penalty. Trust score reduced by 10 points.`
+      note:      `Farmer cancelled contract. ₹${escrowAmount} escrow forfeited as trust penalty. Trust score -10.`
     });
     await proposal.save();
 

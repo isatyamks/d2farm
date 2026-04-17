@@ -14,11 +14,20 @@ const farmerProfileSchema = new mongoose.Schema({
   // Custodial Wallet (Blockchain Lite — farmer never sees private keys)
   wallet: {
     custodialAddress: { type: String },
-    balance: { type: Number, default: 0 },           // Total credited (locked + withdrawable)
-    lockedBalance: { type: Number, default: 0 },     // Escrow hold — cannot withdraw
-    withdrawableBalance: { type: Number, default: 0 }, // Free to withdraw
+    balance: { type: Number, default: 0 },              // Total credited (locked + withdrawable)
+    lockedBalance: { type: Number, default: 0 },        // Escrow hold — cannot withdraw
+    withdrawableBalance: { type: Number, default: 0 },  // Free to withdraw
     currency: { type: String, default: 'INR' }
   },
+
+  // Wallet Transaction Ledger — full audit trail
+  walletTransactions: [{
+    type:      { type: String, enum: ['ESCROW_CREDIT', 'ESCROW_RELEASE', 'ESCROW_PENALTY', 'WITHDRAWAL'], required: true },
+    amount:    { type: Number, required: true },
+    note:      { type: String, default: '' },
+    proposalId:{ type: mongoose.Schema.Types.ObjectId, ref: 'Proposal', default: null },
+    createdAt: { type: Date, default: Date.now }
+  }],
 
   // Farm Location (GeoJSON Point — MongoDB 2dsphere index)
   farmLocation: {
