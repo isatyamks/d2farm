@@ -22,13 +22,32 @@ export default function Wallet() {
     const [wallet, setWallet] = useState<WalletData>({ balance: 50000, lockedBalance: 0, creditLimit: 0 });
     const [txns, setTxns] = useState<TxEntry[]>([]);
     const [loading, setLoading] = useState(true);
+    const [showAll, setShowAll] = useState(false);
+    const [funding, setFunding] = useState(false);
+
+    const addFunds = async () => {
+        setFunding(true);
+        // Simulate PG delay
+        setTimeout(() => {
+            setWallet(prev => ({ ...prev, balance: prev.balance + 10000 }));
+            setFunding(false);
+        }, 1500);
+    };
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Fetch all proposals to derive real wallet ledger
-                const res = await fetch(`${API_BASE}/api/proposals`);
-                const json = await res.json();
+                const [balRes, propRes] = await Promise.all([
+                    fetch(`${API_BASE}/api/wallet/balance`),
+                    fetch(`${API_BASE}/api/proposals`)
+                ]);
+
+                const balJson = await balRes.json();
+                if (balJson.success) {
+                    setWallet(prev => ({ ...prev, balance: balJson.balance }));
+                }
+
+                const json = await propRes.json();
                 if (json.success) {
                     setTxns(json.proposals || []);
 
@@ -50,18 +69,9 @@ export default function Wallet() {
     const escrowPct = wallet.balance > 0 ? Math.min((wallet.lockedBalance / wallet.balance) * 100, 100) : 0;
 
     return (
-        <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '1.5rem', borderBottom: '2px solid var(--border-color)', paddingBottom: '1rem' }}>
-                <div>
-                    <h3 style={{ margin: 0, fontSize: '1.4rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <i className="ph ph-wallet"></i> Payments &amp; Wallet
-                    </h3>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>Your live escrow and payment ledger</p>
-                </div>
-            </div>
 
-            <div className="grid-main-side">
-                <div>
+        <div className="grid-main-side">
+            <div>
                     {/* Main Balance Card */}
                     <div className="card-glass mb-6">
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
@@ -76,7 +86,13 @@ export default function Wallet() {
                                     Total wallet: ₹{wallet.balance.toLocaleString('en-IN')}
                                 </div>
                             </div>
-                            <button className="btn btn-primary"><i className="ph ph-plus"></i> Add Funds</button>
+                            <button
+                                className={`btn btn-primary ${funding ? 'btn-loading' : ''}`}
+                                onClick={addFunds}
+                                disabled={funding}
+                            >
+                                {funding ? <><i className="ph ph-spinner"></i> Funding...</> : <><i className="ph ph-plus"></i> Add ₹10,000</>}
+                            </button>
                         </div>
 
                         {/* Escrow Bar */}
@@ -107,30 +123,9 @@ export default function Wallet() {
                         </div>
                     </div>
 
-                    {/* Wallet Breakdown */}
-                    <div className="grid-cols-2 mb-6">
-                        <div className="card-glass">
-                            <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700, marginBottom: '0.5rem' }}>
-                                <i className="ph ph-check-circle" style={{ color: 'var(--success)', marginRight: '4px' }}></i>Available
-                            </div>
-                            <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--success)' }}>
-                                ₹{availableBalance.toLocaleString('en-IN')}
-                            </div>
-                            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>Ready to spend</div>
-                        </div>
-                        <div className="card-glass">
-                            <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700, marginBottom: '0.5rem' }}>
-                                <i className="ph ph-lock-key" style={{ color: 'var(--warning)', marginRight: '4px' }}></i>Escrowed
-                            </div>
-                            <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--warning)' }}>
-                                ₹{wallet.lockedBalance.toLocaleString('en-IN')}
-                            </div>
-                            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>Pending delivery</div>
-                        </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+                        <span style={{ fontWeight: 700, fontSize: '0.95rem' }}>Contract Ledger</span>
                     </div>
-
-                    {/* Transaction Ledger */}
-                    <h3 style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Contract Ledger</h3>
                     {loading ? (
                         <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-muted)' }}>
                             <i className="ph ph-spinner ph-spin" style={{ fontSize: '1.5rem', color: 'var(--primary)' }}></i>
@@ -140,7 +135,7 @@ export default function Wallet() {
                             No transactions yet
                         </div>
                     ) : (
-                        txns.slice(0, 8).map(p => {
+                        txns.slice(0, showAll ? txns.length : 8).map(p => {
                             const escrow = parseFloat((p.totalValue * 0.02).toFixed(2));
                             const isEscrowed = p.status === 'ACCEPTED';
                             const isPaid = p.status === 'PAYMENT_RECEIVED';
@@ -169,8 +164,13 @@ export default function Wallet() {
                             );
                         })
                     )}
-                    <button className="btn btn-outline" style={{ width: '100%', justifyContent: 'center', marginTop: '0.5rem' }}>
-                        <i className="ph ph-list"></i> View Full Ledger
+                    <button
+                        className="btn btn-outline"
+                        style={{ width: '100%', justifyContent: 'center', marginTop: '0.5rem' }}
+                        onClick={() => setShowAll(prev => !prev)}
+                    >
+                        <i className={`ph ${showAll ? 'ph-caret-up' : 'ph-list'}`}></i>
+                        {showAll ? 'Show Less' : `View All ${txns.length} Entries`}
                     </button>
                 </div>
 
@@ -214,7 +214,6 @@ export default function Wallet() {
                             </div>
                         ))}
                     </div>
-                </div>
             </div>
         </div>
     );

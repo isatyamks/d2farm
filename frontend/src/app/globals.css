@@ -460,6 +460,26 @@ body {
     background: #F1F5F9;
 }
 
+.btn-loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.btn-loading i.ph-spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
 /* Modals */
 .modal-overlay {
     position: fixed;

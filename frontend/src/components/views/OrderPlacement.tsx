@@ -1,5 +1,5 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 
@@ -32,6 +32,25 @@ export default function OrderPlacement() {
         // Automatically default variety to the first one in the new crop's array
         setVariety(CROP_DATA[selectedCrop][0]);
     };
+
+    const [marketPrice, setMarketPrice] = useState<number | null>(null);
+    const [fetchingPrice, setFetchingPrice] = useState(false);
+
+    useEffect(() => {
+        const getPrice = async () => {
+            setFetchingPrice(true);
+            try {
+                const res = await fetch(`${API_BASE}/api/ml/farmer-forecast?crop=${crop}`);
+                const data = await res.json();
+                if (data.success) setMarketPrice(data.farmerPrice);
+            } catch (e) {
+                setMarketPrice(20); // fallback
+            } finally {
+                setFetchingPrice(false);
+            }
+        };
+        getPrice();
+    }, [crop]);
 
     const placeOrder = async () => {
         if (!quantity) {
@@ -156,16 +175,24 @@ export default function OrderPlacement() {
                             </div>
                         </div>
 
-                        <div style={{ background: 'var(--info-light)', padding: '1rem', borderRadius: 'var(--border-radius-sm)', margin: '1rem 0' }}>
+                        {/* Predictive Market Check */}
+                        <div style={{ background: 'var(--info-light)', padding: '1rem', borderRadius: 'var(--border-radius-sm)', margin: '1rem 0', border: '1px solid rgba(59, 130, 246, 0.2)' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                                <span style={{ fontWeight: 600, color: '#1D4ED8' }}>System Check</span>
-                                <span style={{ fontWeight: 700, color: '#1D4ED8' }}>90% Confidence</span>
+                                <span style={{ fontWeight: 600, color: '#1D4ED8', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                    <i className="ph ph-sparkle"></i> AI Pricing Check
+                                </span>
+                                <span style={{ fontWeight: 700, color: '#1D4ED8' }}>Live AGMARKNET modal</span>
                             </div>
-                            <div style={{ fontSize: '0.85rem', color: '#1E3A8A' }}>Estimated Availability: 450-500kg | Current Price: ₹18/kg</div>
+                            <div style={{ fontSize: '0.85rem', color: '#1E3A8A', fontWeight: 500 }}>
+                                Verified Market Rate: <strong>₹{marketPrice || '...'} / kg</strong> 
+                                {fetchingPrice && <i className="ph ph-spinner ph-spin" style={{ marginLeft: '4px' }}></i>}
+                                <span style={{ marginLeft: '10px', opacity: 0.7 }}>•</span>
+                                <span style={{ marginLeft: '10px' }}>Deposit (10%): ₹{( (marketPrice || 20) * parseInt(quantity || "0") * 0.1).toLocaleString()}</span>
+                            </div>
                         </div>
                         
                         <button 
-                            className="btn btn-primary" 
+                            className={`btn btn-primary ${loading ? 'btn-loading' : ''}`} 
                             style={{ 
                                 width: '100%', 
                                 justifyContent: 'center', 
@@ -175,7 +202,7 @@ export default function OrderPlacement() {
                             onClick={placeOrder}
                             disabled={loading}
                         >
-                            {loading ? <><i className="ph ph-spinner ph-spin"></i> Processing...</> : 
+                            {loading ? <><i className="ph ph-spinner"></i> Securing Price...</> : 
                              status?.type === 'success' ? <><i className="ph ph-check"></i> Order Confirmed!</> :
                              status?.type === 'error' ? <><i className="ph ph-warning"></i> Error (Retry)</> :
                              'Pay Deposit (10%) & Confirm'}
@@ -184,26 +211,21 @@ export default function OrderPlacement() {
                 </div>
 
                 <div>
-                    <h3 style={{ marginBottom: '1rem' }}>Action Required</h3>
-                    <div className="card-glass" style={{ border: '1px solid var(--warning)' }}>
-                        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '1rem', color: 'var(--warning)', fontWeight: 600 }}>
-                            <i className="ph-fill ph-warning"></i> Partial Fulfillment (Order #4093)
+                <div>
+                    <h3 style={{ marginBottom: '1rem' }}>Fulfillment Alerts</h3>
+                    <div className="card-glass" style={{ border: '1px solid var(--border-color)', opacity: 0.8 }}>
+                        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '1rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                            <i className="ph ph-check-circle"></i> Pipeline Status
                         </div>
-                        <p style={{ fontSize: '0.9rem', marginBottom: '1rem' }}>You requested <strong>500kg Potatoes</strong>. Only <strong>420kg</strong> is available from trusted farmers.</p>
+                        <p style={{ fontSize: '0.85rem', marginBottom: '1rem', color: 'var(--text-muted)' }}>
+                            System-wide supply is stable. Local clusters in your region report 95%+ fulfillment capacity for requested commodities.
+                        </p>
                         
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                            <label style={{ border: '1px solid var(--border-color)', padding: '0.75rem', borderRadius: 'var(--border-radius-sm)', cursor: 'pointer', background: 'white', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                <input type="radio" name="partial" defaultChecked /> Accept 420kg (Auto-refund rest)
-                            </label>
-                            <label style={{ border: '1px solid var.(--border-color)', padding: '0.75rem', borderRadius: 'var(--border-radius-sm)', cursor: 'pointer', background: 'white', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                <input type="radio" name="partial" /> Accept 420kg + Delay 80kg by 1 day
-                            </label>
-                            <label style={{ border: '1px solid var(--border-color)', padding: '0.75rem', borderRadius: 'var(--border-radius-sm)', cursor: 'pointer', background: 'white', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                <input type="radio" name="partial" /> Cancel entirely
-                            </label>
+                        <div style={{ padding: '0.75rem', borderRadius: 'var(--border-radius-sm)', background: 'var(--surface-bg)', border: '1px dashed var(--border-color)', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                            <i className="ph ph-info" style={{ marginRight: '4px' }}></i> No manual decisions required for your active orders at this time.
                         </div>
-                        <button className="btn btn-outline" style={{ width: '100%', marginTop: '1rem', justifyContent: 'center' }}>Submit Decision</button>
                     </div>
+                </div>
                 </div>
             </div>
         </div>

@@ -1,42 +1,50 @@
 "use client";
-import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useCallback, Suspense } from 'react';
 import Sidebar from '@/components/Sidebar';
 import Topbar from '@/components/Topbar';
 
-// Import All Reconstructed Views
+// Views
 import Dashboard from '@/components/views/Dashboard';
 import DemandPlanner from '@/components/views/DemandPlanner';
-import ProcurementAI from '@/components/views/ProcurementAI';
 import FarmerProposals from '@/components/views/FarmerProposals';
 import OrderPlacement from '@/components/views/OrderPlacement';
 import OrderTracking from '@/components/views/OrderTracking';
-import TransportLogistics from '@/components/views/TransportLogistics';
 import MarketInsights from '@/components/views/MarketInsights';
 import Wallet from '@/components/views/Wallet';
 import UserProfile from '@/components/views/UserProfile';
 import SmartContracts from '@/components/views/SmartContracts';
 
-export default function App() {
-    const [currentView, setCurrentView] = useState('dashboard');
+// Valid view IDs
+const VALID_VIEWS = ['dashboard', 'planner', 'proposals', 'orders', 'contracts', 'tracking', 'market', 'wallet', 'profile'] as const;
+type ViewId = typeof VALID_VIEWS[number];
+
+function isValidView(v: string): v is ViewId {
+    return VALID_VIEWS.includes(v as ViewId);
+}
+
+function AppInner() {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+
+    const rawView = searchParams.get('view') ?? 'dashboard';
+    const currentView: ViewId = isValidView(rawView) ? rawView : 'dashboard';
+
+    const setCurrentView = useCallback((view: string) => {
+        router.push(`/?view=${view}`, { scroll: false });
+    }, [router]);
 
     const renderView = () => {
         switch (currentView) {
-            case 'dashboard': return <Dashboard setCurrentView={setCurrentView} />;
-            case 'planner': return <DemandPlanner setCurrentView={setCurrentView} />;
-            case 'proposals': return <FarmerProposals />;
-            case 'orders': return <OrderPlacement />;
-            case 'contracts': return <SmartContracts />;
-            case 'tracking': return <OrderTracking />;
-            case 'transport': return <TransportLogistics />;
-            case 'market': return <MarketInsights />;
-            case 'wallet': return <Wallet />;
-            case 'profile': return <UserProfile />;
-            default: return (
-                <div className="card-glass text-center p-12">
-                    <h1 className="text-2xl font-bold mb-4">WIP: {currentView}</h1>
-                    <p className="text-gray-500">We are currently porting this Vanilla JS view natively to React TSX Components!</p>
-                </div>
-            );
+            case 'dashboard':  return <Dashboard setCurrentView={setCurrentView} />;
+            case 'planner':    return <DemandPlanner setCurrentView={setCurrentView} />;
+            case 'proposals':  return <FarmerProposals />;
+            case 'orders':     return <OrderPlacement />;
+            case 'contracts':  return <SmartContracts />;
+            case 'tracking':   return <OrderTracking />;
+            case 'market':     return <MarketInsights />;
+            case 'wallet':     return <Wallet />;
+            case 'profile':    return <UserProfile />;
         }
     };
 
@@ -45,14 +53,20 @@ export default function App() {
             <Sidebar currentView={currentView} setCurrentView={setCurrentView} />
             <main className="main-content">
                 <Topbar currentView={currentView} />
-                {/* 
-                  Using key={currentView} forces React to destroy and recreate the div,
-                  which automatically perfectly re-triggers the fade-in animation on every tab switch! 
-                */}
+                {/* key={currentView} destroys + recreates the div, re-triggering fade-in on every navigation */}
                 <div key={currentView} className="view-container fade-in">
                     {renderView()}
                 </div>
             </main>
         </div>
+    );
+}
+
+// useSearchParams() requires a Suspense boundary in Next.js App Router
+export default function App() {
+    return (
+        <Suspense fallback={null}>
+            <AppInner />
+        </Suspense>
     );
 }
