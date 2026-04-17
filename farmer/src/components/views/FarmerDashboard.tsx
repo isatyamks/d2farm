@@ -43,7 +43,7 @@ export default function FarmerDashboard({ farmerId, farmerData, setCurrentView }
 
   const statusLabel = (s: string) => {
     const map: Record<string, string> = {
-      SENT: 'Proposal Sent', ACCEPTED: 'Accepted', LOGISTICS_DISPATCHED: 'Dispatched',
+      SENT: 'Sent', ACCEPTED: 'Accepted', LOGISTICS_DISPATCHED: 'In Transit',
       DELIVERED: 'Delivered', PAYMENT_RECEIVED: 'Paid', REJECTED: 'Rejected'
     };
     return map[s] || s;
@@ -59,21 +59,20 @@ export default function FarmerDashboard({ farmerId, farmerData, setCurrentView }
 
   return (
     <div className="stagger">
-      {/* Hero: Payment Status */}
+      {/* Balance */}
       <div className="card-hero" style={{ marginBottom: '1rem' }}>
         <div style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{ fontSize: '0.8rem', opacity: 0.85, marginBottom: '0.25rem', fontWeight: 600 }}>
-            {pendingPayment.length > 0 ? '💰 Pending Payments' : '✅ All Payments Clear'}
+          <div style={{ fontSize: '0.75rem', opacity: 0.85, marginBottom: '0.25rem', fontWeight: 600 }}>
+            {pendingPayment.length > 0 ? 'Pending Payments' : 'Balance'}
           </div>
-          <div style={{ fontSize: '2.2rem', fontWeight: 800, lineHeight: 1.1, marginBottom: '0.5rem' }}>
+          <div style={{ fontSize: '2.2rem', fontWeight: 800, lineHeight: 1.1, marginBottom: '0.4rem' }}>
             ₹{totalPending > 0 ? totalPending.toLocaleString('en-IN') : (wallet.balance as number || 0).toLocaleString('en-IN')}
           </div>
-          <div style={{ fontSize: '0.8rem', opacity: 0.8 }}>
-            {pendingPayment.length > 0
-              ? `${pendingPayment.length} delivery awaiting payment`
-              : 'Wallet Balance'
-            }
-          </div>
+          {pendingPayment.length > 0 && (
+            <div style={{ fontSize: '0.78rem', opacity: 0.8 }}>
+              {pendingPayment.length} {pendingPayment.length === 1 ? 'delivery' : 'deliveries'} pending
+            </div>
+          )}
         </div>
       </div>
 
@@ -121,9 +120,9 @@ export default function FarmerDashboard({ farmerId, farmerData, setCurrentView }
         </button>
       </div>
 
-      <button className="btn-big" onClick={() => setCurrentView('deeptech')} style={{ width: '100%', marginBottom: '1.25rem', background: 'linear-gradient(135deg, #1e293b, #0f172a)', color: '#fff', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-        Access DeepTech ML Forecasts
+      <button className="btn-big btn-secondary" onClick={() => setCurrentView('deeptech')} style={{ marginBottom: '1.25rem' }} id="deeptech-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>
+        Price Forecasts
       </button>
 
       {/* Active Proposals */}
@@ -141,11 +140,9 @@ export default function FarmerDashboard({ farmerId, farmerData, setCurrentView }
         </div>
       ) : proposals.length === 0 ? (
         <div className="card-solid empty-state" style={{ padding: '2rem' }}>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: 48, height: 48, margin: '0 auto 0.75rem' }}>
-            <path d="M16 3h5v5" /><path d="M8 3H3v5" /><path d="M12 22v-8.3a4 4 0 00-1.172-2.872L3 3" /><path d="M15 9l6-6" />
-          </svg>
-          <h3>No proposals yet</h3>
-          <p>List your crops and respond to buyer orders to get started!</p>
+          <div style={{ fontSize: '2.5rem', marginBottom: '0.75rem' }}>🌱</div>
+          <h3>No activity yet</h3>
+          <p>List your crops to start receiving orders.</p>
           <button className="btn-big btn-primary" onClick={() => setCurrentView('crops')} style={{ maxWidth: 200, margin: '0 auto' }}>
             Add Your First Crop
           </button>

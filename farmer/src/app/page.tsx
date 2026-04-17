@@ -116,7 +116,7 @@ export default function App() {
           <div
             className="header-icon-btn"
             onClick={() => setCurrentView('profile')}
-            style={{ background: 'linear-gradient(135deg, #10B981, #059669)', color: 'white', border: 'none', fontWeight: 700, fontSize: '0.85rem' }}
+            style={{ background: 'linear-gradient(135deg, var(--primary), var(--primary-dark))', color: 'white', border: 'none', fontWeight: 700, fontSize: '0.85rem' }}
           >
             {(farmerData?.fullName as string || 'F')[0]}
           </div>
