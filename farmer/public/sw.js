@@ -37,6 +37,11 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
+  // Bypass unsupported schemes (like chrome-extension://) and Next.js HMR
+  if (!url.protocol.startsWith('http') || url.pathname.includes('/_next/webpack-hmr')) {
+    return;
+  }
+
   // API calls: network-first with cache fallback
   if (url.pathname.startsWith('/api/')) {
     event.respondWith(

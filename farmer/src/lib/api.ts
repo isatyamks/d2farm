@@ -17,7 +17,10 @@ interface ApiResponse<T = unknown> {
 export async function apiGet<T = unknown>(endpoint: string): Promise<ApiResponse<T>> {
   try {
     const res = await fetch(`${API_BASE}${endpoint}`, {
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true'
+      },
       cache: 'no-store',
     });
     const data = await res.json();
@@ -32,7 +35,10 @@ export async function apiPost<T = unknown>(endpoint: string, body: Record<string
   try {
     const res = await fetch(`${API_BASE}${endpoint}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true'
+      },
       body: JSON.stringify(body),
     });
     const data = await res.json();
@@ -50,7 +56,10 @@ export async function apiPut<T = unknown>(endpoint: string, body: Record<string,
   try {
     const res = await fetch(`${API_BASE}${endpoint}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true'
+      },
       body: JSON.stringify(body),
     });
     const data = await res.json();
@@ -65,7 +74,10 @@ export async function apiDelete(endpoint: string): Promise<ApiResponse> {
   try {
     const res = await fetch(`${API_BASE}${endpoint}`, {
       method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true'
+      },
     });
     const data = await res.json();
     return { success: data.success !== false, data };
@@ -85,7 +97,10 @@ export async function syncOfflineData(): Promise<{ synced: number; failed: numbe
       const { endpoint, body } = entry.data as { endpoint: string; body: Record<string, unknown> };
       const res = await fetch(`${API_BASE}${endpoint}`, {
         method: entry.action === 'DELETE' ? 'DELETE' : 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': 'true'
+        },
         body: JSON.stringify(body),
       });
 
