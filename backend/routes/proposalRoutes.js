@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Proposal = require('../models/Proposal');
 const FarmerProfile = require('../models/FarmerProfile');
+const CropListing = require('../models/CropListing');
 const BlockchainService = require('../services/blockchainService');
 
 // ─── POST /api/proposals ───
@@ -9,6 +10,28 @@ const BlockchainService = require('../services/blockchainService');
 router.post('/', async (req, res) => {
   try {
     const { farmerId, orderId, cropListingId, proposedQuantity, proposedPricePerUnit, message } = req.body;
+
+    // Check for duplicate
+    const existing = await Proposal.findOne({ farmerId, orderId });
+    if (existing) {
+      return res.status(400).json({ success: false, message: 'You have already sent a proposal for this order.' });
+    }
+
+    // Check quantity limit and deduct
+    const listing = await CropListing.findById(cropListingId);
+    if (!listing) {
+      return res.status(404).json({ success: false, message: 'Crop listing not found.' });
+    }
+    if (listing.totalQuantity < proposedQuantity) {
+      return res.status(400).json({ 
+        success: false, 
+        message: `Insufficient stock limit. You only have ${listing.totalQuantity} available.` 
+      });
+    }
+
+    // Deduct stock
+    listing.totalQuantity -= proposedQuantity;
+    await listing.save();
 
     const proposal = await Proposal.create({
       farmerId,
@@ -113,6 +136,14 @@ router.put('/:id/status', async (req, res) => {
       await FarmerProfile.findByIdAndUpdate(proposal.farmerId, {
         $inc: { 'metrics.rejectedProposals': 1 }
       });
+
+      // Refund the quantity back to the crop listing
+      if (proposal.cropListingId) {
+        await CropListing.findByIdAndUpdate(proposal.cropListingId, {
+          $inc: { totalQuantity: proposal.proposedQuantity }
+        });
+        console.log(`♻️ Refunded ${proposal.proposedQuantity} kg back to crop listing ${proposal.cropListingId}`);
+      }
     }
 
     await proposal.save();

@@ -44,7 +44,7 @@ export default function TransactionTracker({ farmerId }: TransactionTrackerProps
       const res = await apiGet(`/api/proposals?farmerId=${farmerId}`);
       if (res.success && res.data) {
         const data = res.data as { proposals: TrackedProposal[] };
-        const active = (data.proposals || []).filter(p => p.status !== 'REJECTED');
+        const active = data.proposals || [];
         setProposals(active);
         if (active.length > 0 && !selectedProposal) {
           setSelectedProposal(active[0]);
@@ -56,8 +56,18 @@ export default function TransactionTracker({ farmerId }: TransactionTrackerProps
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [farmerId]);
 
-  const getStageIndex = (status: string) => {
-    return LIFECYCLE_STAGES.findIndex(s => s.key === status);
+  const getStages = (status: string) => {
+    if (status === 'REJECTED') {
+      return [
+        { key: 'SENT', label: 'Proposal Sent', icon: '📩', description: 'Your proposal was submitted to the buyer' },
+        { key: 'REJECTED', label: 'Rejected', icon: '❌', description: 'Buyer declined your proposal. Limits refunded.' },
+      ];
+    }
+    return LIFECYCLE_STAGES;
+  };
+
+  const getStageIndex = (status: string, stages: typeof LIFECYCLE_STAGES) => {
+    return stages.findIndex(s => s.key === status);
   };
 
   const getTimeForStage = (timeline: TimelineEntry[], stageKey: string) => {
@@ -93,7 +103,8 @@ export default function TransactionTracker({ farmerId }: TransactionTrackerProps
     );
   }
 
-  const currentStageIdx = selectedProposal ? getStageIndex(selectedProposal.status) : -1;
+  const stages = selectedProposal ? getStages(selectedProposal.status) : [];
+  const currentStageIdx = selectedProposal ? getStageIndex(selectedProposal.status, stages) : -1;
 
   return (
     <div>
@@ -166,20 +177,21 @@ export default function TransactionTracker({ farmerId }: TransactionTrackerProps
             </div>
 
             <div className="timeline">
-              {LIFECYCLE_STAGES.map((stage, idx) => {
+              {stages.map((stage, idx) => {
                 const isCompleted = idx < currentStageIdx;
                 const isActive = idx === currentStageIdx;
                 const isPending = idx > currentStageIdx;
+                const isRejected = stage.key === 'REJECTED';
                 const stageTime = getTimeForStage(selectedProposal.timeline, stage.key);
                 const timelineEntry = selectedProposal.timeline.find(t => t.status === stage.key);
 
                 return (
                   <div key={stage.key} className="timeline-item">
-                    <div className={`timeline-dot ${isCompleted ? 'completed' : isActive ? 'active' : 'pending'}`} />
+                    <div className={`timeline-dot ${isCompleted ? 'completed' : isActive ? (isRejected ? 'rejected' : 'active') : 'pending'}`} />
                     <div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.15rem' }}>
                         <span style={{ fontSize: '1rem' }}>{stage.icon}</span>
-                        <span className={`timeline-title ${isActive ? 'active' : isPending ? 'pending' : ''}`}>
+                        <span className={`timeline-title ${isActive ? (isRejected ? 'rejected-text' : 'active') : isPending ? 'pending' : ''}`}>
                           {stage.label}
                         </span>
                       </div>
