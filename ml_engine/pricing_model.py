@@ -1,7 +1,6 @@
-import numpy as np
-from sklearn.ensemble import RandomForestRegressor, GradientBoostingClassifier
+import numpy as np  # type: ignore[import-untyped]
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingClassifier  # type: ignore[import-untyped]
 import datetime
-import random
 
 class AdvancedMLHub:
     def __init__(self):

@@ -1,12 +1,23 @@
 "use client";
 
 export default function Topbar({ currentView }: { currentView: string }) {
-    const viewTitle = currentView.charAt(0).toUpperCase() + currentView.slice(1);
+        const titles: Record<string, string> = {
+            market: 'Market Insights',
+            transport: 'Transport & Logistics',
+            proposals: 'Farmer Proposals',
+            planner: 'Demand Planner',
+            orders: 'Order Placement',
+            contracts: 'Smart Contracts',
+            tracking: 'Order Tracking',
+            wallet: 'Payments & Wallet',
+            profile: 'My Profile',
+        };
+        const viewTitle = titles[currentView] || (currentView.charAt(0).toUpperCase() + currentView.slice(1));
     
     return (
         <header className="topbar">
             <div className="greeting">
-                <h1>{viewTitle === 'Market' ? 'Market Insights' : viewTitle === 'Transport' ? 'Transport & Logistics' : viewTitle}</h1>
+                <h1>{viewTitle}</h1>
                 <p className="subtitle">Here is what you need to know today.</p>
             </div>
             <div className="topbar-actions">
