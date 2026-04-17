@@ -1,41 +1,47 @@
 from flask import Flask, request, jsonify
-from pricing_model import predict_realtime_price
-import os
+from flask_cors import CORS
+from pricing_model import d2farm_ml_hub
 
 app = Flask(__name__)
+CORS(app)
 
-@app.route('/api/ml/predict-price', methods=['POST'])
-def predict_price():
-    try:
-        data = request.get_json()
-        
-        # Extract features (use realistic defaults if missing)
-        supply = float(data.get('supply', 1000.0))
-        demand = float(data.get('demand', 1500.0))
-        weather = int(data.get('weather', 0))
-        cost = float(data.get('cultivation_cost', 15.0))
-        policy = float(data.get('gov_policy', 1.0))
-        
-        # Predict
-        predicted_price = predict_realtime_price(supply, demand, weather, cost, policy)
-        
-        return jsonify({
-            "success": True,
-            "predicted_price_per_kg": round(predicted_price, 2),
-            "factors": {
-                "supply": supply,
-                "demand": demand,
-                "ratio": round(demand / (supply + 1), 2)
-            }
-        })
-    except Exception as e:
-        return jsonify({"success": False, "error": str(e)}), 500
+@app.route('/api/ml/health', methods=['GET'])
+def health_check():
+    return jsonify({"status": "ACTIVE", "engine": "D2Farm DeepTech ML Hub"})
 
-@app.route('/health', methods=['GET'])
-def health():
-    return jsonify({"status": "ML Engine Active"})
+@app.route('/api/ml/forecast-price', methods=['GET'])
+def api_forecast():
+    # Example Params: ?crop=Tomato&current_price=22&weather_severity=3
+    crop = request.args.get('crop', 'Tomato')
+    current_price = float(request.args.get('current_price', 20.0))
+    weather_severity = int(request.args.get('weather_severity', 1))
+    
+    result = d2farm_ml_hub.forecast_price(crop, current_price, weather_severity)
+    return jsonify({"success": True, "data": result})
+
+@app.route('/api/ml/predict-demand', methods=['GET'])
+def api_demand():
+    # Example Params: ?crop=Onion&lat=20.0&lng=73.7
+    crop = request.args.get('crop', 'Onion')
+    result = d2farm_ml_hub.predict_demand(crop, 20.0, 73.7)
+    return jsonify({"success": True, "data": result})
+
+@app.route('/api/ml/predict-spoilage', methods=['GET'])
+def api_spoilage():
+    # Example Params: ?crop=Tomato&travel_hours=12&temp=32&humidity=80
+    crop = request.args.get('crop', 'Tomato')
+    travel_hours = float(request.args.get('travel_hours', 12.0))
+    temp = float(request.args.get('temp', 32.0))
+    humidity = float(request.args.get('humidity', 80.0))
+    
+    result = d2farm_ml_hub.predict_spoilage(crop, travel_hours, temp, humidity)
+    return jsonify({"success": True, "data": result})
+
+@app.route('/api/ml/optimize-route', methods=['GET'])
+def api_route():
+    result = d2farm_ml_hub.optimize_route(20.0, 73.7, 19.0, 72.8)
+    return jsonify({"success": True, "data": result})
 
 if __name__ == '__main__':
-    # Run the ML API on port 5000
-    print("🚀 Mounting AI Pricing Engine on Port 5000...")
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    print("🧠 D2Farm DeepTech ML Flask Engine Booting on Port 5000...")
+    app.run(port=5000, debug=True)

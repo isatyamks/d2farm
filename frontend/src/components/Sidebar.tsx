@@ -9,7 +9,7 @@ export default function Sidebar({ currentView, setCurrentView }: SidebarProps) {
     const menu = [
         { id: 'dashboard', icon: 'ph-squares-four', label: 'Dashboard' },
         { id: 'planner', icon: 'ph-chart-line-up', label: 'Demand Planner' },
-        { id: 'predictions', icon: 'ph-brain', label: 'Procurement AI' },
+        { id: 'proposals', icon: 'ph-handshake', label: 'Farmer Proposals' },
         { id: 'orders', icon: 'ph-shopping-cart', label: 'Order Placement' },
         { id: 'contracts', icon: 'ph-link', label: 'Smart Contracts' },
         { id: 'tracking', icon: 'ph-truck', label: 'Order Tracking' },

@@ -7,6 +7,7 @@ import ProposalCenter from '@/components/views/ProposalCenter';
 import TransactionTracker from '@/components/views/TransactionTracker';
 import FarmerProfile from '@/components/views/FarmerProfile';
 import Onboarding from '@/components/views/Onboarding';
+import DeepTechEngine from '@/components/views/DeepTechEngine';
 import { syncOfflineData } from '@/lib/api';
 
 export default function App() {
@@ -75,6 +76,8 @@ export default function App() {
         return <TransactionTracker farmerId={farmerId} />;
       case 'profile':
         return <FarmerProfile farmerId={farmerId} farmerData={farmerData} setFarmerData={setFarmerData} />;
+      case 'deeptech':
+        return <DeepTechEngine farmerId={farmerId} />;
       default:
         return <FarmerDashboard farmerId={farmerId} farmerData={farmerData} setCurrentView={setCurrentView} />;
     }

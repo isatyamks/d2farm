@@ -7,6 +7,7 @@ import Topbar from '@/components/Topbar';
 import Dashboard from '@/components/views/Dashboard';
 import DemandPlanner from '@/components/views/DemandPlanner';
 import ProcurementAI from '@/components/views/ProcurementAI';
+import FarmerProposals from '@/components/views/FarmerProposals';
 import OrderPlacement from '@/components/views/OrderPlacement';
 import OrderTracking from '@/components/views/OrderTracking';
 import TransportLogistics from '@/components/views/TransportLogistics';
@@ -22,7 +23,7 @@ export default function App() {
         switch (currentView) {
             case 'dashboard': return <Dashboard setCurrentView={setCurrentView} />;
             case 'planner': return <DemandPlanner setCurrentView={setCurrentView} />;
-            case 'predictions': return <ProcurementAI setCurrentView={setCurrentView} />;
+            case 'proposals': return <FarmerProposals />;
             case 'orders': return <OrderPlacement />;
             case 'contracts': return <SmartContracts />;
             case 'tracking': return <OrderTracking />;

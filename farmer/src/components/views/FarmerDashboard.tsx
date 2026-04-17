@@ -106,7 +106,7 @@ export default function FarmerDashboard({ farmerId, farmerData, setCurrentView }
       </div>
 
       {/* Quick Actions */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '1.25rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '0.75rem' }}>
         <button className="btn-big btn-primary" onClick={() => setCurrentView('crops')} id="add-crop-btn">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 5v14" /><path d="M5 12h14" />
@@ -120,6 +120,11 @@ export default function FarmerDashboard({ farmerId, farmerData, setCurrentView }
           Open Orders
         </button>
       </div>
+
+      <button className="btn-big" onClick={() => setCurrentView('deeptech')} style={{ width: '100%', marginBottom: '1.25rem', background: 'linear-gradient(135deg, #1e293b, #0f172a)', color: '#fff', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        Access DeepTech ML Forecasts
+      </button>
 
       {/* Active Proposals */}
       <div className="section-title" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
