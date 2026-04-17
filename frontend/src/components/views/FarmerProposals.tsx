@@ -27,7 +27,7 @@ interface MLForecast {
     spoilage: { risk_pct: number; risk_level: string; cold_chain_needed: boolean; stressor: string };
 }
 
-const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+const API = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000').replace(/\/+$/, '');
 
 const STATUS_MAP: Record<string, { label: string; cls: string; bar: string }> = {
     SENT:                 { label: 'New Proposal', cls: 'status-warn',  bar: '#3B82F6' },

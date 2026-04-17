@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 
-const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+const API = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000').replace(/\/+$/, '');
 
 export default function DemandPlanner({ setCurrentView }: any) {
     const [summaries, setSummaries] = useState<any[]>([]);
