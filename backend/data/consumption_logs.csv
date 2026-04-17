@@ -1,0 +1,687 @@
+id,cropName,variety,buyerName,quantityKg,pricePerKg,totalCost,orderDate,deliveryDate,fulfillmentStatus,qualityScore,spoilagePercent,supplierName,supplierLocation
+LOG-1776410043711-1469,Tomato,Desi,FreshMart Superstore,130,20,2600,2026-01-17,2026-01-20,cancelled,4.5,3.1,Rajesh Kumar,Lucknow UP
+LOG-1776410043711-3104,Tomato,Roma,FreshMart Superstore,80,21.4,1712,2026-01-18,2026-01-19,completed,3.6,4.7,Sunita Patel,Unnao UP
+LOG-1776410043711-1594,Tomato,Roma,Metro Wholesale Club,99,22,2178,2026-01-19,2026-01-21,completed,4.2,2.7,Arvind Mishra,Fatehpur UP
+LOG-1776410043711-7161,Tomato,Desi,SpiceBox Restaurant Chain,76,21.3,1619,2026-01-20,2026-01-22,completed,3.9,2.2,Pushpa Kumari,Patna BR
+LOG-1776410043711-8368,Tomato,Hybrid,Zomato Cloud Kitchen,89,20.6,1833,2026-01-21,2026-01-23,completed,4.5,2.8,Pushpa Kumari,Patna BR
+LOG-1776410043711-7375,Tomato,Cherry,Mother Dairy Outlet,126,20.8,2621,2026-01-23,2026-01-24,completed,4.5,5.6,Mohan Lal,Bhopal MP
+LOG-1776410043711-1245,Tomato,Roma,DMart Fresh Counter,86,18.9,1625,2026-01-24,2026-01-26,completed,4.4,7.7,Ganesh Jadhav,Kolhapur MH
+LOG-1776410043711-6921,Tomato,Hybrid,ITC Foods Processing,105,21.2,2226,2026-01-26,2026-01-29,completed,4.9,2.9,Geeta Verma,Kannauj UP
+LOG-1776410043711-1277,Tomato,Green,Mother Dairy Outlet,103,18,1854,2026-01-27,2026-01-29,completed,4.1,6,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043711-2928,Tomato,Desi,Mother Dairy Outlet,111,20.5,2276,2026-01-28,2026-01-29,partial,3.9,0.1,Deepak Gupta,Prayagraj UP
+LOG-1776410043711-5846,Tomato,Cherry,Zomato Cloud Kitchen,119,19.3,2297,2026-01-29,2026-01-31,completed,4.3,2.6,Mohan Lal,Bhopal MP
+LOG-1776410043711-8711,Tomato,Hybrid,Chai Point Cafes,100,18,1800,2026-01-30,2026-02-01,completed,3.6,3.3,Meena Devi,Kanpur Dehat UP
+LOG-1776410043711-5373,Tomato,Cherry,DMart Fresh Counter,93,21.4,1990,2026-01-31,2026-02-02,completed,3.5,4.2,Shanti Bai,Indore MP
+LOG-1776410043712-9971,Tomato,Roma,Chai Point Cafes,136,18,2448,2026-02-01,2026-02-03,completed,4.5,0.2,Meena Devi,Kanpur Dehat UP
+LOG-1776410043712-3823,Tomato,Desi,Metro Wholesale Club,109,22.2,2420,2026-02-02,2026-02-03,completed,3.6,1.6,Rajesh Kumar,Lucknow UP
+LOG-1776410043712-8076,Tomato,Hybrid,ITC Foods Processing,81,22.5,1823,2026-02-03,2026-02-05,completed,5,6,Asha Kumari,Sitapur UP
+LOG-1776410043712-2503,Tomato,Roma,Haldiram Distribution,87,18.9,1644,2026-02-04,2026-02-06,completed,3.6,7.4,Ravi Patil,Pune MH
+LOG-1776410043712-5976,Tomato,Cherry,Zomato Cloud Kitchen,109,20.4,2224,2026-02-07,2026-02-08,completed,3.7,2.8,Raju Mandal,Muzaffarpur BR
+LOG-1776410043712-2603,Tomato,Cherry,DMart Fresh Counter,108,21.3,2300,2026-02-08,2026-02-09,completed,4.1,2.1,Mohan Lal,Bhopal MP
+LOG-1776410043712-3088,Tomato,Hybrid,Zomato Cloud Kitchen,111,22.2,2464,2026-02-09,2026-02-11,completed,3.8,2.2,Ramesh Yadav,Barabanki UP
+LOG-1776410043712-5370,Tomato,Roma,Chai Point Cafes,99,21.6,2138,2026-02-10,2026-02-12,completed,4.3,2.7,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043712-3389,Tomato,Roma,Zomato Cloud Kitchen,80,21.1,1688,2026-02-11,2026-02-12,completed,5,0.4,Ravi Patil,Pune MH
+LOG-1776410043712-3250,Tomato,Cherry,FreshMart Superstore,102,22.7,2315,2026-02-12,2026-02-15,partial,4.5,2.5,Kavita Rani,Varanasi UP
+LOG-1776410043712-8236,Tomato,Green,Mother Dairy Outlet,113,18.7,2113,2026-02-14,2026-02-16,partial,4.5,6.8,Kiran Bai,Bareilly UP
+LOG-1776410043712-1219,Tomato,Desi,Haldiram Distribution,126,19.7,2482,2026-02-15,2026-02-17,completed,4.6,4.6,Shanti Bai,Indore MP
+LOG-1776410043712-7201,Tomato,Roma,Grand Hotel Kitchens,128,21.4,2739,2026-02-17,2026-02-20,completed,4.3,6.7,Geeta Verma,Kannauj UP
+LOG-1776410043712-2460,Tomato,Hybrid,Swiggy Instamart Hub,94,20,1880,2026-02-18,2026-02-21,completed,3.6,1.7,Shanti Bai,Indore MP
+LOG-1776410043712-1231,Tomato,Desi,DMart Fresh Counter,82,22.3,1829,2026-02-21,2026-02-23,completed,4.2,3,Raju Mandal,Muzaffarpur BR
+LOG-1776410043712-6341,Tomato,Desi,Chai Point Cafes,92,20.1,1849,2026-02-22,2026-02-24,cancelled,3.6,5.2,Ravi Patil,Pune MH
+LOG-1776410043712-9348,Tomato,Cherry,Grand Hotel Kitchens,75,19.4,1455,2026-02-23,2026-02-24,partial,4.1,3.8,Ramesh Yadav,Barabanki UP
+LOG-1776410043712-5461,Tomato,Roma,SpiceBox Restaurant Chain,132,21.7,2864,2026-02-24,2026-02-25,completed,4.1,0.3,Priya Sharma,Rae Bareli UP
+LOG-1776410043712-2684,Tomato,Green,Mother Dairy Outlet,87,20.1,1749,2026-02-25,2026-02-28,completed,3.7,6.1,Anita Devi,Meerut UP
+LOG-1776410043712-2041,Tomato,Hybrid,Metro Wholesale Club,124,20.6,2554,2026-02-26,2026-02-28,cancelled,3.9,8,Mahesh Tiwari,Hardoi UP
+LOG-1776410043712-1981,Tomato,Roma,ITC Foods Processing,113,19.8,2237,2026-02-27,2026-02-28,partial,4.8,6.6,Pushpa Kumari,Patna BR
+LOG-1776410043712-1347,Tomato,Roma,FreshMart Superstore,102,21,2142,2026-02-28,2026-03-01,completed,3.8,2.2,Arvind Mishra,Fatehpur UP
+LOG-1776410043712-5704,Tomato,Cherry,Haldiram Distribution,96,14.1,1354,2026-03-01,2026-03-04,partial,4,4.6,Anita Devi,Meerut UP
+LOG-1776410043712-6305,Tomato,Cherry,SpiceBox Restaurant Chain,117,16.4,1919,2026-03-02,2026-03-04,completed,3.6,7.3,Rajesh Kumar,Lucknow UP
+LOG-1776410043712-9937,Tomato,Green,Swiggy Instamart Hub,114,14.8,1687,2026-03-03,2026-03-05,completed,4.9,0.8,Sunita Patel,Unnao UP
+LOG-1776410043712-3583,Tomato,Roma,Chai Point Cafes,109,14,1526,2026-03-04,2026-03-06,cancelled,4.2,7.5,Sunita Patel,Unnao UP
+LOG-1776410043712-4463,Tomato,Cherry,Mother Dairy Outlet,86,18.2,1565,2026-03-05,2026-03-07,cancelled,4.8,4.7,Mohan Lal,Bhopal MP
+LOG-1776410043712-7266,Tomato,Roma,Haldiram Distribution,122,15.5,1891,2026-03-06,2026-03-08,partial,4.7,5.3,Lakshmi Devi,Nashik MH
+LOG-1776410043712-6125,Tomato,Green,BigBasket Warehouse,104,16.6,1726,2026-03-07,2026-03-09,completed,4.9,4.1,Vikram Singh,Bithoor UP
+LOG-1776410043712-9996,Tomato,Roma,SpiceBox Restaurant Chain,130,13.8,1794,2026-03-08,2026-03-09,completed,3.7,3.4,Rajesh Kumar,Lucknow UP
+LOG-1776410043712-3301,Tomato,Desi,Mother Dairy Outlet,119,16,1904,2026-03-11,2026-03-14,completed,4.5,3.4,Shanti Bai,Indore MP
+LOG-1776410043712-6592,Tomato,Roma,FreshMart Superstore,100,14.4,1440,2026-03-12,2026-03-14,completed,4.9,4.5,Kiran Bai,Bareilly UP
+LOG-1776410043712-3315,Tomato,Roma,SpiceBox Restaurant Chain,84,16.5,1386,2026-03-13,2026-03-14,completed,3.6,2.2,Bhola Nath,Jhansi UP
+LOG-1776410043712-3495,Tomato,Hybrid,DMart Fresh Counter,103,15.7,1617,2026-03-14,2026-03-15,cancelled,4,5.8,Vikram Singh,Bithoor UP
+LOG-1776410043712-5999,Tomato,Cherry,Haldiram Distribution,121,15.7,1900,2026-03-15,2026-03-18,completed,4.1,6.3,Mohan Lal,Bhopal MP
+LOG-1776410043712-7972,Tomato,Hybrid,Grand Hotel Kitchens,92,15.2,1398,2026-03-16,2026-03-17,completed,4.6,2.9,Mohan Lal,Bhopal MP
+LOG-1776410043712-5946,Tomato,Green,Zomato Cloud Kitchen,80,18.1,1448,2026-03-17,2026-03-20,cancelled,3.6,7.5,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043712-1491,Tomato,Cherry,Swiggy Instamart Hub,112,16.2,1814,2026-03-18,2026-03-19,completed,3.8,7.9,Deepak Gupta,Prayagraj UP
+LOG-1776410043712-6278,Tomato,Desi,Swiggy Instamart Hub,132,14,1848,2026-03-19,2026-03-21,completed,4.2,2.8,Ganesh Jadhav,Kolhapur MH
+LOG-1776410043712-2851,Tomato,Green,Metro Wholesale Club,88,14.6,1285,2026-03-20,2026-03-23,completed,4.3,1.4,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043712-9302,Tomato,Hybrid,FreshMart Superstore,86,17.2,1479,2026-03-21,2026-03-23,completed,3.9,1.2,Lakshmi Devi,Nashik MH
+LOG-1776410043712-9290,Tomato,Desi,Chai Point Cafes,131,15.8,2070,2026-03-22,2026-03-24,completed,3.7,4.9,Ganesh Jadhav,Kolhapur MH
+LOG-1776410043712-5091,Tomato,Hybrid,BigBasket Warehouse,98,16.3,1597,2026-03-23,2026-03-25,completed,4.9,5.8,Arvind Mishra,Fatehpur UP
+LOG-1776410043712-3936,Tomato,Roma,Grand Hotel Kitchens,107,14.8,1584,2026-03-24,2026-03-26,completed,4.1,6.4,Kiran Bai,Bareilly UP
+LOG-1776410043712-4112,Tomato,Hybrid,Zomato Cloud Kitchen,104,18.1,1882,2026-03-25,2026-03-26,completed,4.4,6.8,Meena Devi,Kanpur Dehat UP
+LOG-1776410043712-1016,Tomato,Roma,Grand Hotel Kitchens,85,16.8,1428,2026-03-26,2026-03-29,completed,5,5.5,Mahesh Tiwari,Hardoi UP
+LOG-1776410043712-3720,Tomato,Hybrid,DMart Fresh Counter,91,15.9,1447,2026-03-27,2026-03-28,completed,4.2,4.8,Lakshmi Devi,Nashik MH
+LOG-1776410043712-9351,Tomato,Desi,Swiggy Instamart Hub,116,14.7,1705,2026-03-28,2026-03-30,completed,3.8,1.7,Priya Sharma,Rae Bareli UP
+LOG-1776410043712-6909,Tomato,Hybrid,Chai Point Cafes,83,15,1245,2026-03-29,2026-03-31,completed,4.1,6.1,Lakshmi Devi,Nashik MH
+LOG-1776410043712-4946,Tomato,Hybrid,Haldiram Distribution,130,13.5,1755,2026-03-31,2026-04-02,completed,4.3,6.6,Raju Mandal,Muzaffarpur BR
+LOG-1776410043712-7109,Tomato,Green,Haldiram Distribution,123,18.3,2251,2026-04-01,2026-04-03,completed,4.4,2,Vikram Singh,Bithoor UP
+LOG-1776410043712-2769,Tomato,Roma,ITC Foods Processing,132,17.2,2270,2026-04-02,2026-04-04,completed,4.6,2.5,Deepak Gupta,Prayagraj UP
+LOG-1776410043712-1704,Tomato,Desi,BigBasket Warehouse,105,17.4,1827,2026-04-03,2026-04-05,completed,3.6,0.8,Asha Kumari,Sitapur UP
+LOG-1776410043712-5583,Tomato,Desi,Swiggy Instamart Hub,79,17.7,1398,2026-04-04,2026-04-06,completed,4.4,5.7,Ravi Patil,Pune MH
+LOG-1776410043712-7855,Tomato,Green,Zomato Cloud Kitchen,108,17.5,1890,2026-04-05,2026-04-08,completed,4.6,1.1,Arvind Mishra,Fatehpur UP
+LOG-1776410043712-3140,Tomato,Cherry,Metro Wholesale Club,118,16.8,1982,2026-04-06,2026-04-08,completed,4.8,4.1,Rajesh Kumar,Lucknow UP
+LOG-1776410043712-5507,Tomato,Cherry,Chai Point Cafes,89,14.8,1317,2026-04-07,2026-04-09,completed,4.7,6.6,Sita Ram,Moradabad UP
+LOG-1776410043712-6066,Tomato,Desi,Swiggy Instamart Hub,80,14.9,1192,2026-04-08,2026-04-11,completed,4.9,7.2,Raju Mandal,Muzaffarpur BR
+LOG-1776410043712-9112,Tomato,Desi,Swiggy Instamart Hub,118,16.6,1959,2026-04-09,2026-04-12,completed,4.3,7,Sunita Patel,Unnao UP
+LOG-1776410043712-5182,Tomato,Roma,ITC Foods Processing,127,15.2,1930,2026-04-10,2026-04-12,completed,4.2,0.3,Sita Ram,Moradabad UP
+LOG-1776410043712-2338,Tomato,Green,BigBasket Warehouse,125,16.8,2100,2026-04-12,2026-04-14,completed,4.2,6.2,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043712-4633,Tomato,Cherry,Grand Hotel Kitchens,118,18.4,2171,2026-04-13,2026-04-15,completed,4.9,0.9,Suresh Chauhan,Agra UP
+LOG-1776410043712-9554,Tomato,Roma,Chai Point Cafes,135,14.7,1985,2026-04-14,2026-04-16,completed,3.7,0.8,Deepak Gupta,Prayagraj UP
+LOG-1776410043712-2297,Tomato,Green,Grand Hotel Kitchens,122,14.4,1757,2026-04-15,2026-04-17,completed,4.2,8,Shanti Bai,Indore MP
+LOG-1776410043712-4957,Tomato,Desi,Mother Dairy Outlet,126,16.5,2079,2026-04-16,2026-04-18,completed,3.7,1.8,Suresh Chauhan,Agra UP
+LOG-1776410043712-4307,Onion,Yellow,Chai Point Cafes,83,26,2158,2026-01-17,2026-01-19,completed,4,1.8,Lakshmi Devi,Nashik MH
+LOG-1776410043712-9063,Onion,Red Nashik,Metro Wholesale Club,72,31,2232,2026-01-18,2026-01-20,completed,3.9,0.3,Shanti Bai,Indore MP
+LOG-1776410043712-1902,Onion,Spring Onion,FreshMart Superstore,70,28.1,1967,2026-01-20,2026-01-21,completed,3.5,0.1,Geeta Verma,Kannauj UP
+LOG-1776410043712-9664,Onion,White,Swiggy Instamart Hub,116,31.2,3619,2026-01-21,2026-01-24,completed,4.4,0.3,Ravi Patil,Pune MH
+LOG-1776410043712-5714,Onion,Yellow,Chai Point Cafes,89,29.7,2643,2026-01-22,2026-01-24,partial,4.4,0.1,Shanti Bai,Indore MP
+LOG-1776410043712-6099,Onion,White,Metro Wholesale Club,108,25.8,2786,2026-01-26,2026-01-29,partial,3.8,1.3,Kavita Rani,Varanasi UP
+LOG-1776410043712-6235,Onion,White,FreshMart Superstore,83,28.6,2374,2026-01-28,2026-01-30,completed,4.2,1.2,Sita Ram,Moradabad UP
+LOG-1776410043712-3568,Onion,Red Nashik,Zomato Cloud Kitchen,108,29.5,3186,2026-01-31,2026-02-03,completed,4.1,2,Pushpa Kumari,Patna BR
+LOG-1776410043712-8607,Onion,White,Mother Dairy Outlet,75,28.6,2145,2026-02-01,2026-02-03,completed,3.6,1.7,Anita Devi,Meerut UP
+LOG-1776410043712-6247,Onion,Yellow,Grand Hotel Kitchens,78,27.8,2168,2026-02-02,2026-02-04,completed,5,1,Pushpa Kumari,Patna BR
+LOG-1776410043712-8735,Onion,Spring Onion,Grand Hotel Kitchens,112,31,3472,2026-02-04,2026-02-07,completed,4.5,0.3,Pushpa Kumari,Patna BR
+LOG-1776410043712-1793,Onion,Spring Onion,Haldiram Distribution,82,29.3,2403,2026-02-05,2026-02-07,completed,4.1,1.5,Geeta Verma,Kannauj UP
+LOG-1776410043712-7219,Onion,Spring Onion,DMart Fresh Counter,71,27.7,1967,2026-02-06,2026-02-08,completed,3.8,1.9,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043712-7968,Onion,Red Nashik,Swiggy Instamart Hub,97,29.1,2823,2026-02-07,2026-02-08,completed,3.8,1.6,Ganesh Jadhav,Kolhapur MH
+LOG-1776410043712-9572,Onion,White,Grand Hotel Kitchens,66,25.4,1676,2026-02-08,2026-02-10,completed,4.4,1.8,Meena Devi,Kanpur Dehat UP
+LOG-1776410043712-2907,Onion,Red Nashik,Zomato Cloud Kitchen,67,26.9,1802,2026-02-09,2026-02-11,completed,4.6,1.5,Meena Devi,Kanpur Dehat UP
+LOG-1776410043712-3569,Onion,Yellow,ITC Foods Processing,96,28.7,2755,2026-02-10,2026-02-11,cancelled,4.4,0.4,Ganesh Jadhav,Kolhapur MH
+LOG-1776410043712-6453,Onion,Red Nashik,Mother Dairy Outlet,69,28.5,1967,2026-02-11,2026-02-13,completed,4.1,1.1,Pushpa Kumari,Patna BR
+LOG-1776410043712-7612,Onion,Yellow,Zomato Cloud Kitchen,84,27,2268,2026-02-12,2026-02-15,completed,4.2,1.9,Pushpa Kumari,Patna BR
+LOG-1776410043712-5444,Onion,Spring Onion,FreshMart Superstore,74,27.5,2035,2026-02-13,2026-02-15,completed,4.8,0.5,Arvind Mishra,Fatehpur UP
+LOG-1776410043712-4549,Onion,Yellow,Swiggy Instamart Hub,78,27.9,2176,2026-02-14,2026-02-17,completed,3.9,1.9,Rajesh Kumar,Lucknow UP
+LOG-1776410043712-3176,Onion,Yellow,FreshMart Superstore,81,25.6,2074,2026-02-15,2026-02-18,completed,4.3,0.7,Arvind Mishra,Fatehpur UP
+LOG-1776410043712-1160,Onion,Yellow,SpiceBox Restaurant Chain,87,31.2,2714,2026-02-16,2026-02-17,completed,4.5,0.9,Sita Ram,Moradabad UP
+LOG-1776410043712-9006,Onion,White,Metro Wholesale Club,98,25.4,2489,2026-02-18,2026-02-20,completed,4.7,1.7,Meena Devi,Kanpur Dehat UP
+LOG-1776410043712-5212,Onion,Red Nashik,FreshMart Superstore,83,28.8,2390,2026-02-22,2026-02-24,completed,4.1,1,Shanti Bai,Indore MP
+LOG-1776410043712-6754,Onion,Spring Onion,Swiggy Instamart Hub,112,30.3,3394,2026-02-23,2026-02-26,completed,4.9,0.3,Anita Devi,Meerut UP
+LOG-1776410043712-6034,Onion,Red Nashik,SpiceBox Restaurant Chain,110,26.5,2915,2026-02-24,2026-02-26,completed,4.9,0.2,Mohan Lal,Bhopal MP
+LOG-1776410043712-4462,Onion,Spring Onion,Metro Wholesale Club,86,29.6,2546,2026-02-25,2026-02-27,completed,4.1,1.5,Ramesh Yadav,Barabanki UP
+LOG-1776410043712-8118,Onion,Red Nashik,BigBasket Warehouse,91,29.9,2721,2026-02-26,2026-02-28,completed,4.8,1.5,Suresh Chauhan,Agra UP
+LOG-1776410043712-8334,Onion,Red Nashik,Swiggy Instamart Hub,69,25,1725,2026-02-27,2026-03-01,completed,3.5,0.1,Ganesh Jadhav,Kolhapur MH
+LOG-1776410043712-4221,Onion,Red Nashik,FreshMart Superstore,110,29.8,3278,2026-02-28,2026-03-02,completed,4.9,1.9,Geeta Verma,Kannauj UP
+LOG-1776410043712-5218,Onion,White,FreshMart Superstore,97,28.4,2755,2026-03-01,2026-03-04,partial,4.1,1.3,Ravi Patil,Pune MH
+LOG-1776410043713-8008,Onion,Red Nashik,Mother Dairy Outlet,99,27.5,2723,2026-03-04,2026-03-06,completed,3.6,1.7,Ramesh Yadav,Barabanki UP
+LOG-1776410043713-7343,Onion,Red Nashik,ITC Foods Processing,102,30.8,3142,2026-03-05,2026-03-07,completed,4.7,1.2,Deepak Gupta,Prayagraj UP
+LOG-1776410043713-8998,Onion,Yellow,Zomato Cloud Kitchen,93,28.8,2678,2026-03-06,2026-03-08,completed,4.5,1.7,Lakshmi Devi,Nashik MH
+LOG-1776410043713-2212,Onion,White,Mother Dairy Outlet,90,29,2610,2026-03-07,2026-03-08,completed,3.6,1.7,Shanti Bai,Indore MP
+LOG-1776410043713-1647,Onion,Spring Onion,SpiceBox Restaurant Chain,109,30.8,3357,2026-03-08,2026-03-10,completed,4.7,0.6,Raju Mandal,Muzaffarpur BR
+LOG-1776410043713-3255,Onion,Spring Onion,BigBasket Warehouse,96,28.6,2746,2026-03-10,2026-03-13,completed,3.8,1.7,Vikram Singh,Bithoor UP
+LOG-1776410043713-6884,Onion,Spring Onion,Mother Dairy Outlet,81,27.1,2195,2026-03-12,2026-03-13,completed,4.4,1.4,Vikram Singh,Bithoor UP
+LOG-1776410043713-2245,Onion,Red Nashik,BigBasket Warehouse,105,26.8,2814,2026-03-13,2026-03-15,completed,4.2,0.1,Vikram Singh,Bithoor UP
+LOG-1776410043713-7549,Onion,Spring Onion,ITC Foods Processing,93,28.9,2688,2026-03-17,2026-03-20,completed,4.7,0.2,Ramesh Yadav,Barabanki UP
+LOG-1776410043713-9111,Onion,White,BigBasket Warehouse,116,26.6,3086,2026-03-18,2026-03-20,completed,4.1,0.5,Meena Devi,Kanpur Dehat UP
+LOG-1776410043713-5749,Onion,Yellow,BigBasket Warehouse,90,30.4,2736,2026-03-19,2026-03-22,partial,3.8,0.4,Kavita Rani,Varanasi UP
+LOG-1776410043713-7482,Onion,White,Haldiram Distribution,108,29.1,3143,2026-03-20,2026-03-22,completed,4.6,0.3,Pushpa Kumari,Patna BR
+LOG-1776410043713-7391,Onion,Spring Onion,ITC Foods Processing,118,26.2,3092,2026-03-21,2026-03-23,completed,3.5,0.5,Ganesh Jadhav,Kolhapur MH
+LOG-1776410043713-3181,Onion,Red Nashik,Swiggy Instamart Hub,78,29.2,2278,2026-03-23,2026-03-24,completed,4.6,0.3,Ramesh Yadav,Barabanki UP
+LOG-1776410043713-8146,Onion,Yellow,ITC Foods Processing,84,27.4,2302,2026-03-25,2026-03-27,completed,3.7,1.8,Sunita Patel,Unnao UP
+LOG-1776410043713-9026,Onion,Red Nashik,Mother Dairy Outlet,76,29.2,2219,2026-03-26,2026-03-27,completed,5,2,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043713-3797,Onion,Spring Onion,FreshMart Superstore,92,29.2,2686,2026-03-27,2026-03-30,completed,3.9,1.4,Pushpa Kumari,Patna BR
+LOG-1776410043713-8333,Onion,Red Nashik,Metro Wholesale Club,73,27.7,2022,2026-03-28,2026-03-30,completed,4.4,0,Deepak Gupta,Prayagraj UP
+LOG-1776410043713-1685,Onion,Spring Onion,Haldiram Distribution,70,28.4,1988,2026-03-30,2026-04-02,completed,4,1.5,Rajesh Kumar,Lucknow UP
+LOG-1776410043713-2191,Onion,Red Nashik,Haldiram Distribution,93,27.6,2567,2026-04-02,2026-04-04,completed,3.5,1.3,Kavita Rani,Varanasi UP
+LOG-1776410043713-7169,Onion,White,Mother Dairy Outlet,111,27.8,3086,2026-04-03,2026-04-06,completed,3.9,0.6,Priya Sharma,Rae Bareli UP
+LOG-1776410043713-5500,Onion,Yellow,SpiceBox Restaurant Chain,85,27.2,2312,2026-04-05,2026-04-07,completed,3.7,1.4,Meena Devi,Kanpur Dehat UP
+LOG-1776410043713-6807,Onion,Red Nashik,Swiggy Instamart Hub,97,29,2813,2026-04-07,2026-04-08,completed,4.5,1.5,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043713-2261,Onion,Yellow,SpiceBox Restaurant Chain,118,30.6,3611,2026-04-08,2026-04-09,completed,4.6,1,Sita Ram,Moradabad UP
+LOG-1776410043713-2087,Onion,Spring Onion,ITC Foods Processing,79,28.8,2275,2026-04-13,2026-04-16,completed,4.6,0.5,Mohan Lal,Bhopal MP
+LOG-1776410043713-9627,Onion,Spring Onion,Swiggy Instamart Hub,94,28.4,2670,2026-04-14,2026-04-17,completed,4.3,0.7,Rajesh Kumar,Lucknow UP
+LOG-1776410043713-6705,Potato,Agra Big,Swiggy Instamart Hub,169,13,2197,2026-01-17,2026-01-19,cancelled,4.4,1.3,Suresh Chauhan,Agra UP
+LOG-1776410043713-6093,Potato,Baby Potato,Haldiram Distribution,130,12.2,1586,2026-01-18,2026-01-21,completed,3.8,1.5,Sunita Patel,Unnao UP
+LOG-1776410043713-7374,Potato,Kufri Jyoti,FreshMart Superstore,173,14,2422,2026-01-20,2026-01-21,completed,4.5,0.3,Geeta Verma,Kannauj UP
+LOG-1776410043713-9605,Potato,Sweet Potato,Metro Wholesale Club,128,15.2,1946,2026-01-21,2026-01-23,completed,4,0.3,Lakshmi Devi,Nashik MH
+LOG-1776410043713-8946,Potato,Sweet Potato,Haldiram Distribution,147,14.6,2146,2026-01-22,2026-01-25,completed,4.7,0.9,Geeta Verma,Kannauj UP
+LOG-1776410043713-6519,Potato,Agra Big,Swiggy Instamart Hub,141,12.7,1791,2026-01-23,2026-01-26,completed,4.5,1.7,Ravi Patil,Pune MH
+LOG-1776410043713-4982,Potato,Agra Big,Metro Wholesale Club,133,12.5,1663,2026-01-25,2026-01-27,completed,4.3,1.7,Kavita Rani,Varanasi UP
+LOG-1776410043713-9858,Potato,Kufri Jyoti,BigBasket Warehouse,158,13.2,2086,2026-01-28,2026-01-29,completed,3.5,0.9,Shanti Bai,Indore MP
+LOG-1776410043713-4548,Potato,Agra Big,DMart Fresh Counter,121,15,1815,2026-01-31,2026-02-02,completed,3.7,0.4,Mohan Lal,Bhopal MP
+LOG-1776410043713-7848,Potato,Agra Big,FreshMart Superstore,146,15,2190,2026-02-01,2026-02-03,completed,4.3,0.1,Deepak Gupta,Prayagraj UP
+LOG-1776410043713-1282,Potato,Agra Big,DMart Fresh Counter,98,14.4,1411,2026-02-02,2026-02-05,completed,4.8,0.8,Anita Devi,Meerut UP
+LOG-1776410043713-1523,Potato,Agra Big,ITC Foods Processing,111,12.6,1399,2026-02-03,2026-02-05,completed,4.1,0.2,Arvind Mishra,Fatehpur UP
+LOG-1776410043713-1253,Potato,Sweet Potato,Haldiram Distribution,159,14.6,2321,2026-02-04,2026-02-06,completed,4.4,0.5,Rajesh Kumar,Lucknow UP
+LOG-1776410043713-7994,Potato,Agra Big,FreshMart Superstore,114,11,1254,2026-02-05,2026-02-06,completed,3.9,0.3,Anita Devi,Meerut UP
+LOG-1776410043713-7101,Potato,Baby Potato,ITC Foods Processing,145,11.3,1639,2026-02-06,2026-02-08,completed,3.6,1.5,Ganesh Jadhav,Kolhapur MH
+LOG-1776410043713-4388,Potato,Sweet Potato,Swiggy Instamart Hub,110,13.4,1474,2026-02-08,2026-02-10,completed,4.3,0.5,Kiran Bai,Bareilly UP
+LOG-1776410043713-4378,Potato,Kufri Jyoti,SpiceBox Restaurant Chain,156,14.6,2278,2026-02-09,2026-02-10,completed,5,1,Kiran Bai,Bareilly UP
+LOG-1776410043713-7365,Potato,Agra Big,BigBasket Warehouse,159,14.1,2242,2026-02-10,2026-02-12,completed,4.7,1.5,Geeta Verma,Kannauj UP
+LOG-1776410043713-1208,Potato,Baby Potato,ITC Foods Processing,164,14.1,2312,2026-02-11,2026-02-14,partial,4.1,0,Ganesh Jadhav,Kolhapur MH
+LOG-1776410043713-6252,Potato,Sweet Potato,BigBasket Warehouse,167,13,2171,2026-02-13,2026-02-14,completed,4.6,1.2,Deepak Gupta,Prayagraj UP
+LOG-1776410043713-4842,Potato,Agra Big,BigBasket Warehouse,161,15.5,2496,2026-02-14,2026-02-17,completed,3.7,0.5,Ganesh Jadhav,Kolhapur MH
+LOG-1776410043713-1634,Potato,Baby Potato,Swiggy Instamart Hub,157,13.7,2151,2026-02-16,2026-02-19,completed,4.3,1.5,Mahesh Tiwari,Hardoi UP
+LOG-1776410043713-1311,Potato,Sweet Potato,Swiggy Instamart Hub,129,15,1935,2026-02-17,2026-02-20,completed,4.4,0.8,Ravi Patil,Pune MH
+LOG-1776410043713-3084,Potato,Agra Big,Grand Hotel Kitchens,158,13.5,2133,2026-02-18,2026-02-21,partial,4.3,1.6,Meena Devi,Kanpur Dehat UP
+LOG-1776410043713-2854,Potato,Agra Big,BigBasket Warehouse,165,14.7,2426,2026-02-19,2026-02-22,completed,4.6,0.1,Raju Mandal,Muzaffarpur BR
+LOG-1776410043713-4843,Potato,Agra Big,Haldiram Distribution,146,14.6,2132,2026-02-21,2026-02-22,completed,4.3,0.5,Priya Sharma,Rae Bareli UP
+LOG-1776410043713-8703,Potato,Kufri Jyoti,Chai Point Cafes,117,13.3,1556,2026-02-22,2026-02-23,completed,4.8,1.2,Pushpa Kumari,Patna BR
+LOG-1776410043713-4970,Potato,Sweet Potato,BigBasket Warehouse,97,13.8,1339,2026-02-24,2026-02-27,completed,4,0.7,Asha Kumari,Sitapur UP
+LOG-1776410043713-1310,Potato,Agra Big,DMart Fresh Counter,157,13.6,2135,2026-02-25,2026-02-27,completed,4.3,0.5,Asha Kumari,Sitapur UP
+LOG-1776410043713-9159,Potato,Baby Potato,Swiggy Instamart Hub,163,12.8,2086,2026-02-26,2026-02-27,completed,4.1,1.6,Kavita Rani,Varanasi UP
+LOG-1776410043713-7862,Potato,Agra Big,DMart Fresh Counter,102,13.8,1408,2026-02-27,2026-02-28,completed,4.3,1.4,Shanti Bai,Indore MP
+LOG-1776410043713-9599,Potato,Baby Potato,Haldiram Distribution,140,14.6,2044,2026-03-01,2026-03-03,completed,3.8,0.7,Raju Mandal,Muzaffarpur BR
+LOG-1776410043713-8879,Potato,Kufri Jyoti,BigBasket Warehouse,166,15.4,2556,2026-03-02,2026-03-04,completed,4.7,0.2,Ramesh Yadav,Barabanki UP
+LOG-1776410043713-7896,Potato,Sweet Potato,Metro Wholesale Club,166,13.5,2241,2026-03-03,2026-03-05,completed,3.8,1.6,Kiran Bai,Bareilly UP
+LOG-1776410043713-4054,Potato,Sweet Potato,Metro Wholesale Club,149,11.7,1743,2026-03-04,2026-03-06,completed,5,1.9,Ravi Patil,Pune MH
+LOG-1776410043713-2104,Potato,Agra Big,ITC Foods Processing,129,14.8,1909,2026-03-06,2026-03-08,completed,4.6,1,Kiran Bai,Bareilly UP
+LOG-1776410043713-9520,Potato,Sweet Potato,Chai Point Cafes,151,13.4,2023,2026-03-07,2026-03-09,completed,4.6,1.4,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043713-5543,Potato,Agra Big,Metro Wholesale Club,152,14.8,2250,2026-03-08,2026-03-10,completed,4.8,1.9,Ravi Patil,Pune MH
+LOG-1776410043713-8603,Potato,Kufri Jyoti,Grand Hotel Kitchens,164,14.3,2345,2026-03-09,2026-03-11,completed,4.5,1.6,Lakshmi Devi,Nashik MH
+LOG-1776410043713-2720,Potato,Agra Big,Chai Point Cafes,143,13.4,1916,2026-03-10,2026-03-11,completed,3.8,0.6,Shanti Bai,Indore MP
+LOG-1776410043713-8860,Potato,Sweet Potato,Zomato Cloud Kitchen,171,13,2223,2026-03-11,2026-03-12,partial,3.7,1.4,Ganesh Jadhav,Kolhapur MH
+LOG-1776410043713-2112,Potato,Baby Potato,BigBasket Warehouse,148,14.5,2146,2026-03-12,2026-03-14,completed,3.7,1.8,Deepak Gupta,Prayagraj UP
+LOG-1776410043713-5319,Potato,Agra Big,Zomato Cloud Kitchen,167,11.5,1921,2026-03-14,2026-03-15,completed,3.9,0.6,Asha Kumari,Sitapur UP
+LOG-1776410043713-3645,Potato,Sweet Potato,BigBasket Warehouse,135,12.4,1674,2026-03-15,2026-03-17,completed,4.4,1.7,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043713-9722,Potato,Agra Big,Mother Dairy Outlet,151,14.1,2129,2026-03-16,2026-03-17,completed,4,0.1,Ravi Patil,Pune MH
+LOG-1776410043713-1224,Potato,Baby Potato,SpiceBox Restaurant Chain,112,11.5,1288,2026-03-18,2026-03-20,completed,5,0.8,Ganesh Jadhav,Kolhapur MH
+LOG-1776410043713-9579,Potato,Baby Potato,BigBasket Warehouse,121,14.8,1791,2026-03-19,2026-03-20,completed,4.2,1.9,Bhola Nath,Jhansi UP
+LOG-1776410043713-1877,Potato,Kufri Jyoti,DMart Fresh Counter,165,14,2310,2026-03-20,2026-03-21,completed,3.6,0.7,Shanti Bai,Indore MP
+LOG-1776410043713-5321,Potato,Agra Big,Swiggy Instamart Hub,137,11.4,1562,2026-03-21,2026-03-23,completed,4.1,1.7,Shanti Bai,Indore MP
+LOG-1776410043713-1924,Potato,Baby Potato,ITC Foods Processing,96,15.1,1450,2026-03-22,2026-03-24,completed,4.8,1.7,Mahesh Tiwari,Hardoi UP
+LOG-1776410043713-3524,Potato,Kufri Jyoti,Haldiram Distribution,120,15,1800,2026-03-23,2026-03-26,completed,4.4,1.1,Sunita Patel,Unnao UP
+LOG-1776410043713-6909,Potato,Agra Big,Mother Dairy Outlet,158,14.6,2307,2026-03-24,2026-03-26,partial,5,1.1,Mohan Lal,Bhopal MP
+LOG-1776410043713-9293,Potato,Sweet Potato,Metro Wholesale Club,169,15.5,2620,2026-03-25,2026-03-27,completed,3.9,0.4,Vikram Singh,Bithoor UP
+LOG-1776410043713-6213,Potato,Sweet Potato,Metro Wholesale Club,145,10.8,1566,2026-03-26,2026-03-29,completed,3.5,1.6,Raju Mandal,Muzaffarpur BR
+LOG-1776410043713-3920,Potato,Kufri Jyoti,SpiceBox Restaurant Chain,147,13.4,1970,2026-03-27,2026-03-30,completed,3.6,1.3,Rajesh Kumar,Lucknow UP
+LOG-1776410043713-9025,Potato,Kufri Jyoti,SpiceBox Restaurant Chain,102,15.7,1601,2026-03-28,2026-03-29,completed,4.4,0.5,Ravi Patil,Pune MH
+LOG-1776410043713-5516,Potato,Kufri Jyoti,Swiggy Instamart Hub,99,14.2,1406,2026-03-29,2026-03-30,completed,3.6,1.3,Ganesh Jadhav,Kolhapur MH
+LOG-1776410043713-4176,Potato,Kufri Jyoti,BigBasket Warehouse,127,16.1,2045,2026-03-30,2026-03-31,completed,4.9,0.8,Deepak Gupta,Prayagraj UP
+LOG-1776410043713-7242,Potato,Agra Big,SpiceBox Restaurant Chain,105,15.9,1670,2026-04-01,2026-04-02,completed,4,1.3,Sita Ram,Moradabad UP
+LOG-1776410043713-7103,Potato,Sweet Potato,SpiceBox Restaurant Chain,174,18.1,3149,2026-04-02,2026-04-03,completed,4.1,1.7,Sita Ram,Moradabad UP
+LOG-1776410043713-4964,Potato,Sweet Potato,Zomato Cloud Kitchen,164,15.3,2509,2026-04-03,2026-04-05,completed,3.6,1.6,Anita Devi,Meerut UP
+LOG-1776410043713-8307,Potato,Agra Big,Haldiram Distribution,170,17,2890,2026-04-04,2026-04-06,completed,3.9,0.1,Sita Ram,Moradabad UP
+LOG-1776410043713-8064,Potato,Agra Big,Zomato Cloud Kitchen,130,17,2210,2026-04-05,2026-04-08,completed,4.4,1.7,Sunita Patel,Unnao UP
+LOG-1776410043713-8548,Potato,Sweet Potato,Zomato Cloud Kitchen,119,16.5,1964,2026-04-06,2026-04-08,completed,3.5,1.9,Ramesh Yadav,Barabanki UP
+LOG-1776410043713-6533,Potato,Sweet Potato,Swiggy Instamart Hub,102,17.3,1765,2026-04-07,2026-04-10,completed,3.8,1.4,Vikram Singh,Bithoor UP
+LOG-1776410043713-6102,Potato,Sweet Potato,FreshMart Superstore,99,18.3,1812,2026-04-08,2026-04-11,completed,4.7,0.5,Meena Devi,Kanpur Dehat UP
+LOG-1776410043713-2461,Potato,Agra Big,Zomato Cloud Kitchen,132,15.4,2033,2026-04-09,2026-04-11,completed,4.3,0.7,Meena Devi,Kanpur Dehat UP
+LOG-1776410043713-5048,Potato,Agra Big,Zomato Cloud Kitchen,148,19.1,2827,2026-04-10,2026-04-12,partial,4.2,0.8,Ravi Patil,Pune MH
+LOG-1776410043713-6856,Potato,Kufri Jyoti,Swiggy Instamart Hub,165,16.5,2723,2026-04-11,2026-04-14,completed,4.3,1.2,Bhola Nath,Jhansi UP
+LOG-1776410043713-4409,Potato,Baby Potato,Metro Wholesale Club,140,17.6,2464,2026-04-12,2026-04-13,completed,3.5,1.2,Pushpa Kumari,Patna BR
+LOG-1776410043713-1682,Potato,Agra Big,Metro Wholesale Club,160,18.1,2896,2026-04-13,2026-04-15,completed,3.7,1,Arvind Mishra,Fatehpur UP
+LOG-1776410043713-6406,Potato,Sweet Potato,BigBasket Warehouse,154,16.7,2572,2026-04-15,2026-04-16,completed,3.6,1.3,Vikram Singh,Bithoor UP
+LOG-1776410043713-1806,Potato,Baby Potato,Zomato Cloud Kitchen,142,14.9,2116,2026-04-16,2026-04-18,completed,4.9,1.6,Shanti Bai,Indore MP
+LOG-1776410043713-8803,Wheat,Durum,DMart Fresh Counter,141,29.7,4188,2026-01-17,2026-01-20,completed,4.1,1.2,Meena Devi,Kanpur Dehat UP
+LOG-1776410043713-7884,Wheat,Sharbati,Zomato Cloud Kitchen,149,31.6,4708,2026-01-19,2026-01-22,completed,4.8,1.3,Deepak Gupta,Prayagraj UP
+LOG-1776410043713-7450,Wheat,Sharbati,Zomato Cloud Kitchen,223,30.4,6779,2026-01-20,2026-01-22,completed,4.2,1.9,Sunita Patel,Unnao UP
+LOG-1776410043713-7669,Wheat,Lokwan,Metro Wholesale Club,203,34.8,7064,2026-01-21,2026-01-22,partial,3.7,1.2,Deepak Gupta,Prayagraj UP
+LOG-1776410043713-5450,Wheat,Durum,Metro Wholesale Club,174,29.8,5185,2026-01-23,2026-01-25,completed,4.2,0.5,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043713-5655,Wheat,Lokwan,Grand Hotel Kitchens,220,29.4,6468,2026-01-24,2026-01-27,completed,5,0.2,Ravi Patil,Pune MH
+LOG-1776410043713-6071,Wheat,Sujata,Zomato Cloud Kitchen,152,32.3,4910,2026-01-25,2026-01-27,completed,3.7,1,Kiran Bai,Bareilly UP
+LOG-1776410043713-2697,Wheat,Sujata,Haldiram Distribution,192,28.4,5453,2026-01-26,2026-01-28,completed,4.4,1.7,Pushpa Kumari,Patna BR
+LOG-1776410043713-3289,Wheat,Durum,SpiceBox Restaurant Chain,222,30.5,6771,2026-01-27,2026-01-28,completed,3.9,2,Sita Ram,Moradabad UP
+LOG-1776410043713-2915,Wheat,Durum,Zomato Cloud Kitchen,188,31.6,5941,2026-01-28,2026-01-29,completed,3.6,1.3,Ravi Patil,Pune MH
+LOG-1776410043714-1589,Wheat,Sujata,Swiggy Instamart Hub,130,33.1,4303,2026-01-29,2026-01-31,completed,4,0.1,Shanti Bai,Indore MP
+LOG-1776410043714-6887,Wheat,Lokwan,Chai Point Cafes,125,32.9,4113,2026-01-30,2026-02-02,completed,4.4,0.8,Kavita Rani,Varanasi UP
+LOG-1776410043714-2634,Wheat,Durum,FreshMart Superstore,217,31.1,6749,2026-01-31,2026-02-02,completed,4.1,0.5,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043714-9468,Wheat,Sujata,Haldiram Distribution,194,30.6,5936,2026-02-01,2026-02-04,completed,4.5,0.6,Suresh Chauhan,Agra UP
+LOG-1776410043714-4219,Wheat,Durum,Grand Hotel Kitchens,157,29.9,4694,2026-02-02,2026-02-03,completed,3.8,1.2,Sita Ram,Moradabad UP
+LOG-1776410043714-9103,Wheat,Sharbati,FreshMart Superstore,219,32.5,7118,2026-02-03,2026-02-06,completed,3.8,0.4,Rajesh Kumar,Lucknow UP
+LOG-1776410043714-6909,Wheat,Durum,Chai Point Cafes,159,34.6,5501,2026-02-04,2026-02-06,completed,4.9,0.6,Bhola Nath,Jhansi UP
+LOG-1776410043714-5845,Wheat,Sujata,BigBasket Warehouse,141,29.2,4117,2026-02-05,2026-02-06,cancelled,4,1.3,Raju Mandal,Muzaffarpur BR
+LOG-1776410043714-3626,Wheat,Sharbati,DMart Fresh Counter,221,32.7,7227,2026-02-07,2026-02-08,completed,3.8,0.6,Suresh Chauhan,Agra UP
+LOG-1776410043714-6873,Wheat,Sharbati,Mother Dairy Outlet,161,34.4,5538,2026-02-08,2026-02-09,completed,4.2,1.7,Asha Kumari,Sitapur UP
+LOG-1776410043714-8916,Wheat,Durum,FreshMart Superstore,176,32.5,5720,2026-02-09,2026-02-11,completed,4.5,1.1,Deepak Gupta,Prayagraj UP
+LOG-1776410043714-5520,Wheat,Durum,BigBasket Warehouse,191,32.4,6188,2026-02-10,2026-02-12,partial,4.2,1.9,Mahesh Tiwari,Hardoi UP
+LOG-1776410043714-3404,Wheat,Durum,Zomato Cloud Kitchen,182,31.1,5660,2026-02-12,2026-02-14,completed,4.1,1,Pushpa Kumari,Patna BR
+LOG-1776410043714-5385,Wheat,Sujata,Metro Wholesale Club,200,33,6600,2026-02-14,2026-02-16,completed,3.9,1,Vikram Singh,Bithoor UP
+LOG-1776410043714-6935,Wheat,Lokwan,Mother Dairy Outlet,142,33.5,4757,2026-02-15,2026-02-16,completed,3.9,1.4,Suresh Chauhan,Agra UP
+LOG-1776410043714-5600,Wheat,Durum,ITC Foods Processing,204,28.4,5794,2026-02-17,2026-02-19,completed,4.4,0.7,Ganesh Jadhav,Kolhapur MH
+LOG-1776410043714-8582,Wheat,Lokwan,BigBasket Warehouse,146,33.5,4891,2026-02-18,2026-02-20,completed,4.1,0,Mohan Lal,Bhopal MP
+LOG-1776410043714-2637,Wheat,Durum,SpiceBox Restaurant Chain,124,30.4,3770,2026-02-19,2026-02-21,completed,4.8,0.5,Kavita Rani,Varanasi UP
+LOG-1776410043714-1814,Wheat,Sharbati,DMart Fresh Counter,219,31.6,6920,2026-02-20,2026-02-22,completed,3.5,1.7,Mohan Lal,Bhopal MP
+LOG-1776410043714-7060,Wheat,Sharbati,ITC Foods Processing,198,32.9,6514,2026-02-21,2026-02-23,completed,4.4,0.1,Pushpa Kumari,Patna BR
+LOG-1776410043714-2592,Wheat,Durum,Mother Dairy Outlet,157,31.3,4914,2026-02-22,2026-02-24,completed,4.9,0.4,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043714-2831,Wheat,Lokwan,ITC Foods Processing,177,34.2,6053,2026-02-23,2026-02-24,completed,4.7,1,Kiran Bai,Bareilly UP
+LOG-1776410043714-5661,Wheat,Lokwan,Metro Wholesale Club,208,31.6,6573,2026-02-24,2026-02-25,completed,3.8,0.6,Ramesh Yadav,Barabanki UP
+LOG-1776410043714-1538,Wheat,Sharbati,Metro Wholesale Club,158,32,5056,2026-02-25,2026-02-26,completed,4.3,0.8,Raju Mandal,Muzaffarpur BR
+LOG-1776410043714-2786,Wheat,Sujata,DMart Fresh Counter,168,33.5,5628,2026-02-26,2026-03-01,completed,5,0.5,Vikram Singh,Bithoor UP
+LOG-1776410043714-1610,Wheat,Sujata,Grand Hotel Kitchens,196,33.6,6586,2026-02-27,2026-02-28,completed,4,0.3,Anita Devi,Meerut UP
+LOG-1776410043714-7676,Wheat,Durum,SpiceBox Restaurant Chain,163,28.9,4711,2026-02-28,2026-03-01,completed,3.8,0.1,Bhola Nath,Jhansi UP
+LOG-1776410043714-7474,Wheat,Sujata,BigBasket Warehouse,135,33.2,4482,2026-03-01,2026-03-02,completed,3.8,0.8,Anita Devi,Meerut UP
+LOG-1776410043714-2868,Wheat,Lokwan,Mother Dairy Outlet,124,34.2,4241,2026-03-02,2026-03-04,completed,4.5,0.3,Raju Mandal,Muzaffarpur BR
+LOG-1776410043714-1572,Wheat,Sujata,Metro Wholesale Club,131,34.7,4546,2026-03-03,2026-03-06,completed,4.2,1.1,Geeta Verma,Kannauj UP
+LOG-1776410043714-5973,Wheat,Sujata,Metro Wholesale Club,197,33,6501,2026-03-04,2026-03-05,completed,3.7,0.2,Arvind Mishra,Fatehpur UP
+LOG-1776410043714-7489,Wheat,Sharbati,BigBasket Warehouse,177,29.2,5168,2026-03-05,2026-03-07,completed,4.7,0.6,Vikram Singh,Bithoor UP
+LOG-1776410043714-2214,Wheat,Lokwan,Grand Hotel Kitchens,209,31.9,6667,2026-03-06,2026-03-08,completed,3.6,1.6,Geeta Verma,Kannauj UP
+LOG-1776410043714-8985,Wheat,Sharbati,Grand Hotel Kitchens,189,32.7,6180,2026-03-07,2026-03-08,completed,4.4,0.1,Pushpa Kumari,Patna BR
+LOG-1776410043724-1383,Wheat,Durum,Haldiram Distribution,163,30.9,5037,2026-03-08,2026-03-09,partial,4.9,1.7,Sita Ram,Moradabad UP
+LOG-1776410043724-7440,Wheat,Sharbati,Swiggy Instamart Hub,124,31.4,3894,2026-03-09,2026-03-10,completed,3.6,0.6,Sita Ram,Moradabad UP
+LOG-1776410043724-2641,Wheat,Lokwan,Mother Dairy Outlet,198,31.3,6197,2026-03-11,2026-03-13,completed,4.3,1.5,Bhola Nath,Jhansi UP
+LOG-1776410043724-9796,Wheat,Sharbati,Metro Wholesale Club,225,30.5,6863,2026-03-12,2026-03-15,completed,4.4,1.2,Meena Devi,Kanpur Dehat UP
+LOG-1776410043724-6095,Wheat,Sharbati,SpiceBox Restaurant Chain,172,30.4,5229,2026-03-13,2026-03-14,completed,3.8,1.5,Priya Sharma,Rae Bareli UP
+LOG-1776410043724-3437,Wheat,Sujata,Zomato Cloud Kitchen,178,34.9,6212,2026-03-15,2026-03-16,partial,4.5,0.5,Suresh Chauhan,Agra UP
+LOG-1776410043724-6205,Wheat,Sharbati,Metro Wholesale Club,175,33.6,5880,2026-03-17,2026-03-18,completed,4.6,0.3,Mohan Lal,Bhopal MP
+LOG-1776410043724-9046,Wheat,Durum,Grand Hotel Kitchens,195,32.1,6260,2026-03-18,2026-03-20,completed,3.9,2,Deepak Gupta,Prayagraj UP
+LOG-1776410043724-2534,Wheat,Sharbati,Metro Wholesale Club,169,32.3,5459,2026-03-20,2026-03-21,completed,3.5,1.8,Deepak Gupta,Prayagraj UP
+LOG-1776410043724-8219,Wheat,Sujata,SpiceBox Restaurant Chain,172,33.5,5762,2026-03-21,2026-03-23,completed,3.7,1.4,Suresh Chauhan,Agra UP
+LOG-1776410043724-6474,Wheat,Sujata,Mother Dairy Outlet,181,33.2,6009,2026-03-22,2026-03-24,completed,4.5,0.4,Kiran Bai,Bareilly UP
+LOG-1776410043724-1062,Wheat,Sujata,Grand Hotel Kitchens,141,31.4,4427,2026-03-23,2026-03-25,partial,4,1.8,Mohan Lal,Bhopal MP
+LOG-1776410043724-5484,Wheat,Sujata,BigBasket Warehouse,141,32.2,4540,2026-03-24,2026-03-26,completed,4.3,1.7,Priya Sharma,Rae Bareli UP
+LOG-1776410043724-5338,Wheat,Durum,BigBasket Warehouse,169,34.3,5797,2026-03-25,2026-03-26,completed,3.5,0.7,Mohan Lal,Bhopal MP
+LOG-1776410043724-7486,Wheat,Durum,FreshMart Superstore,172,33.3,5728,2026-03-26,2026-03-29,completed,3.5,0.4,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043724-6795,Wheat,Sharbati,Grand Hotel Kitchens,153,32,4896,2026-03-27,2026-03-29,completed,4.8,0.8,Meena Devi,Kanpur Dehat UP
+LOG-1776410043725-2704,Wheat,Sharbati,Metro Wholesale Club,208,27.9,5803,2026-03-28,2026-03-30,completed,4.9,1.1,Ramesh Yadav,Barabanki UP
+LOG-1776410043725-9206,Wheat,Lokwan,DMart Fresh Counter,146,31.5,4599,2026-03-29,2026-03-30,completed,4.1,1.9,Rajesh Kumar,Lucknow UP
+LOG-1776410043725-9387,Wheat,Lokwan,Zomato Cloud Kitchen,135,30.3,4091,2026-03-30,2026-03-31,completed,4.5,0.2,Mahesh Tiwari,Hardoi UP
+LOG-1776410043725-4093,Wheat,Durum,FreshMart Superstore,181,26.1,4724,2026-04-01,2026-04-03,completed,4.8,1.9,Raju Mandal,Muzaffarpur BR
+LOG-1776410043725-4642,Wheat,Sujata,DMart Fresh Counter,216,24.2,5227,2026-04-02,2026-04-05,completed,4.6,0.9,Sunita Patel,Unnao UP
+LOG-1776410043725-6564,Wheat,Durum,Metro Wholesale Club,148,26.9,3981,2026-04-03,2026-04-06,cancelled,3.6,0.8,Priya Sharma,Rae Bareli UP
+LOG-1776410043725-8532,Wheat,Sharbati,Swiggy Instamart Hub,171,24.5,4190,2026-04-04,2026-04-06,completed,4,1.4,Mahesh Tiwari,Hardoi UP
+LOG-1776410043725-8744,Wheat,Durum,DMart Fresh Counter,184,23.5,4324,2026-04-06,2026-04-09,completed,5,0.8,Arvind Mishra,Fatehpur UP
+LOG-1776410043725-1486,Wheat,Sharbati,BigBasket Warehouse,162,22.2,3596,2026-04-07,2026-04-10,completed,4,0.1,Sita Ram,Moradabad UP
+LOG-1776410043725-7838,Wheat,Sharbati,Swiggy Instamart Hub,143,24.5,3504,2026-04-08,2026-04-09,completed,4.1,1.5,Asha Kumari,Sitapur UP
+LOG-1776410043725-6895,Wheat,Durum,Grand Hotel Kitchens,211,23.3,4916,2026-04-10,2026-04-12,cancelled,4,0.6,Suresh Chauhan,Agra UP
+LOG-1776410043725-4723,Wheat,Durum,Grand Hotel Kitchens,139,25.1,3489,2026-04-11,2026-04-14,completed,4.2,0.7,Mahesh Tiwari,Hardoi UP
+LOG-1776410043725-4087,Wheat,Sujata,BigBasket Warehouse,210,23.3,4893,2026-04-12,2026-04-14,completed,4.4,0.4,Sita Ram,Moradabad UP
+LOG-1776410043725-4450,Wheat,Durum,Swiggy Instamart Hub,197,24.4,4807,2026-04-13,2026-04-16,completed,4.1,1,Shanti Bai,Indore MP
+LOG-1776410043725-1350,Wheat,Durum,SpiceBox Restaurant Chain,224,26.2,5869,2026-04-14,2026-04-16,completed,4.7,1.1,Meena Devi,Kanpur Dehat UP
+LOG-1776410043725-9137,Wheat,Durum,FreshMart Superstore,146,28.6,4176,2026-04-16,2026-04-18,completed,5,1.3,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043725-7577,Rice,Kolam,Grand Hotel Kitchens,114,39.9,4549,2026-01-18,2026-01-20,completed,3.9,0.8,Ramesh Yadav,Barabanki UP
+LOG-1776410043725-7691,Rice,Kolam,Swiggy Instamart Hub,153,41.2,6304,2026-01-19,2026-01-21,completed,4,1.2,Sunita Patel,Unnao UP
+LOG-1776410043725-9249,Rice,Basmati,Zomato Cloud Kitchen,208,40.5,8424,2026-01-20,2026-01-22,completed,4.9,1.3,Priya Sharma,Rae Bareli UP
+LOG-1776410043725-1401,Rice,Indrayani,BigBasket Warehouse,134,39,5226,2026-01-21,2026-01-23,cancelled,4.1,1.9,Shanti Bai,Indore MP
+LOG-1776410043725-2371,Rice,Kolam,Swiggy Instamart Hub,204,40.9,8344,2026-01-22,2026-01-25,completed,4.3,0,Arvind Mishra,Fatehpur UP
+LOG-1776410043725-5178,Rice,Sona Masuri,Zomato Cloud Kitchen,113,37.4,4226,2026-01-23,2026-01-25,cancelled,3.6,1.9,Bhola Nath,Jhansi UP
+LOG-1776410043725-4040,Rice,Sona Masuri,Grand Hotel Kitchens,157,39.6,6217,2026-01-24,2026-01-26,completed,4.4,0.4,Lakshmi Devi,Nashik MH
+LOG-1776410043725-5433,Rice,Kolam,ITC Foods Processing,119,40.2,4784,2026-01-25,2026-01-27,completed,4.7,1.3,Suresh Chauhan,Agra UP
+LOG-1776410043725-7518,Rice,Indrayani,Zomato Cloud Kitchen,192,42.9,8237,2026-01-26,2026-01-29,completed,4.5,0,Suresh Chauhan,Agra UP
+LOG-1776410043725-9550,Rice,Sona Masuri,Grand Hotel Kitchens,119,37.9,4510,2026-01-27,2026-01-29,completed,4.4,0.6,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043725-6461,Rice,Kolam,SpiceBox Restaurant Chain,208,35.9,7467,2026-01-28,2026-01-30,completed,4.1,0.9,Kavita Rani,Varanasi UP
+LOG-1776410043725-7630,Rice,Kolam,Chai Point Cafes,142,36.9,5240,2026-01-29,2026-01-31,completed,4.3,1.6,Bhola Nath,Jhansi UP
+LOG-1776410043725-5174,Rice,Kolam,ITC Foods Processing,180,35.2,6336,2026-01-30,2026-02-01,completed,4.9,1.7,Sita Ram,Moradabad UP
+LOG-1776410043725-2899,Rice,Sona Masuri,ITC Foods Processing,193,40.3,7778,2026-01-31,2026-02-03,completed,3.6,0.4,Raju Mandal,Muzaffarpur BR
+LOG-1776410043725-3231,Rice,Indrayani,Haldiram Distribution,202,36.8,7434,2026-02-02,2026-02-04,completed,4.4,0,Asha Kumari,Sitapur UP
+LOG-1776410043725-7716,Rice,Kolam,Haldiram Distribution,114,41.9,4777,2026-02-03,2026-02-05,completed,4,1,Meena Devi,Kanpur Dehat UP
+LOG-1776410043725-2215,Rice,Sona Masuri,BigBasket Warehouse,152,38,5776,2026-02-04,2026-02-07,completed,4.2,0.4,Mahesh Tiwari,Hardoi UP
+LOG-1776410043725-5873,Rice,Kolam,Haldiram Distribution,204,38.1,7772,2026-02-05,2026-02-07,completed,4.6,1,Suresh Chauhan,Agra UP
+LOG-1776410043725-8499,Rice,Sona Masuri,Zomato Cloud Kitchen,154,42.9,6607,2026-02-06,2026-02-07,completed,3.7,0.8,Sunita Patel,Unnao UP
+LOG-1776410043725-1804,Rice,Sona Masuri,ITC Foods Processing,158,41.4,6541,2026-02-07,2026-02-09,completed,3.9,0.8,Shanti Bai,Indore MP
+LOG-1776410043725-5709,Rice,Kolam,Grand Hotel Kitchens,136,38.5,5236,2026-02-08,2026-02-10,completed,4.8,1.7,Mohan Lal,Bhopal MP
+LOG-1776410043725-7203,Rice,Sona Masuri,FreshMart Superstore,150,38.5,5775,2026-02-10,2026-02-12,completed,4.6,1.1,Ravi Patil,Pune MH
+LOG-1776410043725-9864,Rice,Kolam,SpiceBox Restaurant Chain,163,37.1,6047,2026-02-11,2026-02-13,completed,4.2,1.3,Deepak Gupta,Prayagraj UP
+LOG-1776410043725-5936,Rice,Basmati,Grand Hotel Kitchens,192,38.2,7334,2026-02-12,2026-02-15,completed,4.2,1.3,Geeta Verma,Kannauj UP
+LOG-1776410043725-1488,Rice,Kolam,Zomato Cloud Kitchen,166,43.8,7271,2026-02-13,2026-02-14,completed,4.9,0.6,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043725-2202,Rice,Kolam,Chai Point Cafes,121,40.3,4876,2026-02-14,2026-02-16,completed,4.3,0.4,Suresh Chauhan,Agra UP
+LOG-1776410043725-6992,Rice,Sona Masuri,Grand Hotel Kitchens,191,37.7,7201,2026-02-15,2026-02-18,completed,4.8,1.1,Kavita Rani,Varanasi UP
+LOG-1776410043725-5563,Rice,Indrayani,SpiceBox Restaurant Chain,173,38,6574,2026-02-16,2026-02-19,completed,3.6,0.9,Asha Kumari,Sitapur UP
+LOG-1776410043725-8257,Rice,Sona Masuri,BigBasket Warehouse,183,39.1,7155,2026-02-17,2026-02-18,partial,4.6,0.2,Ganesh Jadhav,Kolhapur MH
+LOG-1776410043725-6748,Rice,Basmati,Chai Point Cafes,179,37.5,6713,2026-02-18,2026-02-20,completed,4.5,0.6,Bhola Nath,Jhansi UP
+LOG-1776410043725-5283,Rice,Kolam,FreshMart Superstore,178,39.4,7013,2026-02-19,2026-02-22,completed,4.7,1,Lakshmi Devi,Nashik MH
+LOG-1776410043725-8290,Rice,Indrayani,Haldiram Distribution,137,40,5480,2026-02-20,2026-02-22,completed,5,0.2,Ramesh Yadav,Barabanki UP
+LOG-1776410043725-7017,Rice,Basmati,Mother Dairy Outlet,175,39.8,6965,2026-02-21,2026-02-23,completed,4.2,0.9,Meena Devi,Kanpur Dehat UP
+LOG-1776410043725-1566,Rice,Sona Masuri,ITC Foods Processing,128,39.4,5043,2026-02-22,2026-02-24,completed,3.6,1.6,Sunita Patel,Unnao UP
+LOG-1776410043725-5971,Rice,Basmati,BigBasket Warehouse,152,41.1,6247,2026-02-23,2026-02-24,completed,5,1.8,Lakshmi Devi,Nashik MH
+LOG-1776410043725-4265,Rice,Sona Masuri,Chai Point Cafes,161,36.9,5941,2026-02-24,2026-02-26,completed,3.8,1.6,Sita Ram,Moradabad UP
+LOG-1776410043725-2881,Rice,Kolam,Chai Point Cafes,136,43.2,5875,2026-02-25,2026-02-28,completed,4.8,0.3,Sita Ram,Moradabad UP
+LOG-1776410043725-6570,Rice,Basmati,DMart Fresh Counter,184,39.7,7305,2026-02-26,2026-02-28,completed,3.8,0.4,Raju Mandal,Muzaffarpur BR
+LOG-1776410043725-8549,Rice,Kolam,Chai Point Cafes,206,37.4,7704,2026-02-27,2026-02-28,completed,4.3,1.5,Rajesh Kumar,Lucknow UP
+LOG-1776410043725-5886,Rice,Indrayani,DMart Fresh Counter,134,40.3,5400,2026-02-28,2026-03-02,completed,4.2,0.6,Arvind Mishra,Fatehpur UP
+LOG-1776410043725-4497,Rice,Sona Masuri,Chai Point Cafes,184,37.2,6845,2026-03-01,2026-03-03,completed,3.8,0.6,Mahesh Tiwari,Hardoi UP
+LOG-1776410043725-6687,Rice,Sona Masuri,Swiggy Instamart Hub,157,40.3,6327,2026-03-02,2026-03-05,completed,4.5,1,Suresh Chauhan,Agra UP
+LOG-1776410043725-7664,Rice,Basmati,DMart Fresh Counter,113,37.2,4204,2026-03-03,2026-03-04,completed,3.6,0.3,Sita Ram,Moradabad UP
+LOG-1776410043725-5681,Rice,Indrayani,Mother Dairy Outlet,174,39.7,6908,2026-03-05,2026-03-06,completed,5,1.5,Asha Kumari,Sitapur UP
+LOG-1776410043725-3510,Rice,Indrayani,Grand Hotel Kitchens,120,38.7,4644,2026-03-06,2026-03-08,completed,4.6,0.8,Arvind Mishra,Fatehpur UP
+LOG-1776410043725-5150,Rice,Indrayani,DMart Fresh Counter,169,40.8,6895,2026-03-07,2026-03-09,completed,4.8,1.6,Shanti Bai,Indore MP
+LOG-1776410043725-1948,Rice,Kolam,Grand Hotel Kitchens,116,38.9,4512,2026-03-08,2026-03-11,cancelled,4.2,0.8,Sunita Patel,Unnao UP
+LOG-1776410043725-4962,Rice,Kolam,Swiggy Instamart Hub,166,36.6,6076,2026-03-09,2026-03-11,completed,4.8,0.6,Asha Kumari,Sitapur UP
+LOG-1776410043725-6318,Rice,Kolam,ITC Foods Processing,161,41.4,6665,2026-03-10,2026-03-13,completed,3.6,1.5,Pushpa Kumari,Patna BR
+LOG-1776410043725-6490,Rice,Basmati,FreshMart Superstore,168,38.9,6535,2026-03-11,2026-03-12,completed,3.9,1.7,Asha Kumari,Sitapur UP
+LOG-1776410043725-8803,Rice,Basmati,Mother Dairy Outlet,182,40.2,7316,2026-03-12,2026-03-15,completed,3.7,0.4,Deepak Gupta,Prayagraj UP
+LOG-1776410043725-3594,Rice,Basmati,SpiceBox Restaurant Chain,113,37.9,4283,2026-03-15,2026-03-18,completed,4.5,0.5,Suresh Chauhan,Agra UP
+LOG-1776410043725-9882,Rice,Sona Masuri,SpiceBox Restaurant Chain,181,41.3,7475,2026-03-16,2026-03-17,completed,4.5,1.5,Rajesh Kumar,Lucknow UP
+LOG-1776410043725-5609,Rice,Kolam,Mother Dairy Outlet,151,37.8,5708,2026-03-17,2026-03-18,completed,4.6,0,Lakshmi Devi,Nashik MH
+LOG-1776410043725-3463,Rice,Indrayani,Mother Dairy Outlet,112,36,4032,2026-03-18,2026-03-21,partial,3.8,1.4,Ganesh Jadhav,Kolhapur MH
+LOG-1776410043725-5612,Rice,Kolam,Haldiram Distribution,195,36.8,7176,2026-03-19,2026-03-21,completed,3.8,1.6,Deepak Gupta,Prayagraj UP
+LOG-1776410043725-3077,Rice,Kolam,BigBasket Warehouse,201,39.7,7980,2026-03-20,2026-03-23,completed,4,0.3,Asha Kumari,Sitapur UP
+LOG-1776410043725-4075,Rice,Basmati,Haldiram Distribution,170,38.3,6511,2026-03-21,2026-03-23,completed,4.4,0.9,Shanti Bai,Indore MP
+LOG-1776410043725-6242,Rice,Sona Masuri,Mother Dairy Outlet,192,37.4,7181,2026-03-22,2026-03-25,completed,4.8,0.3,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043725-5163,Rice,Sona Masuri,ITC Foods Processing,126,39,4914,2026-03-23,2026-03-24,completed,4.2,0.9,Shanti Bai,Indore MP
+LOG-1776410043725-8280,Rice,Sona Masuri,Metro Wholesale Club,167,41.5,6931,2026-03-24,2026-03-26,completed,4.8,0.2,Mahesh Tiwari,Hardoi UP
+LOG-1776410043725-8565,Rice,Kolam,Zomato Cloud Kitchen,121,41.8,5058,2026-03-25,2026-03-27,partial,4.6,1.5,Sunita Patel,Unnao UP
+LOG-1776410043725-8006,Rice,Indrayani,BigBasket Warehouse,160,40.2,6432,2026-03-26,2026-03-29,completed,4.7,0.3,Kavita Rani,Varanasi UP
+LOG-1776410043725-2705,Rice,Basmati,Haldiram Distribution,182,37.9,6898,2026-03-27,2026-03-30,completed,4.2,1,Kavita Rani,Varanasi UP
+LOG-1776410043725-7229,Rice,Indrayani,Grand Hotel Kitchens,160,36.7,5872,2026-03-28,2026-03-31,completed,5,1.7,Mohan Lal,Bhopal MP
+LOG-1776410043725-9079,Rice,Kolam,Haldiram Distribution,157,40.9,6421,2026-03-29,2026-03-31,completed,4.7,1.6,Deepak Gupta,Prayagraj UP
+LOG-1776410043725-3549,Rice,Kolam,Mother Dairy Outlet,191,39.2,7487,2026-03-30,2026-04-02,completed,4.1,0,Mahesh Tiwari,Hardoi UP
+LOG-1776410043725-6948,Rice,Sona Masuri,ITC Foods Processing,174,39.6,6890,2026-03-31,2026-04-03,completed,4,1.7,Asha Kumari,Sitapur UP
+LOG-1776410043725-4318,Rice,Basmati,Chai Point Cafes,126,39.1,4927,2026-04-02,2026-04-04,completed,3.6,0.3,Ramesh Yadav,Barabanki UP
+LOG-1776410043725-5776,Rice,Kolam,FreshMart Superstore,144,37,5328,2026-04-03,2026-04-06,completed,4.5,1.9,Kavita Rani,Varanasi UP
+LOG-1776410043725-4959,Rice,Kolam,Zomato Cloud Kitchen,172,38.2,6570,2026-04-04,2026-04-06,completed,3.8,1.1,Mohan Lal,Bhopal MP
+LOG-1776410043725-5216,Rice,Basmati,DMart Fresh Counter,189,38.8,7333,2026-04-05,2026-04-07,completed,5,0.3,Anita Devi,Meerut UP
+LOG-1776410043725-7956,Rice,Sona Masuri,Metro Wholesale Club,207,37,7659,2026-04-06,2026-04-08,completed,3.6,0.2,Arvind Mishra,Fatehpur UP
+LOG-1776410043725-3932,Rice,Indrayani,Zomato Cloud Kitchen,167,36.8,6146,2026-04-07,2026-04-10,completed,3.7,1.3,Geeta Verma,Kannauj UP
+LOG-1776410043725-7283,Rice,Sona Masuri,SpiceBox Restaurant Chain,148,36.2,5358,2026-04-08,2026-04-09,completed,4.5,0.4,Kavita Rani,Varanasi UP
+LOG-1776410043725-7942,Rice,Kolam,Haldiram Distribution,147,39.5,5807,2026-04-10,2026-04-12,completed,4,1.3,Mahesh Tiwari,Hardoi UP
+LOG-1776410043725-3703,Rice,Kolam,ITC Foods Processing,195,40,7800,2026-04-11,2026-04-13,completed,4,1.8,Asha Kumari,Sitapur UP
+LOG-1776410043725-1484,Rice,Sona Masuri,ITC Foods Processing,121,35.7,4320,2026-04-12,2026-04-14,partial,4,1.2,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043725-1228,Rice,Sona Masuri,FreshMart Superstore,190,35.7,6783,2026-04-13,2026-04-15,cancelled,4.8,0.2,Asha Kumari,Sitapur UP
+LOG-1776410043725-4897,Rice,Kolam,DMart Fresh Counter,204,39.7,8099,2026-04-14,2026-04-17,completed,3.5,0.4,Shanti Bai,Indore MP
+LOG-1776410043725-4467,Rice,Indrayani,Swiggy Instamart Hub,122,38.2,4660,2026-04-15,2026-04-17,completed,4.8,1.7,Pushpa Kumari,Patna BR
+LOG-1776410043725-7308,Rice,Sona Masuri,Swiggy Instamart Hub,143,39.5,5649,2026-04-16,2026-04-17,completed,4.3,1.9,Lakshmi Devi,Nashik MH
+LOG-1776410043725-9891,Carrot,Delhi Red,DMart Fresh Counter,55,21.2,1166,2026-01-17,2026-01-19,completed,3.8,6.8,Suresh Chauhan,Agra UP
+LOG-1776410043725-2398,Carrot,Ooty,BigBasket Warehouse,58,21.8,1264,2026-01-18,2026-01-21,completed,4.2,4.7,Rajesh Kumar,Lucknow UP
+LOG-1776410043725-3734,Carrot,Nantes,Chai Point Cafes,54,20.4,1102,2026-01-22,2026-01-23,completed,3.7,3.8,Mohan Lal,Bhopal MP
+LOG-1776410043725-1915,Carrot,Orange,FreshMart Superstore,65,19.5,1268,2026-01-24,2026-01-25,completed,4.2,4.7,Ravi Patil,Pune MH
+LOG-1776410043725-2080,Carrot,Orange,ITC Foods Processing,67,21.5,1441,2026-01-25,2026-01-28,completed,4.4,1.9,Mahesh Tiwari,Hardoi UP
+LOG-1776410043726-7465,Carrot,Ooty,BigBasket Warehouse,58,20.2,1172,2026-01-27,2026-01-29,completed,3.8,7.1,Sunita Patel,Unnao UP
+LOG-1776410043726-7428,Carrot,Nantes,BigBasket Warehouse,40,21,840,2026-01-29,2026-01-31,completed,3.5,5.8,Meena Devi,Kanpur Dehat UP
+LOG-1776410043726-7227,Carrot,Ooty,Mother Dairy Outlet,62,22.5,1395,2026-01-31,2026-02-03,completed,4.2,3.9,Lakshmi Devi,Nashik MH
+LOG-1776410043726-8515,Carrot,Ooty,Grand Hotel Kitchens,68,21.3,1448,2026-02-02,2026-02-05,completed,3.7,7.2,Ramesh Yadav,Barabanki UP
+LOG-1776410043726-6836,Carrot,Nantes,SpiceBox Restaurant Chain,53,18.2,965,2026-02-03,2026-02-06,completed,3.8,2.8,Lakshmi Devi,Nashik MH
+LOG-1776410043726-1443,Carrot,Delhi Red,Haldiram Distribution,60,19,1140,2026-02-04,2026-02-06,completed,4.3,1,Shanti Bai,Indore MP
+LOG-1776410043726-4874,Carrot,Delhi Red,ITC Foods Processing,38,19.2,730,2026-02-08,2026-02-11,completed,3.5,2,Mohan Lal,Bhopal MP
+LOG-1776410043726-6045,Carrot,Nantes,Zomato Cloud Kitchen,41,17.9,734,2026-02-09,2026-02-11,completed,4.9,5.3,Sita Ram,Moradabad UP
+LOG-1776410043726-7784,Carrot,Delhi Red,ITC Foods Processing,63,20.8,1310,2026-02-11,2026-02-13,completed,4.5,2.5,Mohan Lal,Bhopal MP
+LOG-1776410043726-8088,Carrot,Delhi Red,Metro Wholesale Club,69,21.5,1484,2026-02-14,2026-02-17,completed,3.5,7.6,Suresh Chauhan,Agra UP
+LOG-1776410043726-7724,Carrot,Nantes,Mother Dairy Outlet,63,17.9,1128,2026-02-15,2026-02-17,completed,4.9,4,Rajesh Kumar,Lucknow UP
+LOG-1776410043726-2923,Carrot,Ooty,SpiceBox Restaurant Chain,52,19.2,998,2026-02-16,2026-02-18,partial,3.7,1.3,Vikram Singh,Bithoor UP
+LOG-1776410043726-2203,Carrot,Nantes,DMart Fresh Counter,48,21.2,1018,2026-02-20,2026-02-22,completed,3.6,1,Lakshmi Devi,Nashik MH
+LOG-1776410043726-8992,Carrot,Delhi Red,DMart Fresh Counter,67,20.9,1400,2026-02-21,2026-02-23,completed,4.6,4,Mohan Lal,Bhopal MP
+LOG-1776410043726-3274,Carrot,Delhi Red,FreshMart Superstore,56,18.1,1014,2026-02-22,2026-02-24,completed,5,7.5,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043726-6960,Carrot,Delhi Red,ITC Foods Processing,60,19.2,1152,2026-02-23,2026-02-25,completed,3.6,0.7,Mahesh Tiwari,Hardoi UP
+LOG-1776410043726-9730,Carrot,Delhi Red,BigBasket Warehouse,47,21.3,1001,2026-02-25,2026-02-26,completed,4,4.8,Bhola Nath,Jhansi UP
+LOG-1776410043726-5801,Carrot,Nantes,Haldiram Distribution,45,19.5,878,2026-02-28,2026-03-03,completed,4.7,6.7,Meena Devi,Kanpur Dehat UP
+LOG-1776410043726-2785,Carrot,Nantes,SpiceBox Restaurant Chain,55,26.5,1458,2026-03-01,2026-03-03,completed,4.3,1.6,Priya Sharma,Rae Bareli UP
+LOG-1776410043726-6042,Carrot,Ooty,ITC Foods Processing,62,22,1364,2026-03-02,2026-03-03,completed,4.7,6.8,Asha Kumari,Sitapur UP
+LOG-1776410043726-4628,Carrot,Delhi Red,Grand Hotel Kitchens,46,27.9,1283,2026-03-03,2026-03-05,completed,4,6.2,Bhola Nath,Jhansi UP
+LOG-1776410043726-2578,Carrot,Ooty,Grand Hotel Kitchens,46,23.9,1099,2026-03-04,2026-03-06,completed,3.7,4.9,Ganesh Jadhav,Kolhapur MH
+LOG-1776410043726-3704,Carrot,Ooty,Mother Dairy Outlet,51,24,1224,2026-03-07,2026-03-09,completed,4.9,3.6,Vikram Singh,Bithoor UP
+LOG-1776410043726-9449,Carrot,Nantes,BigBasket Warehouse,49,25.7,1259,2026-03-08,2026-03-10,completed,4.8,6.3,Ramesh Yadav,Barabanki UP
+LOG-1776410043726-9729,Carrot,Delhi Red,Chai Point Cafes,39,24.4,952,2026-03-09,2026-03-12,completed,4.6,0.3,Lakshmi Devi,Nashik MH
+LOG-1776410043726-1742,Carrot,Nantes,ITC Foods Processing,43,24.2,1041,2026-03-10,2026-03-13,completed,3.7,3.2,Raju Mandal,Muzaffarpur BR
+LOG-1776410043726-2444,Carrot,Delhi Red,FreshMart Superstore,60,23.8,1428,2026-03-11,2026-03-12,completed,4.6,7.7,Suresh Chauhan,Agra UP
+LOG-1776410043726-1617,Carrot,Ooty,SpiceBox Restaurant Chain,62,25.2,1562,2026-03-12,2026-03-14,completed,4.8,1.6,Priya Sharma,Rae Bareli UP
+LOG-1776410043726-4482,Carrot,Ooty,SpiceBox Restaurant Chain,64,27.9,1786,2026-03-15,2026-03-17,completed,4.6,3.3,Shanti Bai,Indore MP
+LOG-1776410043726-5274,Carrot,Orange,BigBasket Warehouse,44,24.3,1069,2026-03-19,2026-03-21,completed,4,1.8,Deepak Gupta,Prayagraj UP
+LOG-1776410043726-2780,Carrot,Delhi Red,ITC Foods Processing,41,25.5,1046,2026-03-20,2026-03-23,completed,4.6,4.8,Lakshmi Devi,Nashik MH
+LOG-1776410043726-7090,Carrot,Nantes,Metro Wholesale Club,55,27.2,1496,2026-03-21,2026-03-23,partial,4.9,2.7,Arvind Mishra,Fatehpur UP
+LOG-1776410043726-2828,Carrot,Delhi Red,ITC Foods Processing,41,22.6,927,2026-03-22,2026-03-25,completed,4.5,6.3,Kavita Rani,Varanasi UP
+LOG-1776410043726-8581,Carrot,Nantes,Mother Dairy Outlet,47,23.8,1119,2026-03-27,2026-03-30,completed,3.9,0.2,Bhola Nath,Jhansi UP
+LOG-1776410043726-9298,Carrot,Ooty,Mother Dairy Outlet,49,25.6,1254,2026-03-29,2026-03-31,completed,4.3,5.5,Sita Ram,Moradabad UP
+LOG-1776410043726-7978,Carrot,Orange,Chai Point Cafes,50,24.7,1235,2026-03-30,2026-03-31,completed,3.7,2.1,Anita Devi,Meerut UP
+LOG-1776410043726-1459,Carrot,Delhi Red,ITC Foods Processing,69,23.8,1642,2026-03-31,2026-04-01,partial,3.6,0.7,Shanti Bai,Indore MP
+LOG-1776410043726-6852,Carrot,Orange,FreshMart Superstore,55,23.7,1304,2026-04-01,2026-04-02,completed,3.8,1.8,Sunita Patel,Unnao UP
+LOG-1776410043726-6096,Carrot,Delhi Red,BigBasket Warehouse,59,22.4,1322,2026-04-03,2026-04-06,completed,4.5,5.5,Sita Ram,Moradabad UP
+LOG-1776410043726-4744,Carrot,Delhi Red,Chai Point Cafes,37,24.1,892,2026-04-04,2026-04-07,completed,4.2,7.4,Lakshmi Devi,Nashik MH
+LOG-1776410043726-8481,Carrot,Ooty,Chai Point Cafes,54,21.6,1166,2026-04-06,2026-04-08,completed,4.6,3.9,Ramesh Yadav,Barabanki UP
+LOG-1776410043726-2361,Carrot,Orange,DMart Fresh Counter,67,22.1,1481,2026-04-08,2026-04-10,completed,4.1,4.3,Mahesh Tiwari,Hardoi UP
+LOG-1776410043726-1198,Carrot,Nantes,Grand Hotel Kitchens,55,22.5,1238,2026-04-09,2026-04-10,completed,4.8,4.5,Shanti Bai,Indore MP
+LOG-1776410043726-3759,Carrot,Delhi Red,Swiggy Instamart Hub,53,24.1,1277,2026-04-10,2026-04-12,completed,4.5,4.8,Anita Devi,Meerut UP
+LOG-1776410043726-7569,Carrot,Orange,Grand Hotel Kitchens,41,27,1107,2026-04-12,2026-04-14,completed,3.9,4.4,Lakshmi Devi,Nashik MH
+LOG-1776410043726-8102,Carrot,Ooty,Haldiram Distribution,44,27.4,1206,2026-04-13,2026-04-15,completed,4.3,5.8,Geeta Verma,Kannauj UP
+LOG-1776410043726-3046,Carrot,Nantes,Mother Dairy Outlet,67,26,1742,2026-04-14,2026-04-17,completed,4.6,1.3,Pushpa Kumari,Patna BR
+LOG-1776410043726-6185,Carrot,Ooty,ITC Foods Processing,63,24.9,1569,2026-04-16,2026-04-19,completed,4.5,0.9,Pushpa Kumari,Patna BR
+LOG-1776410043726-5379,Capsicum,Simla Big,SpiceBox Restaurant Chain,22,47.6,1047,2026-01-19,2026-01-20,completed,3.6,2.5,Bhola Nath,Jhansi UP
+LOG-1776410043726-4475,Capsicum,Simla Big,Grand Hotel Kitchens,29,46.6,1351,2026-01-20,2026-01-21,completed,4.9,4.6,Raju Mandal,Muzaffarpur BR
+LOG-1776410043726-5842,Capsicum,Green,BigBasket Warehouse,34,45.1,1533,2026-01-22,2026-01-24,completed,4.7,4.2,Sunita Patel,Unnao UP
+LOG-1776410043726-7046,Capsicum,Simla Big,DMart Fresh Counter,30,47.2,1416,2026-01-23,2026-01-26,completed,3.9,3.1,Sunita Patel,Unnao UP
+LOG-1776410043726-5370,Capsicum,Green,BigBasket Warehouse,33,44.5,1469,2026-01-24,2026-01-26,completed,3.5,6.1,Sunita Patel,Unnao UP
+LOG-1776410043726-5473,Capsicum,Yellow,Grand Hotel Kitchens,24,49.6,1190,2026-01-28,2026-01-31,completed,3.5,4.5,Ganesh Jadhav,Kolhapur MH
+LOG-1776410043726-6776,Capsicum,Red,SpiceBox Restaurant Chain,22,43.2,950,2026-01-30,2026-01-31,completed,4.3,0.6,Lakshmi Devi,Nashik MH
+LOG-1776410043726-2197,Capsicum,Simla Big,SpiceBox Restaurant Chain,30,44.1,1323,2026-01-31,2026-02-02,completed,4.7,5.7,Ganesh Jadhav,Kolhapur MH
+LOG-1776410043726-2042,Capsicum,Simla Big,Chai Point Cafes,31,47,1457,2026-02-04,2026-02-07,partial,3.6,3.3,Raju Mandal,Muzaffarpur BR
+LOG-1776410043726-9046,Capsicum,Red,ITC Foods Processing,34,43.1,1465,2026-02-05,2026-02-07,completed,4.2,7.7,Lakshmi Devi,Nashik MH
+LOG-1776410043726-8644,Capsicum,Red,Zomato Cloud Kitchen,39,46,1794,2026-02-09,2026-02-11,completed,4,4.4,Suresh Chauhan,Agra UP
+LOG-1776410043726-9420,Capsicum,Yellow,FreshMart Superstore,35,43.8,1533,2026-02-10,2026-02-11,partial,4.1,6.9,Ravi Patil,Pune MH
+LOG-1776410043726-6432,Capsicum,Yellow,Swiggy Instamart Hub,32,46.7,1494,2026-02-13,2026-02-16,completed,3.6,1.1,Rajesh Kumar,Lucknow UP
+LOG-1776410043726-3978,Capsicum,Yellow,FreshMart Superstore,29,41.1,1192,2026-02-16,2026-02-18,completed,3.6,5.1,Deepak Gupta,Prayagraj UP
+LOG-1776410043726-4174,Capsicum,Green,SpiceBox Restaurant Chain,32,44,1408,2026-02-18,2026-02-19,completed,4.7,3.1,Rajesh Kumar,Lucknow UP
+LOG-1776410043726-8142,Capsicum,Red,Swiggy Instamart Hub,38,42.4,1611,2026-02-23,2026-02-26,partial,4.7,0.3,Geeta Verma,Kannauj UP
+LOG-1776410043726-9052,Capsicum,Green,Chai Point Cafes,24,45.8,1099,2026-02-27,2026-03-01,completed,3.8,1,Pushpa Kumari,Patna BR
+LOG-1776410043726-3346,Capsicum,Green,SpiceBox Restaurant Chain,32,41.4,1325,2026-02-28,2026-03-01,completed,4.2,7.1,Lakshmi Devi,Nashik MH
+LOG-1776410043726-3696,Capsicum,Simla Big,ITC Foods Processing,35,35.2,1232,2026-03-02,2026-03-04,completed,4.6,1.8,Sunita Patel,Unnao UP
+LOG-1776410043726-5893,Capsicum,Green,Zomato Cloud Kitchen,29,36.1,1047,2026-03-05,2026-03-07,completed,4.2,6.1,Suresh Chauhan,Agra UP
+LOG-1776410043726-3960,Capsicum,Green,Haldiram Distribution,29,35,1015,2026-03-06,2026-03-09,completed,3.9,0.3,Lakshmi Devi,Nashik MH
+LOG-1776410043726-1738,Capsicum,Yellow,ITC Foods Processing,23,34.5,794,2026-03-14,2026-03-16,completed,4.3,2.5,Arvind Mishra,Fatehpur UP
+LOG-1776410043726-3991,Capsicum,Green,SpiceBox Restaurant Chain,25,37.7,943,2026-03-15,2026-03-18,completed,3.8,3.9,Arvind Mishra,Fatehpur UP
+LOG-1776410043726-2493,Capsicum,Simla Big,FreshMart Superstore,22,36.6,805,2026-03-16,2026-03-18,completed,4,3.1,Kiran Bai,Bareilly UP
+LOG-1776410043726-2611,Capsicum,Simla Big,Metro Wholesale Club,29,37,1073,2026-03-18,2026-03-21,completed,4,7.2,Meena Devi,Kanpur Dehat UP
+LOG-1776410043726-6359,Capsicum,Red,SpiceBox Restaurant Chain,34,38.3,1302,2026-03-20,2026-03-21,completed,4.3,2.2,Geeta Verma,Kannauj UP
+LOG-1776410043726-9470,Capsicum,Simla Big,Haldiram Distribution,22,34.4,757,2026-03-25,2026-03-28,completed,3.8,5.1,Shanti Bai,Indore MP
+LOG-1776410043726-9514,Capsicum,Simla Big,Mother Dairy Outlet,29,38,1102,2026-03-29,2026-03-30,completed,4,6.1,Raju Mandal,Muzaffarpur BR
+LOG-1776410043726-8414,Capsicum,Green,Grand Hotel Kitchens,38,36.3,1379,2026-03-31,2026-04-01,completed,4.3,0.1,Mahesh Tiwari,Hardoi UP
+LOG-1776410043726-6227,Capsicum,Green,Haldiram Distribution,29,39.2,1137,2026-04-02,2026-04-04,completed,3.7,4,Geeta Verma,Kannauj UP
+LOG-1776410043726-6426,Capsicum,Red,Mother Dairy Outlet,28,35.6,997,2026-04-04,2026-04-06,completed,4.7,7.3,Suresh Chauhan,Agra UP
+LOG-1776410043726-8416,Capsicum,Simla Big,BigBasket Warehouse,31,36.2,1122,2026-04-05,2026-04-06,completed,3.6,7.1,Ravi Patil,Pune MH
+LOG-1776410043726-1217,Capsicum,Red,BigBasket Warehouse,32,34.9,1117,2026-04-06,2026-04-09,completed,3.9,7.9,Suresh Chauhan,Agra UP
+LOG-1776410043726-1077,Capsicum,Yellow,Grand Hotel Kitchens,26,37,962,2026-04-11,2026-04-13,completed,4.2,4.9,Sunita Patel,Unnao UP
+LOG-1776410043726-9252,Capsicum,Yellow,SpiceBox Restaurant Chain,32,38.7,1238,2026-04-14,2026-04-17,completed,4.2,4.3,Sunita Patel,Unnao UP
+LOG-1776410043726-6283,Capsicum,Green,Zomato Cloud Kitchen,34,33.4,1136,2026-04-16,2026-04-18,completed,3.6,1.3,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043726-1026,Cabbage,Savoy,ITC Foods Processing,78,11.6,905,2026-01-17,2026-01-20,completed,4.4,0.1,Shanti Bai,Indore MP
+LOG-1776410043726-6097,Cabbage,Green,Mother Dairy Outlet,75,11.7,878,2026-01-18,2026-01-20,partial,4.4,0.1,Sunita Patel,Unnao UP
+LOG-1776410043726-2846,Cabbage,Napa,Zomato Cloud Kitchen,60,9.3,558,2026-01-19,2026-01-22,completed,4.8,1.6,Sunita Patel,Unnao UP
+LOG-1776410043726-9792,Cabbage,Napa,Swiggy Instamart Hub,75,10.4,780,2026-01-22,2026-01-24,completed,4.1,0,Meena Devi,Kanpur Dehat UP
+LOG-1776410043726-5594,Cabbage,Purple,ITC Foods Processing,60,8.5,510,2026-01-23,2026-01-25,completed,4.3,1,Ravi Patil,Pune MH
+LOG-1776410043726-3380,Cabbage,Napa,Haldiram Distribution,66,10.5,693,2026-01-24,2026-01-26,completed,4.2,1.2,Priya Sharma,Rae Bareli UP
+LOG-1776410043727-1194,Cabbage,Savoy,DMart Fresh Counter,77,12.1,932,2026-01-25,2026-01-28,completed,3.8,1.5,Pushpa Kumari,Patna BR
+LOG-1776410043727-2128,Cabbage,Savoy,Haldiram Distribution,43,12.7,546,2026-01-28,2026-01-30,completed,4.4,0.7,Kiran Bai,Bareilly UP
+LOG-1776410043727-2375,Cabbage,Purple,Haldiram Distribution,74,13.3,984,2026-01-30,2026-02-02,completed,4.7,1.1,Bhola Nath,Jhansi UP
+LOG-1776410043727-9867,Cabbage,Green,Metro Wholesale Club,65,10.7,696,2026-02-01,2026-02-03,completed,4.1,1.1,Ravi Patil,Pune MH
+LOG-1776410043727-5117,Cabbage,Green,Mother Dairy Outlet,75,11.6,870,2026-02-05,2026-02-07,completed,3.6,0.5,Mahesh Tiwari,Hardoi UP
+LOG-1776410043727-7465,Cabbage,Purple,ITC Foods Processing,58,11.9,690,2026-02-06,2026-02-09,completed,3.7,0.1,Meena Devi,Kanpur Dehat UP
+LOG-1776410043727-5706,Cabbage,Savoy,SpiceBox Restaurant Chain,48,11.2,538,2026-02-07,2026-02-08,completed,3.8,1.1,Sita Ram,Moradabad UP
+LOG-1776410043727-3261,Cabbage,Napa,SpiceBox Restaurant Chain,52,11.2,582,2026-02-08,2026-02-10,completed,4.7,0.1,Shanti Bai,Indore MP
+LOG-1776410043727-2173,Cabbage,Purple,DMart Fresh Counter,68,10.6,721,2026-02-11,2026-02-12,completed,4,1.8,Raju Mandal,Muzaffarpur BR
+LOG-1776410043727-7268,Cabbage,Purple,BigBasket Warehouse,49,13.2,647,2026-02-15,2026-02-18,completed,4.9,0.4,Suresh Chauhan,Agra UP
+LOG-1776410043727-2279,Cabbage,Savoy,ITC Foods Processing,59,11.1,655,2026-02-17,2026-02-18,completed,4.2,1.4,Anita Devi,Meerut UP
+LOG-1776410043727-9547,Cabbage,Napa,Mother Dairy Outlet,61,10.7,653,2026-02-20,2026-02-22,completed,4,0.4,Kiran Bai,Bareilly UP
+LOG-1776410043727-8948,Cabbage,Green,Haldiram Distribution,57,9.1,519,2026-02-21,2026-02-23,completed,4.6,0.8,Suresh Chauhan,Agra UP
+LOG-1776410043727-1007,Cabbage,Purple,BigBasket Warehouse,65,9.5,618,2026-02-22,2026-02-24,completed,4.8,1.2,Lakshmi Devi,Nashik MH
+LOG-1776410043727-6615,Cabbage,Napa,Grand Hotel Kitchens,53,9.7,514,2026-02-23,2026-02-26,completed,3.7,0.8,Sunita Patel,Unnao UP
+LOG-1776410043727-5528,Cabbage,Napa,Metro Wholesale Club,70,10.8,756,2026-02-24,2026-02-26,completed,3.8,1,Sunita Patel,Unnao UP
+LOG-1776410043727-6209,Cabbage,Green,Grand Hotel Kitchens,52,10.3,536,2026-02-26,2026-02-28,completed,4.3,1.3,Ravi Patil,Pune MH
+LOG-1776410043727-7310,Cabbage,Savoy,Mother Dairy Outlet,55,10.5,578,2026-02-27,2026-03-02,completed,3.6,1.3,Kiran Bai,Bareilly UP
+LOG-1776410043727-8653,Cabbage,Purple,ITC Foods Processing,55,12.9,710,2026-02-28,2026-03-01,completed,3.6,0.1,Suresh Chauhan,Agra UP
+LOG-1776410043727-9838,Cabbage,Savoy,Mother Dairy Outlet,72,9.1,655,2026-03-02,2026-03-05,completed,4.4,1.2,Meena Devi,Kanpur Dehat UP
+LOG-1776410043727-1495,Cabbage,Napa,BigBasket Warehouse,76,9,684,2026-03-03,2026-03-06,cancelled,4.4,1.1,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043727-6495,Cabbage,Napa,SpiceBox Restaurant Chain,58,12.6,731,2026-03-04,2026-03-05,completed,4.4,1.1,Shanti Bai,Indore MP
+LOG-1776410043727-9541,Cabbage,Savoy,DMart Fresh Counter,53,11.1,588,2026-03-05,2026-03-08,completed,4,1.5,Rajesh Kumar,Lucknow UP
+LOG-1776410043727-7650,Cabbage,Napa,Grand Hotel Kitchens,56,11.9,666,2026-03-06,2026-03-09,completed,3.7,1.7,Sita Ram,Moradabad UP
+LOG-1776410043727-8409,Cabbage,Purple,FreshMart Superstore,42,12.2,512,2026-03-07,2026-03-10,completed,3.6,1.2,Raju Mandal,Muzaffarpur BR
+LOG-1776410043727-8257,Cabbage,Green,Haldiram Distribution,51,9.4,479,2026-03-09,2026-03-11,completed,4,1.5,Mohan Lal,Bhopal MP
+LOG-1776410043727-1892,Cabbage,Napa,Swiggy Instamart Hub,73,10.7,781,2026-03-10,2026-03-13,completed,3.7,1.2,Anita Devi,Meerut UP
+LOG-1776410043727-7485,Cabbage,Napa,Chai Point Cafes,67,10.5,704,2026-03-11,2026-03-12,completed,4.7,1.4,Ravi Patil,Pune MH
+LOG-1776410043727-3683,Cabbage,Green,Zomato Cloud Kitchen,72,12.2,878,2026-03-12,2026-03-14,completed,4.4,1.5,Kiran Bai,Bareilly UP
+LOG-1776410043727-9026,Cabbage,Green,ITC Foods Processing,74,9.4,696,2026-03-13,2026-03-16,completed,4.5,0.1,Vikram Singh,Bithoor UP
+LOG-1776410043727-7763,Cabbage,Green,Swiggy Instamart Hub,63,9,567,2026-03-16,2026-03-17,completed,3.7,1.5,Sita Ram,Moradabad UP
+LOG-1776410043727-7808,Cabbage,Green,Grand Hotel Kitchens,73,8.9,650,2026-03-18,2026-03-21,completed,3.7,0.6,Priya Sharma,Rae Bareli UP
+LOG-1776410043727-4004,Cabbage,Purple,Zomato Cloud Kitchen,44,9.3,409,2026-03-20,2026-03-23,completed,4.2,1.7,Asha Kumari,Sitapur UP
+LOG-1776410043727-1661,Cabbage,Savoy,Chai Point Cafes,55,9.9,545,2026-03-21,2026-03-23,completed,4.9,1.7,Ganesh Jadhav,Kolhapur MH
+LOG-1776410043727-8621,Cabbage,Savoy,Grand Hotel Kitchens,50,9.4,470,2026-03-22,2026-03-25,completed,4.6,1.8,Bhola Nath,Jhansi UP
+LOG-1776410043727-3030,Cabbage,Purple,FreshMart Superstore,45,10.3,464,2026-03-23,2026-03-26,completed,4.1,1.9,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043727-4103,Cabbage,Green,Chai Point Cafes,48,11.2,538,2026-03-25,2026-03-28,completed,4.6,1.3,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043727-8109,Cabbage,Green,Mother Dairy Outlet,57,12,684,2026-03-26,2026-03-28,completed,4,1.6,Lakshmi Devi,Nashik MH
+LOG-1776410043727-3380,Cabbage,Green,Swiggy Instamart Hub,63,10,630,2026-03-28,2026-03-29,completed,4.2,1.4,Sunita Patel,Unnao UP
+LOG-1776410043727-7988,Cabbage,Napa,Metro Wholesale Club,76,15.8,1201,2026-04-01,2026-04-02,completed,3.6,0.9,Anita Devi,Meerut UP
+LOG-1776410043727-8829,Cabbage,Green,Grand Hotel Kitchens,49,12.9,632,2026-04-02,2026-04-04,completed,3.8,0.5,Ramesh Yadav,Barabanki UP
+LOG-1776410043727-2112,Cabbage,Savoy,SpiceBox Restaurant Chain,45,15.4,693,2026-04-04,2026-04-06,partial,4.4,1.8,Suresh Chauhan,Agra UP
+LOG-1776410043727-9847,Cabbage,Savoy,Grand Hotel Kitchens,77,15.9,1224,2026-04-05,2026-04-06,partial,4.7,0.7,Ramesh Yadav,Barabanki UP
+LOG-1776410043727-1897,Cabbage,Purple,Metro Wholesale Club,47,15.1,710,2026-04-07,2026-04-08,completed,3.8,1.7,Pushpa Kumari,Patna BR
+LOG-1776410043727-2267,Cabbage,Savoy,DMart Fresh Counter,44,11.8,519,2026-04-08,2026-04-10,completed,4.3,1.4,Ramesh Yadav,Barabanki UP
+LOG-1776410043727-6044,Cabbage,Savoy,Metro Wholesale Club,44,15.7,691,2026-04-09,2026-04-12,completed,4.6,1.7,Asha Kumari,Sitapur UP
+LOG-1776410043727-5793,Cabbage,Savoy,FreshMart Superstore,68,12.9,877,2026-04-11,2026-04-12,completed,4,0.8,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043727-5999,Cabbage,Savoy,Grand Hotel Kitchens,75,12.1,908,2026-04-12,2026-04-14,completed,4.8,0.3,Shanti Bai,Indore MP
+LOG-1776410043727-9455,Cabbage,Savoy,DMart Fresh Counter,67,14.9,998,2026-04-13,2026-04-15,completed,4.6,1,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043727-8439,Cabbage,Purple,Zomato Cloud Kitchen,72,14.1,1015,2026-04-14,2026-04-16,completed,4,1.7,Lakshmi Devi,Nashik MH
+LOG-1776410043727-9466,Cabbage,Savoy,ITC Foods Processing,64,11.2,717,2026-04-15,2026-04-17,completed,3.8,1.7,Arvind Mishra,Fatehpur UP
+LOG-1776410043727-6545,Garlic,Desi,Chai Point Cafes,16,71.8,1149,2026-01-21,2026-01-22,completed,3.8,0.8,Asha Kumari,Sitapur UP
+LOG-1776410043727-4618,Garlic,Jamnagar,Metro Wholesale Club,25,66.4,1660,2026-01-24,2026-01-26,partial,3.7,1.6,Bhola Nath,Jhansi UP
+LOG-1776410043727-3743,Garlic,Single Clove,SpiceBox Restaurant Chain,17,71.4,1214,2026-01-25,2026-01-27,completed,3.8,0.8,Rajesh Kumar,Lucknow UP
+LOG-1776410043727-4878,Garlic,Desi,Metro Wholesale Club,25,68.8,1720,2026-01-26,2026-01-28,partial,4.1,1.7,Deepak Gupta,Prayagraj UP
+LOG-1776410043727-5078,Garlic,Desi,Zomato Cloud Kitchen,19,66.1,1256,2026-01-27,2026-01-28,cancelled,4.3,0.4,Sunita Patel,Unnao UP
+LOG-1776410043727-4931,Garlic,Single Clove,Haldiram Distribution,15,69.1,1037,2026-01-28,2026-01-30,completed,3.9,0.9,Arvind Mishra,Fatehpur UP
+LOG-1776410043727-4777,Garlic,Jamnagar,FreshMart Superstore,17,69.2,1176,2026-01-29,2026-02-01,completed,4.5,0.1,Lakshmi Devi,Nashik MH
+LOG-1776410043727-3945,Garlic,Single Clove,Chai Point Cafes,24,52.2,1253,2026-02-01,2026-02-03,completed,4.3,0.2,Arvind Mishra,Fatehpur UP
+LOG-1776410043727-2530,Garlic,Mandsaur,ITC Foods Processing,23,55.1,1267,2026-02-05,2026-02-06,completed,4.1,2,Kavita Rani,Varanasi UP
+LOG-1776410043727-3519,Garlic,Desi,Swiggy Instamart Hub,20,56.2,1124,2026-02-09,2026-02-11,completed,3.9,1,Sunita Patel,Unnao UP
+LOG-1776410043727-4784,Garlic,Jamnagar,Zomato Cloud Kitchen,16,52.2,835,2026-02-10,2026-02-11,completed,3.6,1.1,Vikram Singh,Bithoor UP
+LOG-1776410043727-4658,Garlic,Jamnagar,Zomato Cloud Kitchen,14,52.1,729,2026-02-11,2026-02-13,completed,4.4,0.4,Arvind Mishra,Fatehpur UP
+LOG-1776410043727-6807,Garlic,Jamnagar,Haldiram Distribution,19,56.3,1070,2026-02-13,2026-02-15,completed,4.6,1.7,Sunita Patel,Unnao UP
+LOG-1776410043727-4790,Garlic,Jamnagar,Metro Wholesale Club,23,54.2,1247,2026-02-14,2026-02-15,completed,3.9,1.2,Sunita Patel,Unnao UP
+LOG-1776410043727-2835,Garlic,Single Clove,DMart Fresh Counter,17,51.3,872,2026-02-17,2026-02-20,completed,3.8,1.1,Priya Sharma,Rae Bareli UP
+LOG-1776410043727-1842,Garlic,Desi,Grand Hotel Kitchens,24,52.9,1270,2026-02-19,2026-02-20,completed,4.9,1.2,Pushpa Kumari,Patna BR
+LOG-1776410043727-5941,Garlic,Single Clove,Mother Dairy Outlet,21,55.5,1166,2026-02-21,2026-02-22,completed,3.6,0.7,Mahesh Tiwari,Hardoi UP
+LOG-1776410043727-6991,Garlic,Mandsaur,SpiceBox Restaurant Chain,18,53.8,968,2026-02-22,2026-02-24,completed,4.8,0.6,Deepak Gupta,Prayagraj UP
+LOG-1776410043727-4005,Garlic,Desi,SpiceBox Restaurant Chain,16,58.4,934,2026-02-24,2026-02-26,completed,3.6,1.2,Vikram Singh,Bithoor UP
+LOG-1776410043727-9247,Garlic,Jamnagar,SpiceBox Restaurant Chain,15,50,750,2026-03-09,2026-03-10,completed,4.8,0,Kavita Rani,Varanasi UP
+LOG-1776410043727-4677,Garlic,Mandsaur,Haldiram Distribution,24,49.7,1193,2026-03-10,2026-03-11,completed,4.9,0.1,Rajesh Kumar,Lucknow UP
+LOG-1776410043727-6120,Garlic,Jamnagar,Zomato Cloud Kitchen,25,54,1350,2026-03-12,2026-03-14,completed,4,1.7,Suresh Chauhan,Agra UP
+LOG-1776410043727-5692,Garlic,Jamnagar,Swiggy Instamart Hub,20,52.9,1058,2026-03-14,2026-03-16,completed,4,1.2,Mahesh Tiwari,Hardoi UP
+LOG-1776410043727-4790,Garlic,Jamnagar,BigBasket Warehouse,15,53.9,809,2026-03-16,2026-03-19,completed,3.9,0.4,Shanti Bai,Indore MP
+LOG-1776410043727-3071,Garlic,Desi,BigBasket Warehouse,21,52.9,1111,2026-03-19,2026-03-20,completed,3.6,0.6,Kiran Bai,Bareilly UP
+LOG-1776410043727-7227,Garlic,Single Clove,Chai Point Cafes,22,52,1144,2026-03-21,2026-03-23,completed,3.8,1.8,Geeta Verma,Kannauj UP
+LOG-1776410043727-2770,Garlic,Single Clove,BigBasket Warehouse,23,49.9,1148,2026-03-26,2026-03-28,completed,3.8,1.3,Mahesh Tiwari,Hardoi UP
+LOG-1776410043727-1502,Garlic,Desi,Metro Wholesale Club,24,51.4,1234,2026-03-27,2026-03-30,completed,4.2,0.8,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043727-8232,Garlic,Jamnagar,Chai Point Cafes,21,54,1134,2026-03-28,2026-03-30,completed,3.8,1,Ganesh Jadhav,Kolhapur MH
+LOG-1776410043727-9347,Garlic,Desi,Chai Point Cafes,18,51.2,922,2026-03-29,2026-04-01,completed,4,1,Meena Devi,Kanpur Dehat UP
+LOG-1776410043727-6607,Garlic,Single Clove,FreshMart Superstore,16,52.2,835,2026-03-30,2026-04-02,completed,4.3,1.2,Anita Devi,Meerut UP
+LOG-1776410043727-1739,Garlic,Mandsaur,BigBasket Warehouse,21,52.3,1098,2026-04-02,2026-04-04,partial,4.3,0.1,Ravi Patil,Pune MH
+LOG-1776410043727-6037,Garlic,Jamnagar,ITC Foods Processing,22,51.1,1124,2026-04-04,2026-04-05,completed,4.7,0.9,Ramesh Yadav,Barabanki UP
+LOG-1776410043727-4138,Garlic,Desi,BigBasket Warehouse,19,53.6,1018,2026-04-07,2026-04-09,completed,4.7,0.1,Sunita Patel,Unnao UP
+LOG-1776410043728-5702,Garlic,Jamnagar,Metro Wholesale Club,19,50.7,963,2026-04-14,2026-04-17,completed,3.9,1.3,Kavita Rani,Varanasi UP
+LOG-1776410043728-7880,Garlic,Jamnagar,Chai Point Cafes,17,56.7,964,2026-04-15,2026-04-17,completed,4.5,0.6,Ravi Patil,Pune MH
+LOG-1776410043728-3000,Ginger,Assam,Haldiram Distribution,19,51.7,982,2026-01-19,2026-01-22,completed,3.8,0.6,Ramesh Yadav,Barabanki UP
+LOG-1776410043728-7136,Ginger,Assam,BigBasket Warehouse,13,50.7,659,2026-01-20,2026-01-22,completed,5,0.5,Anita Devi,Meerut UP
+LOG-1776410043728-6584,Ginger,Assam,ITC Foods Processing,19,50,950,2026-01-21,2026-01-22,completed,4.2,0.4,Geeta Verma,Kannauj UP
+LOG-1776410043728-5580,Ginger,Assam,Swiggy Instamart Hub,14,48.1,673,2026-01-23,2026-01-25,completed,3.9,0,Asha Kumari,Sitapur UP
+LOG-1776410043728-8237,Ginger,Kochi,Grand Hotel Kitchens,16,49.1,786,2026-01-27,2026-01-29,completed,4.9,1.7,Asha Kumari,Sitapur UP
+LOG-1776410043728-3985,Ginger,Assam,SpiceBox Restaurant Chain,13,52.6,684,2026-01-31,2026-02-01,completed,4,1.1,Geeta Verma,Kannauj UP
+LOG-1776410043728-7915,Ginger,Kochi,DMart Fresh Counter,15,49.9,749,2026-02-04,2026-02-06,completed,4.5,0.2,Lakshmi Devi,Nashik MH
+LOG-1776410043728-3424,Ginger,Himalayan,Grand Hotel Kitchens,19,49.3,937,2026-02-05,2026-02-06,completed,4.6,1.1,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043728-7176,Ginger,Assam,Zomato Cloud Kitchen,13,50.6,658,2026-02-07,2026-02-09,completed,3.9,0.7,Arvind Mishra,Fatehpur UP
+LOG-1776410043728-4716,Ginger,Himalayan,FreshMart Superstore,15,48.3,725,2026-02-09,2026-02-12,completed,3.6,0.9,Geeta Verma,Kannauj UP
+LOG-1776410043728-9104,Ginger,Assam,ITC Foods Processing,18,46.2,832,2026-02-11,2026-02-14,completed,4.8,2,Ganesh Jadhav,Kolhapur MH
+LOG-1776410043728-5776,Ginger,Assam,Grand Hotel Kitchens,13,49.5,644,2026-02-12,2026-02-15,completed,4.6,1.7,Ganesh Jadhav,Kolhapur MH
+LOG-1776410043728-5631,Ginger,Assam,Zomato Cloud Kitchen,17,47.6,809,2026-02-14,2026-02-17,completed,4.6,0.6,Sita Ram,Moradabad UP
+LOG-1776410043728-4737,Ginger,Kochi,Grand Hotel Kitchens,21,46.4,974,2026-02-18,2026-02-21,completed,3.8,1.5,Vikram Singh,Bithoor UP
+LOG-1776410043728-7439,Ginger,Assam,ITC Foods Processing,15,52.9,794,2026-02-21,2026-02-23,completed,3.7,0.2,Meena Devi,Kanpur Dehat UP
+LOG-1776410043728-1357,Ginger,Kochi,Haldiram Distribution,21,51.8,1088,2026-02-22,2026-02-25,completed,4.9,1.7,Ramesh Yadav,Barabanki UP
+LOG-1776410043728-7007,Ginger,Assam,Mother Dairy Outlet,16,50.4,806,2026-02-23,2026-02-25,cancelled,3.9,1.1,Geeta Verma,Kannauj UP
+LOG-1776410043728-9298,Ginger,Assam,Metro Wholesale Club,12,48.8,586,2026-02-24,2026-02-26,completed,4.2,0.2,Arvind Mishra,Fatehpur UP
+LOG-1776410043728-5308,Ginger,Assam,Swiggy Instamart Hub,13,48.4,629,2026-02-25,2026-02-26,completed,5,1.7,Sita Ram,Moradabad UP
+LOG-1776410043728-2080,Ginger,Assam,Swiggy Instamart Hub,21,62,1302,2026-03-02,2026-03-05,completed,4.4,2,Rajesh Kumar,Lucknow UP
+LOG-1776410043728-2783,Ginger,Kochi,BigBasket Warehouse,14,61.5,861,2026-03-04,2026-03-05,completed,3.6,0.3,Shanti Bai,Indore MP
+LOG-1776410043728-2761,Ginger,Himalayan,Swiggy Instamart Hub,14,65.7,920,2026-03-05,2026-03-06,completed,4.8,1.4,Ravi Patil,Pune MH
+LOG-1776410043728-2276,Ginger,Bangalore,SpiceBox Restaurant Chain,19,58.6,1113,2026-03-06,2026-03-08,completed,4.3,0.5,Raju Mandal,Muzaffarpur BR
+LOG-1776410043728-5801,Ginger,Kochi,DMart Fresh Counter,19,61.5,1169,2026-03-08,2026-03-10,completed,4.2,0.3,Meena Devi,Kanpur Dehat UP
+LOG-1776410043728-2370,Ginger,Kochi,Haldiram Distribution,12,58.2,698,2026-03-09,2026-03-11,completed,4,1.8,Suresh Chauhan,Agra UP
+LOG-1776410043728-7149,Ginger,Himalayan,Chai Point Cafes,17,63,1071,2026-03-10,2026-03-11,completed,3.8,1.8,Raju Mandal,Muzaffarpur BR
+LOG-1776410043728-7565,Ginger,Himalayan,Metro Wholesale Club,16,66.3,1061,2026-03-11,2026-03-12,completed,4.2,0.4,Sunita Patel,Unnao UP
+LOG-1776410043728-4475,Ginger,Himalayan,ITC Foods Processing,18,67.3,1211,2026-03-13,2026-03-15,cancelled,4,2,Rajesh Kumar,Lucknow UP
+LOG-1776410043728-2890,Ginger,Kochi,Swiggy Instamart Hub,20,62.5,1250,2026-03-16,2026-03-18,completed,3.8,1.6,Deepak Gupta,Prayagraj UP
+LOG-1776410043728-6909,Ginger,Himalayan,Zomato Cloud Kitchen,17,62.8,1068,2026-03-20,2026-03-22,completed,4.5,0.9,Raju Mandal,Muzaffarpur BR
+LOG-1776410043728-2880,Ginger,Bangalore,Metro Wholesale Club,20,63.5,1270,2026-03-30,2026-03-31,completed,3.5,0,Arvind Mishra,Fatehpur UP
+LOG-1776410043728-5518,Ginger,Himalayan,SpiceBox Restaurant Chain,16,56.8,909,2026-03-31,2026-04-03,completed,4,1.1,Arvind Mishra,Fatehpur UP
+LOG-1776410043728-8264,Ginger,Kochi,Grand Hotel Kitchens,17,56.6,962,2026-04-01,2026-04-03,completed,3.8,0.5,Priya Sharma,Rae Bareli UP
+LOG-1776410043728-7341,Ginger,Kochi,DMart Fresh Counter,18,63.2,1138,2026-04-02,2026-04-03,completed,4.3,1.3,Suresh Chauhan,Agra UP
+LOG-1776410043728-5437,Ginger,Bangalore,BigBasket Warehouse,13,59.9,779,2026-04-04,2026-04-07,completed,4.6,1.7,Asha Kumari,Sitapur UP
+LOG-1776410043728-3303,Ginger,Kochi,DMart Fresh Counter,13,65.4,850,2026-04-06,2026-04-09,completed,3.6,1.3,Kiran Bai,Bareilly UP
+LOG-1776410043728-1036,Ginger,Assam,DMart Fresh Counter,17,63.5,1080,2026-04-08,2026-04-10,completed,4.5,0.2,Kavita Rani,Varanasi UP
+LOG-1776410043728-1485,Ginger,Kochi,ITC Foods Processing,17,64.4,1095,2026-04-10,2026-04-11,completed,5,0.2,Mahesh Tiwari,Hardoi UP
+LOG-1776410043728-9632,Ginger,Kochi,SpiceBox Restaurant Chain,13,59.7,776,2026-04-11,2026-04-12,cancelled,5,1,Sita Ram,Moradabad UP
+LOG-1776410043728-6818,Ginger,Himalayan,Haldiram Distribution,12,65.3,784,2026-04-14,2026-04-15,completed,4.3,0.8,Kiran Bai,Bareilly UP
+LOG-1776410043728-6634,Ginger,Himalayan,Haldiram Distribution,12,61.2,734,2026-04-15,2026-04-17,completed,4.5,0.7,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043728-4956,Cauliflower,Hybrid White,Grand Hotel Kitchens,47,16.3,766,2026-01-17,2026-01-20,completed,3.8,4,Pushpa Kumari,Patna BR
+LOG-1776410043728-6154,Cauliflower,Snowball,Mother Dairy Outlet,55,18.7,1029,2026-01-18,2026-01-21,completed,4.9,4.5,Vikram Singh,Bithoor UP
+LOG-1776410043728-4203,Cauliflower,Snowball,BigBasket Warehouse,56,16.3,913,2026-01-20,2026-01-23,completed,3.8,0.7,Sita Ram,Moradabad UP
+LOG-1776410043728-7164,Cauliflower,Hybrid White,SpiceBox Restaurant Chain,60,16.4,984,2026-01-21,2026-01-23,partial,3.9,3.1,Lakshmi Devi,Nashik MH
+LOG-1776410043728-8483,Cauliflower,Pusa,Metro Wholesale Club,42,17.9,752,2026-01-24,2026-01-25,partial,4.5,3.8,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043728-2148,Cauliflower,Pusa,BigBasket Warehouse,51,16.8,857,2026-01-25,2026-01-28,completed,3.6,4.3,Deepak Gupta,Prayagraj UP
+LOG-1776410043728-8622,Cauliflower,Pusa,DMart Fresh Counter,52,18.3,952,2026-01-26,2026-01-27,completed,3.8,5.6,Asha Kumari,Sitapur UP
+LOG-1776410043728-4845,Cauliflower,Snowball,Grand Hotel Kitchens,57,17.8,1015,2026-01-28,2026-01-31,completed,3.6,7.7,Suresh Chauhan,Agra UP
+LOG-1776410043728-1525,Cauliflower,Hybrid White,ITC Foods Processing,47,20,940,2026-01-29,2026-01-31,completed,3.7,2.5,Arvind Mishra,Fatehpur UP
+LOG-1776410043728-2098,Cauliflower,Pusa,Grand Hotel Kitchens,47,19.2,902,2026-01-30,2026-02-02,completed,4.7,2.8,Pushpa Kumari,Patna BR
+LOG-1776410043728-6117,Cauliflower,Snowball,FreshMart Superstore,40,16.6,664,2026-01-31,2026-02-02,completed,3.6,5.1,Sita Ram,Moradabad UP
+LOG-1776410043728-7987,Cauliflower,Pusa,Mother Dairy Outlet,38,18.5,703,2026-02-02,2026-02-05,cancelled,3.8,0.1,Geeta Verma,Kannauj UP
+LOG-1776410043728-8150,Cauliflower,Hybrid White,Mother Dairy Outlet,46,20.5,943,2026-02-03,2026-02-05,completed,4.4,7.3,Meena Devi,Kanpur Dehat UP
+LOG-1776410043728-7005,Cauliflower,Snowball,BigBasket Warehouse,39,16.8,655,2026-02-05,2026-02-07,completed,4,6.7,Lakshmi Devi,Nashik MH
+LOG-1776410043728-2733,Cauliflower,Snowball,Swiggy Instamart Hub,52,18.8,978,2026-02-07,2026-02-08,completed,3.6,2.3,Sita Ram,Moradabad UP
+LOG-1776410043728-3470,Cauliflower,Hybrid White,Mother Dairy Outlet,34,20,680,2026-02-11,2026-02-12,completed,4.3,3.6,Suresh Chauhan,Agra UP
+LOG-1776410043728-9845,Cauliflower,Snowball,Haldiram Distribution,56,19.1,1070,2026-02-16,2026-02-18,completed,4.7,1.5,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043728-8650,Cauliflower,Snowball,Haldiram Distribution,43,16.3,701,2026-02-17,2026-02-18,completed,4.4,3.4,Priya Sharma,Rae Bareli UP
+LOG-1776410043728-5606,Cauliflower,Pusa,Chai Point Cafes,48,16.5,792,2026-02-19,2026-02-21,completed,4,5.6,Asha Kumari,Sitapur UP
+LOG-1776410043728-5424,Cauliflower,Snowball,Swiggy Instamart Hub,58,19.2,1114,2026-02-20,2026-02-23,completed,5,0.2,Arvind Mishra,Fatehpur UP
+LOG-1776410043728-8911,Cauliflower,Hybrid White,Grand Hotel Kitchens,37,16.6,614,2026-02-25,2026-02-26,completed,3.8,2.8,Geeta Verma,Kannauj UP
+LOG-1776410043728-5271,Cauliflower,Pusa,Grand Hotel Kitchens,59,17.6,1038,2026-02-26,2026-02-28,completed,4.4,6.7,Geeta Verma,Kannauj UP
+LOG-1776410043728-8802,Cauliflower,Pusa,ITC Foods Processing,47,24,1128,2026-03-01,2026-03-02,completed,4.3,4.9,Ramesh Yadav,Barabanki UP
+LOG-1776410043728-1217,Cauliflower,Pusa,ITC Foods Processing,56,24.2,1355,2026-03-04,2026-03-06,completed,4.1,7,Pushpa Kumari,Patna BR
+LOG-1776410043728-2939,Cauliflower,Pusa,DMart Fresh Counter,33,20.9,690,2026-03-05,2026-03-06,completed,4.6,3.7,Lakshmi Devi,Nashik MH
+LOG-1776410043728-2649,Cauliflower,Hybrid White,Chai Point Cafes,57,24.5,1397,2026-03-09,2026-03-11,completed,4.1,5,Pushpa Kumari,Patna BR
+LOG-1776410043728-2300,Cauliflower,Pusa,Grand Hotel Kitchens,34,20.3,690,2026-03-10,2026-03-12,completed,3.9,5.1,Sita Ram,Moradabad UP
+LOG-1776410043728-4718,Cauliflower,Snowball,SpiceBox Restaurant Chain,52,21,1092,2026-03-12,2026-03-14,completed,4.6,4.2,Suresh Chauhan,Agra UP
+LOG-1776410043728-9835,Cauliflower,Hybrid White,Mother Dairy Outlet,57,20.5,1169,2026-03-14,2026-03-17,completed,4.9,3.5,Priya Sharma,Rae Bareli UP
+LOG-1776410043728-7831,Cauliflower,Pusa,Mother Dairy Outlet,37,21,777,2026-03-15,2026-03-16,completed,3.5,1.3,Deepak Gupta,Prayagraj UP
+LOG-1776410043728-1709,Cauliflower,Pusa,DMart Fresh Counter,36,24.5,882,2026-03-16,2026-03-19,completed,4.3,5,Deepak Gupta,Prayagraj UP
+LOG-1776410043728-4878,Cauliflower,Hybrid White,Mother Dairy Outlet,46,22.1,1017,2026-03-18,2026-03-19,completed,4.1,5.2,Anita Devi,Meerut UP
+LOG-1776410043728-8490,Cauliflower,Snowball,Swiggy Instamart Hub,49,22.5,1103,2026-03-19,2026-03-22,completed,4.3,6.9,Rajesh Kumar,Lucknow UP
+LOG-1776410043728-6692,Cauliflower,Pusa,Haldiram Distribution,58,22,1276,2026-03-20,2026-03-22,completed,3.5,7.9,Arvind Mishra,Fatehpur UP
+LOG-1776410043728-7700,Cauliflower,Pusa,FreshMart Superstore,33,22.6,746,2026-03-23,2026-03-25,completed,4.1,7.7,Suresh Chauhan,Agra UP
+LOG-1776410043728-1186,Cauliflower,Snowball,BigBasket Warehouse,56,20.2,1131,2026-03-24,2026-03-26,completed,3.8,3.5,Vikram Singh,Bithoor UP
+LOG-1776410043728-3150,Cauliflower,Hybrid White,ITC Foods Processing,49,23,1127,2026-03-26,2026-03-29,completed,4.8,7.4,Suresh Chauhan,Agra UP
+LOG-1776410043728-2381,Cauliflower,Pusa,Swiggy Instamart Hub,36,24.1,868,2026-03-27,2026-03-29,completed,4.3,0.5,Deepak Gupta,Prayagraj UP
+LOG-1776410043728-7630,Cauliflower,Hybrid White,BigBasket Warehouse,59,24.4,1440,2026-03-28,2026-03-30,completed,4.3,7.8,Mohan Lal,Bhopal MP
+LOG-1776410043728-8682,Cauliflower,Snowball,BigBasket Warehouse,44,25,1100,2026-03-29,2026-03-31,completed,4.3,2.2,Sita Ram,Moradabad UP
+LOG-1776410043728-1206,Cauliflower,Snowball,Zomato Cloud Kitchen,42,22.2,932,2026-03-31,2026-04-02,completed,3.8,7,Sita Ram,Moradabad UP
+LOG-1776410043728-3559,Cauliflower,Pusa,SpiceBox Restaurant Chain,53,22.6,1198,2026-04-03,2026-04-05,cancelled,3.6,2.8,Anita Devi,Meerut UP
+LOG-1776410043728-4231,Cauliflower,Pusa,ITC Foods Processing,41,24.3,996,2026-04-06,2026-04-07,completed,3.9,0.1,Ravi Patil,Pune MH
+LOG-1776410043728-4559,Cauliflower,Hybrid White,Haldiram Distribution,45,21.5,968,2026-04-07,2026-04-10,completed,4.1,5.6,Deepak Gupta,Prayagraj UP
+LOG-1776410043728-8093,Cauliflower,Pusa,Chai Point Cafes,40,23.3,932,2026-04-08,2026-04-10,completed,4.7,0.9,Shanti Bai,Indore MP
+LOG-1776410043728-4362,Cauliflower,Pusa,SpiceBox Restaurant Chain,47,21.9,1029,2026-04-09,2026-04-11,completed,4.1,3,Shanti Bai,Indore MP
+LOG-1776410043728-1521,Cauliflower,Snowball,ITC Foods Processing,49,21.3,1044,2026-04-11,2026-04-14,completed,4.9,1.1,Shanti Bai,Indore MP
+LOG-1776410043728-3398,Cauliflower,Snowball,BigBasket Warehouse,60,23.6,1416,2026-04-13,2026-04-14,completed,4,3.3,Lakshmi Devi,Nashik MH
+LOG-1776410043728-1496,Cauliflower,Pusa,ITC Foods Processing,60,24.3,1458,2026-04-14,2026-04-15,partial,4.8,4.8,Ramesh Yadav,Barabanki UP
+LOG-1776410043728-5284,Spinach,Baby Spinach,Zomato Cloud Kitchen,22,11.2,246,2026-01-18,2026-01-21,partial,4.1,3.3,Shanti Bai,Indore MP
+LOG-1776410043728-4491,Spinach,Flat Leaf,Mother Dairy Outlet,20,14.5,290,2026-01-21,2026-01-24,completed,4.3,5.4,Shanti Bai,Indore MP
+LOG-1776410043728-6678,Spinach,Baby Spinach,ITC Foods Processing,22,13.3,293,2026-01-23,2026-01-26,completed,4.6,1.7,Mohan Lal,Bhopal MP
+LOG-1776410043728-9595,Spinach,Palak,Haldiram Distribution,23,11.3,260,2026-01-26,2026-01-28,completed,4,5.4,Sunita Patel,Unnao UP
+LOG-1776410043728-8739,Spinach,Flat Leaf,Mother Dairy Outlet,31,11.9,369,2026-01-28,2026-01-30,completed,3.6,5.7,Mohan Lal,Bhopal MP
+LOG-1776410043728-6200,Spinach,Palak,BigBasket Warehouse,26,13.4,348,2026-01-29,2026-02-01,completed,5,5.4,Pushpa Kumari,Patna BR
+LOG-1776410043728-3954,Spinach,Baby Spinach,ITC Foods Processing,25,11.2,280,2026-01-30,2026-02-01,partial,3.7,3.4,Lakshmi Devi,Nashik MH
+LOG-1776410043728-6850,Spinach,Baby Spinach,FreshMart Superstore,23,12.9,297,2026-02-01,2026-02-02,completed,3.7,8,Bhola Nath,Jhansi UP
+LOG-1776410043729-2904,Spinach,Baby Spinach,Swiggy Instamart Hub,22,12.5,275,2026-02-03,2026-02-04,completed,5,4.2,Ravi Patil,Pune MH
+LOG-1776410043729-9632,Spinach,Flat Leaf,FreshMart Superstore,32,13.8,442,2026-02-07,2026-02-08,completed,4,2.3,Kiran Bai,Bareilly UP
+LOG-1776410043729-7468,Spinach,Palak,ITC Foods Processing,28,11.7,328,2026-02-12,2026-02-13,completed,3.9,7.6,Rajesh Kumar,Lucknow UP
+LOG-1776410043729-8557,Spinach,Palak,Metro Wholesale Club,33,11.9,393,2026-02-13,2026-02-14,completed,4.5,1.2,Raju Mandal,Muzaffarpur BR
+LOG-1776410043729-4614,Spinach,Baby Spinach,DMart Fresh Counter,30,12.6,378,2026-02-16,2026-02-17,cancelled,3.8,4.8,Meena Devi,Kanpur Dehat UP
+LOG-1776410043729-4951,Spinach,Palak,BigBasket Warehouse,24,11.5,276,2026-02-18,2026-02-19,completed,5,6.5,Raju Mandal,Muzaffarpur BR
+LOG-1776410043729-5114,Spinach,Flat Leaf,BigBasket Warehouse,25,14.7,368,2026-02-19,2026-02-21,completed,4.4,1.9,Deepak Gupta,Prayagraj UP
+LOG-1776410043729-1374,Spinach,Flat Leaf,ITC Foods Processing,25,14.3,358,2026-02-20,2026-02-22,completed,5,3.7,Mahesh Tiwari,Hardoi UP
+LOG-1776410043729-8339,Spinach,Flat Leaf,Metro Wholesale Club,23,13.7,315,2026-02-21,2026-02-23,completed,4.1,7.9,Ganesh Jadhav,Kolhapur MH
+LOG-1776410043729-1235,Spinach,Baby Spinach,Zomato Cloud Kitchen,30,12.1,363,2026-02-22,2026-02-24,completed,4,6.6,Shanti Bai,Indore MP
+LOG-1776410043729-9633,Spinach,Flat Leaf,ITC Foods Processing,22,12.7,279,2026-02-24,2026-02-27,completed,4.7,4.3,Arvind Mishra,Fatehpur UP
+LOG-1776410043729-2078,Spinach,Palak,Zomato Cloud Kitchen,27,12.6,340,2026-02-28,2026-03-02,completed,3.9,2.8,Kavita Rani,Varanasi UP
+LOG-1776410043729-2615,Spinach,Flat Leaf,FreshMart Superstore,29,12.3,357,2026-03-03,2026-03-05,completed,4.9,0.8,Asha Kumari,Sitapur UP
+LOG-1776410043729-3475,Spinach,Palak,ITC Foods Processing,33,14.8,488,2026-03-04,2026-03-06,completed,3.8,7.6,Priya Sharma,Rae Bareli UP
+LOG-1776410043729-6779,Spinach,Baby Spinach,Zomato Cloud Kitchen,29,11.6,336,2026-03-05,2026-03-07,completed,4.6,2.9,Lakshmi Devi,Nashik MH
+LOG-1776410043729-4298,Spinach,Baby Spinach,DMart Fresh Counter,26,12,312,2026-03-06,2026-03-08,cancelled,4.2,6.6,Anita Devi,Meerut UP
+LOG-1776410043729-9986,Spinach,Baby Spinach,SpiceBox Restaurant Chain,32,13,416,2026-03-07,2026-03-09,completed,4.1,3.2,Kavita Rani,Varanasi UP
+LOG-1776410043729-8464,Spinach,Palak,BigBasket Warehouse,29,14,406,2026-03-08,2026-03-09,completed,3.7,3.7,Shanti Bai,Indore MP
+LOG-1776410043729-9622,Spinach,Flat Leaf,BigBasket Warehouse,32,15.4,493,2026-03-09,2026-03-11,completed,4.6,6.8,Geeta Verma,Kannauj UP
+LOG-1776410043729-1294,Spinach,Baby Spinach,Haldiram Distribution,29,11.9,345,2026-03-10,2026-03-12,completed,4.6,4.1,Vikram Singh,Bithoor UP
+LOG-1776410043729-5946,Spinach,Baby Spinach,BigBasket Warehouse,24,14,336,2026-03-11,2026-03-14,completed,5,5.1,Mahesh Tiwari,Hardoi UP
+LOG-1776410043729-4154,Spinach,Baby Spinach,Metro Wholesale Club,25,15.8,395,2026-03-13,2026-03-15,completed,4.2,1.3,Pushpa Kumari,Patna BR
+LOG-1776410043729-8202,Spinach,Palak,Swiggy Instamart Hub,32,13.7,438,2026-03-14,2026-03-16,completed,4.2,5.1,Ganesh Jadhav,Kolhapur MH
+LOG-1776410043729-7222,Spinach,Palak,SpiceBox Restaurant Chain,19,12.9,245,2026-03-16,2026-03-18,completed,4.4,4.1,Pankaj Dubey,Gorakhpur UP
+LOG-1776410043729-5340,Spinach,Palak,Chai Point Cafes,28,14.4,403,2026-03-21,2026-03-23,completed,4.7,5.6,Arvind Mishra,Fatehpur UP
+LOG-1776410043729-6797,Spinach,Baby Spinach,Zomato Cloud Kitchen,29,11.4,331,2026-03-24,2026-03-25,completed,4.9,7.8,Priya Sharma,Rae Bareli UP
+LOG-1776410043729-8959,Spinach,Palak,SpiceBox Restaurant Chain,22,14.4,317,2026-03-26,2026-03-27,completed,4.7,7.8,Mahesh Tiwari,Hardoi UP
+LOG-1776410043729-4910,Spinach,Palak,SpiceBox Restaurant Chain,25,12.5,313,2026-03-29,2026-03-31,completed,4.5,7.5,Sunita Patel,Unnao UP
+LOG-1776410043729-8391,Spinach,Flat Leaf,Metro Wholesale Club,22,14.1,310,2026-03-31,2026-04-03,completed,4.8,5.3,Ravi Patil,Pune MH
+LOG-1776410043730-5085,Spinach,Baby Spinach,Zomato Cloud Kitchen,33,19,627,2026-04-01,2026-04-02,completed,4.7,3.8,Geeta Verma,Kannauj UP
+LOG-1776410043730-7987,Spinach,Baby Spinach,SpiceBox Restaurant Chain,33,15.1,498,2026-04-04,2026-04-06,completed,4.2,6.8,Asha Kumari,Sitapur UP
+LOG-1776410043730-6219,Spinach,Flat Leaf,Grand Hotel Kitchens,26,14.6,380,2026-04-05,2026-04-07,completed,5,4.7,Kiran Bai,Bareilly UP
+LOG-1776410043730-8127,Spinach,Baby Spinach,Grand Hotel Kitchens,33,15.8,521,2026-04-07,2026-04-08,completed,3.9,1.5,Kiran Bai,Bareilly UP
+LOG-1776410043730-2144,Spinach,Flat Leaf,Haldiram Distribution,21,19.2,403,2026-04-08,2026-04-10,completed,3.5,6,Rajesh Kumar,Lucknow UP
+LOG-1776410043730-4907,Spinach,Palak,DMart Fresh Counter,23,14.8,340,2026-04-12,2026-04-13,completed,3.6,1.8,Kiran Bai,Bareilly UP
+LOG-1776410043730-1181,Spinach,Baby Spinach,Grand Hotel Kitchens,23,18.1,416,2026-04-15,2026-04-16,completed,4,7.2,Raju Mandal,Muzaffarpur BR
+LOG-1776410043730-2364,Spinach,Palak,Metro Wholesale Club,34,18,612,2026-04-16,2026-04-17,completed,3.7,3.9,Priya Sharma,Rae Bareli UPLOG-1776410546255-2493,Wheat,Sharbati,Grand Hotel Kitchens,500,18,9000,2026-04-17,2026-04-01,completed,4.5,0,Auto-Matched,Lucknow UP
+LOG-1776410567858-9427,Wheat,Sharbati,Grand Hotel Kitchens,500,18,9000,2026-04-17,2026-04-01,completed,4.5,0,Auto-Matched,Lucknow UP
+LOG-1776410591103-7990,Wheat,Sharbati,Grand Hotel Kitchens,500,18,9000,2026-04-17,2026-04-05,completed,4.5,0,Auto-Matched,Lucknow UP
