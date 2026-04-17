@@ -93,9 +93,15 @@ d2farm/
 │   ├── contracts/     → D2FarmIdentity.sol (Solidity smart contract)
 │   └── services/      → blockchainService.js
 │
-├── ml_engine/         → AI Pricing Engine (Python + Flask + scikit-learn)
-│   ├── app.py         → Flask REST API (port 5000)
-│   └── pricing_model.py → RandomForest model for price prediction
+├── models/            → ML/AI Models (Python + scikit-learn)
+│   ├── price_prediction.py    → Ensemble price forecasting (RF + GBR)
+│   ├── crop_quality.py        → Multi-factor quality grading (A/B/C/Rejected)
+│   ├── demand_forecasting.py  → Buyer demand prediction (seasonal + events)
+│   ├── supply_confidence.py   → Farmer reliability scoring
+│   ├── spoilage_risk.py       → Transit spoilage predictor
+│   ├── route_optimizer.py     → Multi-stop transport optimizer
+│   ├── matching_engine.py     → Demand ↔ Supply allocation engine
+│   └── requirements.txt
 │
 └── screenshots/       → App screenshots for documentation
 ```
@@ -110,7 +116,7 @@ d2farm/
 | **Farmer App** | Next.js, Tailwind CSS, Leaflet Maps | Mobile-first onboarding, crop listing, proposal management |
 | **Backend API** | Node.js, Express.js | REST API for orders, proposals, matching, farmer profiles |
 | **Database** | MongoDB (Mongoose) | Stores orders, users, crops, listings, proposals, transactions |
-| **AI/ML Engine** | Python, Flask, scikit-learn | Real-time price prediction using RandomForest (supply, demand, weather, policy) |
+| **ML Models** | Python, scikit-learn, NumPy, Pandas | 7 production models — pricing, quality, demand, supply confidence, spoilage, routing, matching |
 | **Blockchain** | Solidity, Polygon (ERC-721) | Soulbound Farmer ID NFTs, farmland verification, smart contracts |
 | **Maps** | Leaflet + OpenStreetMap | GPS-based farm location capture and verification |
 
