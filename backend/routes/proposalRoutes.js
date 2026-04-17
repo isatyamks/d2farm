@@ -3,6 +3,7 @@ const router = express.Router();
 const Proposal = require('../models/Proposal');
 const FarmerProfile = require('../models/FarmerProfile');
 const CropListing = require('../models/CropListing');
+const User = require('../models/User');
 const BlockchainService = require('../services/blockchainService');
 
 // ─── POST /api/proposals ───
@@ -113,17 +114,22 @@ router.put('/:id/status', async (req, res) => {
       note: note || `Status updated to ${status}`
     });
 
-    // Update payment status based on lifecycle
+    // ── On full payment: unlock escrow + credit remaining 98% to farmer withdrawable balance
     if (status === 'PAYMENT_RECEIVED') {
       proposal.paymentStatus = 'COMPLETED';
-      
-      // Update farmer metrics
+      const escrowAmount = parseFloat((proposal.totalValue * 0.02).toFixed(2));
+      const remainingAmount = parseFloat((proposal.totalValue - escrowAmount).toFixed(2));
+
       await FarmerProfile.findByIdAndUpdate(proposal.farmerId, {
-        $inc: { 
-          'metrics.completedDeliveries': 1,
-          'metrics.acceptedProposals': status === 'ACCEPTED' ? 1 : 0
+        $inc: {
+          // Move locked escrow → withdrawable
+          'wallet.lockedBalance': -escrowAmount,
+          'wallet.withdrawableBalance': proposal.totalValue, // full amount now withdrawable
+          'metrics.completedDeliveries': 1
         }
       });
+
+      console.log(`💰 Payment settled: ₹${proposal.totalValue} (escrow ₹${escrowAmount} unlocked + ₹${remainingAmount} credited). Proposal ${proposal._id}`);
     }
 
     if (status === 'ACCEPTED') {
@@ -154,43 +160,99 @@ router.put('/:id/status', async (req, res) => {
 });
 
 // ─── PUT /api/proposals/:id/accept-contract ───
-// specialized Escrow calculation endpoint locking the 2% advance directly onto Blockchain
+// Buyer accepts: 2% escrow debited from buyer wallet + locked in farmer wallet (NOT withdrawable)
 router.put('/:id/accept-contract', async (req, res) => {
   try {
-    const proposal = await Proposal.findById(req.params.id);
+    const proposal = await Proposal.findById(req.params.id).populate('orderId');
     if (!proposal) return res.status(404).json({ success: false, message: 'Proposal not found.' });
     if (proposal.status === 'ACCEPTED') return res.status(400).json({ success: false, message: 'Already locked.' });
 
-    // 1. Calculate the 2% escrow lock
-    const escrowAmount = proposal.totalValue * 0.02; // 2% upfront
+    const escrowAmount = parseFloat((proposal.totalValue * 0.02).toFixed(2));
 
-    // 2. Change state to ACCEPTED (which triggers Blockchain Smart Contract lock implicitly)
+    // ── 1. Debit from buyer wallet
+    const buyerId = proposal.orderId?.userId || proposal.orderId?.buyer;
+    if (buyerId) {
+      const buyer = await User.findById(buyerId);
+      if (buyer) {
+        if (buyer.wallet.balance < escrowAmount) {
+          return res.status(400).json({ success: false, message: `Insufficient buyer wallet balance. Need ₹${escrowAmount}, available ₹${buyer.wallet.balance}.` });
+        }
+        buyer.wallet.balance -= escrowAmount;
+        buyer.wallet.lockedBalance = (buyer.wallet.lockedBalance || 0) + escrowAmount;
+        await buyer.save();
+      }
+    }
+
+    // ── 2. Credit farmer's LOCKED wallet (not withdrawable until delivery)
+    await FarmerProfile.findByIdAndUpdate(proposal.farmerId, {
+      $inc: {
+        'wallet.balance': escrowAmount,
+        'wallet.lockedBalance': escrowAmount,
+        'metrics.acceptedProposals': 1
+      }
+    });
+
+    // ── 3. Update proposal state
     proposal.status = 'ACCEPTED';
     proposal.paymentStatus = 'ESCROW_LOCKED';
-    
-    // 3. Document the precise 2% transfer safely into the DB timeline
     proposal.timeline.push({
-      status: 'ESCROW_LOCKED',
+      status: 'ACCEPTED',
       timestamp: new Date(),
-      note: `Buyer accepted proposal. Fixed Smart Contract on-chain with 2% advance margin transfer (₹${escrowAmount}).`
+      note: `Smart contract locked. ₹${escrowAmount} (2%) debited from buyer and held in farmer escrow. Release on delivery confirmation.`
     });
-
-    // 4. Update Farmer's Profile metric stats seamlessly
-    await FarmerProfile.findByIdAndUpdate(proposal.farmerId, {
-      $inc: { 'metrics.acceptedProposals': 1 }
-    });
-
-    // [Mock] Web3 execution would be called here to lock the actual Polygon wallet funds
     await proposal.save();
 
-    res.status(200).json({ 
-        success: true, 
-        message: `Contract accepted successfully. 2% escrow (₹${escrowAmount}) transferred and locked.`,
-        proposal 
+    console.log(`✅ Escrow locked: ₹${escrowAmount} | Proposal ${proposal._id}`);
+    res.status(200).json({
+      success: true,
+      message: `Contract accepted. ₹${escrowAmount} escrowed and locked in farmer wallet pending delivery.`,
+      escrowAmount,
+      proposal
     });
   } catch (err) {
-    console.error("Accept Contract Error:", err);
+    console.error('Accept Contract Error:', err);
     res.status(500).json({ success: false, message: 'Failed to initiate Smart Contract lock.', error: err.message });
+  }
+});
+
+// ─── PUT /api/proposals/:id/cancel-contract ───
+// Farmer cancels AFTER escrow locked — their 2% is FORFEITED as trust penalty
+router.put('/:id/cancel-contract', async (req, res) => {
+  try {
+    const proposal = await Proposal.findById(req.params.id);
+    if (!proposal) return res.status(404).json({ success: false, message: 'Proposal not found.' });
+    if (proposal.status !== 'ACCEPTED') return res.status(400).json({ success: false, message: 'Only accepted contracts can be cancelled.' });
+
+    const escrowAmount = parseFloat((proposal.totalValue * 0.02).toFixed(2));
+
+    // ── Slash farmer's locked escrow as penalty (funds forfeited)
+    await FarmerProfile.findByIdAndUpdate(proposal.farmerId, {
+      $inc: {
+        'wallet.balance': -escrowAmount,
+        'wallet.lockedBalance': -escrowAmount,
+        'metrics.trustScore': -10,
+        'metrics.rejectedProposals': 1
+      }
+    });
+
+    proposal.status = 'REJECTED';
+    proposal.paymentStatus = 'PENDING';
+    proposal.timeline.push({
+      status: 'REJECTED',
+      timestamp: new Date(),
+      note: `Farmer cancelled contract. ₹${escrowAmount} escrow forfeited as trust penalty. Trust score reduced by 10 points.`
+    });
+    await proposal.save();
+
+    console.log(`⚠️ Contract cancelled. ₹${escrowAmount} forfeited. Proposal ${proposal._id}`);
+    res.status(200).json({
+      success: true,
+      message: `Contract cancelled. ₹${escrowAmount} escrow slashed as trust penalty.`,
+      proposal
+    });
+  } catch (err) {
+    console.error('Cancel Contract Error:', err);
+    res.status(500).json({ success: false, message: 'Failed to cancel contract.', error: err.message });
   }
 });
 
