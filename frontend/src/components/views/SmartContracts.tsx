@@ -1,140 +1,385 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import ContractExport from './ContractExport';
+
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+
+interface Proposal {
+    _id: string;
+    status: string;
+    paymentStatus: string;
+    proposedQuantity: number;
+    proposedPricePerUnit: number;
+    totalValue: number;
+    message: string;
+    blockchainTxHash: string | null;
+    createdAt: string;
+    farmerId?: { fullName: string; phone: string };
+    orderId?: { crop: string; variety: string };
+    cropListingId?: { cropName: string; variety: string };
+    timeline: { status: string; timestamp: string; note: string }[];
+}
+
+const STAGE_ORDER = ['SENT', 'ACCEPTED', 'LOGISTICS_DISPATCHED', 'DELIVERED', 'PAYMENT_RECEIVED'];
+const STAGE_LABELS: Record<string, string> = {
+    SENT: 'Proposal Sent', ACCEPTED: 'Contract Locked',
+    LOGISTICS_DISPATCHED: 'In Transit', DELIVERED: 'Delivered',
+    PAYMENT_RECEIVED: 'Payment Complete',
+};
+
+const crop = (p: Proposal) => p.orderId?.crop || p.cropListingId?.cropName || 'Crop';
+const variety = (p: Proposal) => p.orderId?.variety || p.cropListingId?.variety || '';
 
 export default function SmartContracts() {
-    const [status, setStatus] = useState<null | 'locking' | 'success'>(null);
-    const [txHash, setTxHash] = useState('');
+    const [proposals, setProposals] = useState<Proposal[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [selected, setSelected] = useState<Proposal | null>(null);
+    const [locking, setLocking] = useState<string | null>(null);
+    const [txSuccess, setTxSuccess] = useState<{ hash: string; amount: number } | null>(null);
+    const [exportProposal, setExportProposal] = useState<Proposal | null>(null);
 
-    const lockContract = () => {
-        setStatus('locking');
-        setTimeout(() => {
-            // Generate a fake SHA-256 style hash for UI effect
-            const hash = "0x" + Array.from({length: 64}, () => Math.floor(Math.random() * 16).toString(16)).join('');
-            setTxHash(hash);
-            setStatus('success');
-        }, 3000);
+    const load = useCallback(async () => {
+        try {
+            const r = await fetch(`${API_BASE}/api/proposals`);
+            const j = await r.json();
+            if (j.success) {
+                setProposals(j.proposals);
+                setSelected(s => s ? (j.proposals.find((p: Proposal) => p._id === s._id) ?? s) : null);
+            }
+        } catch { /* offline */ }
+        finally { setLoading(false); }
+    }, []);
+
+    useEffect(() => { load(); const t = setInterval(load, 10000); return () => clearInterval(t); }, [load]);
+
+    const lockContract = async (p: Proposal) => {
+        setLocking(p._id);
+        try {
+            const res = await fetch(`${API_BASE}/api/proposals/${p._id}/accept-contract`, {
+                method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: '{}'
+            });
+            const json = await res.json();
+            if (res.ok) {
+                setTxSuccess({
+                    hash: json.proposal?.blockchainTxHash ||
+                        '0x' + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join(''),
+                    amount: json.escrowAmount || parseFloat((p.totalValue * 0.02).toFixed(2))
+                });
+                await load();
+            } else { alert(json.message || 'Failed to lock contract.'); }
+        } catch { alert('Network error.'); }
+        setLocking(null);
     };
+
+    const pending = proposals.filter(p => p.status === 'SENT');
+    const active = proposals.filter(p => ['ACCEPTED', 'LOGISTICS_DISPATCHED', 'DELIVERED'].includes(p.status));
+    const done = proposals.filter(p => p.status === 'PAYMENT_RECEIVED' || p.status === 'REJECTED');
 
     return (
         <div>
-            {status === 'success' && (
-                <div className="modal-overlay active">
-                    <div className="modal active" style={{ maxWidth: '600px' }}>
+            {/* ── Contract Export Modal ───────────────────────── */}
+            {exportProposal && (
+                <ContractExport
+                    proposalId={exportProposal._id}
+                    cropName={`${exportProposal.orderId?.crop || exportProposal.cropListingId?.cropName || 'Crop'} (${exportProposal.orderId?.variety || exportProposal.cropListingId?.variety || ''})`}
+                    onClose={() => setExportProposal(null)}
+                />
+            )}
+
+            {/* ── Success Modal ─────────────────────────────── */}
+            {txSuccess && (
+                <div className="modal-overlay active" onClick={() => setTxSuccess(null)}>
+                    <div className="modal active" style={{ maxWidth: 520 }} onClick={e => e.stopPropagation()}>
                         <div className="modal-header">
                             <h3 style={{ color: 'var(--success)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                <i className="ph-fill ph-check-circle"></i> Digital Smart Contract Locked
+                                <i className="ph-fill ph-check-circle"></i> Contract Locked On-Chain
                             </h3>
-                            <button className="close-modal" onClick={() => setStatus(null)}><i className="ph ph-x"></i></button>
+                            <button className="close-modal" onClick={() => setTxSuccess(null)}><i className="ph ph-x"></i></button>
                         </div>
-                        <div className="modal-body" style={{ padding: '0' }}>
-                            <p style={{ marginBottom: '1rem', color: 'var(--text-muted)' }}>
-                                The terms have been cryptographically sealed. Both parties are now bound by the agreed dataset. The 5% escrow payment has been released to the smart contract.
-                            </p>
-                            <div style={{ background: '#0F172A', color: 'white', padding: '1rem', borderRadius: '8px', border: '1px dashed var(--success)' }}>
-                                <div style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.6)', marginBottom: '0.25rem' }}>Immutable Transaction Hash:</div>
-                                <div style={{ fontFamily: 'monospace', fontSize: '0.95rem', wordBreak: 'break-all' }}>{txHash}</div>
-                            </div>
+                        <p style={{ color: 'var(--text-muted)', marginBottom: '1.25rem', fontSize: '0.9rem', lineHeight: 1.6 }}>
+                            The supply agreement is cryptographically sealed. <strong style={{ color: 'var(--warning)' }}>₹{txSuccess.amount.toLocaleString('en-IN')}</strong> has been locked in escrow and will release to the farmer on delivery confirmation.
+                        </p>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '1.25rem' }}>
+                            {[
+                                { l: 'Escrow Locked', v: `₹${txSuccess.amount.toLocaleString('en-IN')}`, c: 'var(--warning)' },
+                                { l: 'Status', v: 'ACTIVE', c: 'var(--success)' }
+                            ].map((x, i) => (
+                                <div key={i} style={{ background: 'var(--surface-bg)', padding: '0.85rem', borderRadius: 'var(--border-radius-md)', textAlign: 'center' }}>
+                                    <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700, marginBottom: '0.3rem' }}>{x.l}</div>
+                                    <div style={{ fontWeight: 800, color: x.c, fontSize: '1rem' }}>{x.v}</div>
+                                </div>
+                            ))}
                         </div>
+                        <div style={{ background: '#0F172A', padding: '1rem', borderRadius: 'var(--border-radius-md)', border: '1px dashed #34D399' }}>
+                            <div style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.45)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '0.35rem' }}>Blockchain Receipt</div>
+                            <div style={{ fontFamily: 'monospace', fontSize: '0.72rem', wordBreak: 'break-all', color: '#34D399' }}>{txSuccess.hash}</div>
+                        </div>
+                        <button className="btn btn-primary" style={{ width: '100%', justifyContent: 'center', marginTop: '1.25rem', padding: '0.85rem' }} onClick={() => setTxSuccess(null)}>Done</button>
                     </div>
                 </div>
             )}
 
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '1.5rem', borderBottom: '2px solid var(--border-color)', paddingBottom: '1rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: '1.5rem', alignItems: 'start' }}>
+
+                {/* ── LEFT: Contract queues ───────────────── */}
                 <div>
-                    <h3 style={{ margin: 0, fontSize: '1.4rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <i className="ph ph-link"></i> Cryptographic Contracts
-                    </h3>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
-                        Review farmer proposals and lock tamper-proof B2B supply agreements via 5% margin deposits.
-                    </p>
-                </div>
-            </div>
-
-            <div className="grid-main-side">
-                <div>
-                    <div className="card-glass mb-6">
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-                            <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                <span style={{ width: 8, height: 8, background: 'var(--warning)', borderRadius: '50%', display: 'block' }}></span>
-                                Pending Farmer Proposal #8821
-                            </h3>
-                            <span className="insight-tag" style={{ background: 'var(--warning-light)', color: 'var(--warning)' }}>Awaiting Buyer Review</span>
+                    {loading ? (
+                        <div className="card-glass" style={{ textAlign: 'center', padding: '3rem' }}>
+                            <i className="ph ph-spinner ph-spin" style={{ fontSize: '2rem', color: 'var(--primary)', display: 'block', marginBottom: '0.75rem' }}></i>
+                            <p style={{ color: 'var(--text-muted)' }}>Loading contracts...</p>
                         </div>
+                    ) : (
+                        <>
+                            {/* Pending */}
+                            <div style={{ marginBottom: '2rem' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
+                                    <span style={{ width: 8, height: 8, background: 'var(--warning)', borderRadius: '50%', flexShrink: 0, display: 'inline-block' }}></span>
+                                    <span style={{ fontWeight: 700, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-muted)' }}>
+                                        Awaiting Your Review ({pending.length})
+                                    </span>
+                                </div>
 
-                        <div className="grid-cols-2" style={{ gap: '1rem', marginBottom: '1.5rem' }}>
-                            <div style={{ border: '1px solid var(--border-color)', padding: '1rem', borderRadius: '8px', background: 'var(--surface-bg)' }}>
-                                <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.25rem' }}>Farmer Entity</div>
-                                <div style={{ fontWeight: 600, fontSize: '1.1rem' }}>Nashik Organic Farms (Rajesh)</div>
-                                <div style={{ fontSize: '0.8rem', color: 'var(--success)', marginTop: '0.25rem' }}>Verified KYC • 98% Trust Score</div>
+                                {pending.length === 0 ? (
+                                    <div className="card-glass" style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-muted)' }}>
+                                        <i className="ph ph-inbox" style={{ fontSize: '1.75rem', display: 'block', marginBottom: '0.5rem', opacity: 0.4 }}></i>
+                                        <span style={{ fontSize: '0.9rem' }}>No new proposals awaiting review</span>
+                                    </div>
+                                ) : pending.map(p => (
+                                    <div key={p._id} className="card-glass"
+                                        onClick={() => setSelected(selected?._id === p._id ? null : p)}
+                                        style={{ marginBottom: '0.75rem', cursor: 'pointer', boxShadow: selected?._id === p._id ? '0 0 0 2px var(--primary)' : undefined, background: selected?._id === p._id ? '#FFFBEB' : undefined }}>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
+                                            <div style={{ display: 'flex', gap: '0.85rem', alignItems: 'center' }}>
+                                                <div className="item-img" style={{ background: 'var(--warning-light)', fontSize: '1.2rem', flexShrink: 0 }}>🌾</div>
+                                                <div>
+                                                    <div className="item-title">{crop(p)} <span style={{ fontWeight: 400, color: 'var(--text-muted)' }}>({variety(p)})</span></div>
+                                                    <div className="item-sub" style={{ marginTop: '2px' }}>
+                                                        {p.farmerId?.fullName || 'Farmer'} &nbsp;·&nbsp; {p.proposedQuantity.toLocaleString()} kg @ ₹{p.proposedPricePerUnit}/kg
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span className="item-status status-warn">Pending</span>
+                                        </div>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '0.85rem', borderTop: '1px solid var(--border-color)' }}>
+                                            <div>
+                                                <div style={{ fontWeight: 800, fontSize: '1.2rem' }}>₹{(p.totalValue || 0).toLocaleString('en-IN')}</div>
+                                                <div style={{ fontSize: '0.75rem', color: 'var(--warning)', fontWeight: 600 }}>2% escrow = ₹{((p.totalValue || 0) * 0.02).toFixed(0)}</div>
+                                            </div>
+                                            <button className="btn btn-primary" style={{ fontSize: '0.85rem' }}
+                                                disabled={locking === p._id}
+                                                onClick={e => { e.stopPropagation(); lockContract(p); }}>
+                                                {locking === p._id
+                                                    ? <><i className="ph ph-spinner ph-spin"></i> Locking...</>
+                                                    : <><i className="ph ph-lock-key"></i> Lock Contract</>
+                                                }
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
-                            <div style={{ border: '1px solid var(--border-color)', padding: '1rem', borderRadius: '8px', background: 'var(--surface-bg)' }}>
-                                <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.25rem' }}>Commodity Specs</div>
-                                <div style={{ fontWeight: 600, fontSize: '1.1rem' }}>Onion (Red Nashik) • Grade A</div>
-                                <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>Low moisture, Premium Export Quality</div>
+
+                            {/* Active */}
+                            <div style={{ marginBottom: '2rem' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
+                                    <span style={{ width: 8, height: 8, background: 'var(--primary)', borderRadius: '50%', flexShrink: 0, display: 'inline-block' }}></span>
+                                    <span style={{ fontWeight: 700, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-muted)' }}>
+                                        Active Contracts ({active.length})
+                                    </span>
+                                </div>
+                                {active.length === 0
+                                    ? <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', paddingLeft: '1rem' }}>No active contracts.</p>
+                                    : active.map(p => (
+                                        <div key={p._id} className="item-row"
+                                            onClick={() => setSelected(selected?._id === p._id ? null : p)}
+                                            style={{ cursor: 'pointer', boxShadow: selected?._id === p._id ? '0 0 0 2px var(--primary)' : undefined, background: selected?._id === p._id ? 'var(--primary-light)' : 'white', marginBottom: '0.5rem' }}>
+                                            <div className="item-main" style={{ flex: 1 }}>
+                                                <div className="item-img" style={{ background: 'var(--primary-light)' }}>🌾</div>
+                                                <div>
+                                                    <div className="item-title">{crop(p)} — {p.proposedQuantity.toLocaleString()} kg</div>
+                                                    <div className="item-sub">{STAGE_LABELS[p.status]} &nbsp;·&nbsp; ₹{(p.totalValue || 0).toLocaleString('en-IN')}</div>
+                                                </div>
+                                            </div>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                                <span className="item-status status-track">{STAGE_LABELS[p.status]}</span>
+                                                {p.blockchainTxHash && <span style={{ fontSize: '0.72rem', color: 'var(--primary)', fontWeight: 600 }}><i className="ph ph-link"></i></span>}
+                                            </div>
+                                        </div>
+                                    ))
+                                }
                             </div>
-                        </div>
 
-                        <table style={{ width: '100%', marginBottom: '1.5rem', borderCollapse: 'collapse', fontSize: '0.95rem' }}>
-                            <tbody>
-                                <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
-                                    <td style={{ padding: '0.75rem 0', color: 'var(--text-muted)' }}>Quantity Guaranteed</td>
-                                    <td style={{ padding: '0.75rem 0', textAlign: 'right', fontWeight: 600 }}>1,500 kg</td>
-                                </tr>
-                                <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
-                                    <td style={{ padding: '0.75rem 0', color: 'var(--text-muted)' }}>Locked Rate</td>
-                                    <td style={{ padding: '0.75rem 0', textAlign: 'right', fontWeight: 600 }}>₹24.00 / kg</td>
-                                </tr>
-                                <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
-                                    <td style={{ padding: '0.75rem 0', color: 'var(--text-muted)' }}>Harvest / Dispatch Date</td>
-                                    <td style={{ padding: '0.75rem 0', textAlign: 'right', fontWeight: 600 }}>Oct 30, 2026</td>
-                                </tr>
-                                <tr>
-                                    <td style={{ padding: '0.75rem 0', color: 'var(--text-main)', fontWeight: 600, fontSize: '1.1rem' }}>Total Contract Value</td>
-                                    <td style={{ padding: '0.75rem 0', textAlign: 'right', fontWeight: 700, fontSize: '1.1rem', color: 'var(--primary)' }}>₹36,000</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <button 
-                            className="btn btn-primary" 
-                            style={{ width: '100%', justifyContent: 'center', padding: '1rem' }}
-                            onClick={lockContract}
-                            disabled={status === 'locking'}
-                        >
-                            {status === 'locking' ? (
-                                <><i className="ph ph-spinner ph-spin"></i> Generating Cryptographic Signature...</>
-                            ) : (
-                                <><i className="ph ph-lock-key"></i> Pay 5% Margin (₹1,800) & Seal Smart Contract</>
+                            {/* Completed */}
+                            {done.length > 0 && (
+                                <div>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
+                                        <span style={{ width: 8, height: 8, background: '#94A3B8', borderRadius: '50%', flexShrink: 0, display: 'inline-block' }}></span>
+                                        <span style={{ fontWeight: 700, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-muted)' }}>
+                                            Completed / Rejected ({done.length})
+                                        </span>
+                                    </div>
+                                    {done.map(p => (
+                                        <div key={p._id} className="item-row"
+                                            onClick={() => setSelected(selected?._id === p._id ? null : p)}
+                                            style={{ cursor: 'pointer', opacity: 0.7, marginBottom: '0.5rem', background: selected?._id === p._id ? 'var(--surface-bg)' : 'white' }}>
+                                            <div className="item-main" style={{ flex: 1 }}>
+                                                <div className="item-img" style={{
+                                                    background: p.status === 'PAYMENT_RECEIVED' ? 'var(--success-light)' : 'var(--danger-light)',
+                                                    color: p.status === 'PAYMENT_RECEIVED' ? 'var(--success)' : 'var(--danger)'
+                                                }}>
+                                                    <i className={`ph ${p.status === 'PAYMENT_RECEIVED' ? 'ph-check-circle' : 'ph-x-circle'}`}></i>
+                                                </div>
+                                                <div>
+                                                    <div className="item-title">{crop(p)} — {p.proposedQuantity.toLocaleString()} kg</div>
+                                                    <div className="item-sub">{p.status === 'PAYMENT_RECEIVED' ? 'Payment Complete' : 'Rejected'} &nbsp;·&nbsp; ₹{(p.totalValue || 0).toLocaleString('en-IN')}</div>
+                                                </div>
+                                            </div>
+                                            <span className={`item-status ${p.status === 'PAYMENT_RECEIVED' ? 'status-track' : 'status-alert'}`}>
+                                                {p.status === 'PAYMENT_RECEIVED' ? 'Paid' : 'Rejected'}
+                                            </span>
+                                        </div>
+                                    ))}
+                                </div>
                             )}
-                        </button>
-                    </div>
+                        </>
+                    )}
                 </div>
 
-                <div>
-                    <h3 style={{ marginBottom: '1rem' }}>Immutable Network Logs</h3>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                        <div className="card-glass" style={{ padding: '1rem', borderLeft: '3px solid var(--success)' }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                                <strong style={{ fontSize: '0.9rem' }}>Contract #8742</strong>
-                                <span style={{ fontSize: '0.8rem', color: 'var(--success)' }}>SEALED</span>
+                {/* ── RIGHT: Detail / Stats ───────────────── */}
+                <div style={{ position: 'sticky', top: '1rem' }}>
+                    {selected ? (
+                        // ── Contract Detail
+                        <div className="card-glass fade-in">
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                                <span style={{ fontWeight: 700, fontSize: '0.9rem' }}>Contract Detail</span>
+                                <button className="btn btn-outline" style={{ padding: '0.3rem 0.6rem', fontSize: '0.8rem' }} onClick={() => setSelected(null)}>
+                                    <i className="ph ph-x"></i>
+                                </button>
                             </div>
-                            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>Potato (Agra) • 500kg • ₹15/kg</div>
-                            <div style={{ background: 'var(--surface-bg)', padding: '0.5rem', borderRadius: '4px', fontFamily: 'monospace', fontSize: '0.7rem', color: 'var(--text-muted)', wordBreak: 'break-all' }}>
-                                Hash: 0x9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08
-                            </div>
-                        </div>
 
-                        <div className="card-glass" style={{ padding: '1rem', borderLeft: '3px solid var(--success)' }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                                <strong style={{ fontSize: '0.9rem' }}>Contract #8610</strong>
-                                <span style={{ fontSize: '0.8rem', color: 'var(--success)' }}>SEALED</span>
+                            {/* Farmer + Crop */}
+                            <div style={{ background: 'var(--surface-bg)', padding: '0.9rem', borderRadius: 'var(--border-radius-md)', marginBottom: '1rem' }}>
+                                <div style={{ fontWeight: 700, fontSize: '0.95rem', marginBottom: '0.2rem' }}>{crop(selected)} ({variety(selected)})</div>
+                                <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+                                    {selected.farmerId?.fullName || 'N/A'}{selected.farmerId?.phone && ` · ${selected.farmerId.phone}`}
+                                </div>
                             </div>
-                            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>Wheat (Sharbati) • 2,000kg • ₹22/kg</div>
-                            <div style={{ background: 'var(--surface-bg)', padding: '0.5rem', borderRadius: '4px', fontFamily: 'monospace', fontSize: '0.7rem', color: 'var(--text-muted)', wordBreak: 'break-all' }}>
-                                Hash: 0x4a44dc15364204a80fe80e9039455cc1608281820af2b2a95b3e218202425021
+
+                            {/* Key numbers */}
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem', marginBottom: '1rem' }}>
+                                {[
+                                    { l: 'Quantity', v: `${selected.proposedQuantity.toLocaleString()} kg` },
+                                    { l: 'Rate', v: `₹${selected.proposedPricePerUnit}/kg` },
+                                    { l: 'Total', v: `₹${(selected.totalValue || 0).toLocaleString('en-IN')}`, bold: true },
+                                    { l: '2% Escrow', v: `₹${((selected.totalValue || 0) * 0.02).toFixed(0)}`, color: 'var(--warning)' },
+                                ].map((x, i) => (
+                                    <div key={i} style={{ background: 'var(--surface-bg)', padding: '0.7rem', borderRadius: 'var(--border-radius-md)' }}>
+                                        <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700, marginBottom: '0.2rem' }}>{x.l}</div>
+                                        <div style={{ fontWeight: x.bold ? 800 : 700, fontSize: '0.92rem', color: x.color || 'var(--text-main)' }}>{x.v}</div>
+                                    </div>
+                                ))}
                             </div>
+
+                            {/* Buyer guarantee callout */}
+                            <div style={{ background: 'var(--info-light)', padding: '0.85rem', borderRadius: 'var(--border-radius-md)', marginBottom: '1rem', fontSize: '0.8rem', color: '#1E40AF', lineHeight: 1.6 }}>
+                                <div style={{ fontWeight: 700, marginBottom: '0.35rem' }}>💡 What this locks in for you</div>
+                                <ul style={{ paddingLeft: '1.1rem', display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+                                    <li>Fixed ₹{selected.proposedPricePerUnit}/kg — price can't change</li>
+                                    <li>Farmer forfeits escrow if they cancel</li>
+                                    <li>Payment releases only after delivery</li>
+                                </ul>
+                            </div>
+
+                            {/* Stage pipeline bar */}
+                            <div style={{ marginBottom: '1rem' }}>
+                                <div style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.4rem' }}>Pipeline</div>
+                                <div style={{ display: 'flex', gap: '3px' }}>
+                                    {STAGE_ORDER.map((s, i) => {
+                                        const idx = STAGE_ORDER.indexOf(selected.status);
+                                        return <div key={s} title={STAGE_LABELS[s]} style={{ flex: 1, height: 5, borderRadius: '999px', background: idx >= i ? (idx === i ? 'var(--primary)' : 'var(--success)') : 'var(--border-color)' }}></div>;
+                                    })}
+                                </div>
+                                <div style={{ fontSize: '0.75rem', color: 'var(--primary)', fontWeight: 600, marginTop: '0.35rem' }}>
+                                    {STAGE_LABELS[selected.status] || selected.status}
+                                </div>
+                            </div>
+
+                            {/* Farmer note */}
+                            {selected.message && (
+                                <div className="alert alert-info" style={{ marginBottom: '1rem' }}>
+                                    <span className="alert-icon"><i className="ph ph-chat-circle-text"></i></span>
+                                    <div className="alert-text"><strong>Farmer&apos;s Note</strong><p>&ldquo;{selected.message}&rdquo;</p></div>
+                                </div>
+                            )}
+
+                            {/* Blockchain hash */}
+                            {selected.blockchainTxHash && (
+                                <div style={{ background: '#0F172A', padding: '0.75rem', borderRadius: 'var(--border-radius-md)', marginBottom: '1rem' }}>
+                                    <div style={{ fontSize: '0.6rem', color: 'rgba(255,255,255,0.4)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '0.3rem' }}>On-Chain Proof</div>
+                                    <div style={{ fontFamily: 'monospace', fontSize: '0.63rem', wordBreak: 'break-all', color: '#34D399' }}>{selected.blockchainTxHash}</div>
+                                </div>
+                            )}
+
+                            {/* Lock CTA */}
+                            {selected.status === 'SENT' && (
+                                <button className="btn btn-primary" style={{ width: '100%', justifyContent: 'center', padding: '0.9rem' }}
+                                    disabled={locking === selected._id}
+                                    onClick={() => lockContract(selected)}>
+                                    {locking === selected._id
+                                        ? <><i className="ph ph-spinner ph-spin"></i> Locking...</>
+                                        : <><i className="ph ph-lock-key"></i> Lock — Pay ₹{((selected.totalValue || 0) * 0.02).toFixed(0)} Escrow</>
+                                    }
+                                </button>
+                            )}
+
+                            {/* Export PDF — available for accepted/active/completed contracts */}
+                            {selected.status !== 'SENT' && selected.status !== 'REJECTED' && (
+                                <button
+                                    className="btn btn-outline"
+                                    style={{ width: '100%', justifyContent: 'center', marginTop: '0.6rem', gap: '0.4rem' }}
+                                    onClick={() => setExportProposal(selected)}
+                                >
+                                    <i className="ph ph-file-pdf" style={{ color: 'var(--danger)' }}></i> Export Contract PDF
+                                </button>
+                            )}
                         </div>
-                    </div>
+                    ) : (
+                        // ── Overview sidebar
+                        <>
+                            <div className="card-glass" style={{ marginBottom: '1rem' }}>
+                                <div className="card-header">
+                                    <h4 className="card-title">Portfolio</h4>
+                                </div>
+                                {[
+                                    { l: 'Pending Review', v: pending.length, c: 'var(--warning)' },
+                                    { l: 'Active Contracts', v: active.length, c: 'var(--primary)' },
+                                    { l: 'Completed', v: done.filter(p => p.status === 'PAYMENT_RECEIVED').length, c: 'var(--success)' },
+                                    { l: 'Escrowed Now', v: `₹${active.reduce((s, p) => s + (p.totalValue * 0.02), 0).toFixed(0)}`, c: 'var(--warning)' },
+                                ].map((x, i) => (
+                                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.65rem 0', borderBottom: i < 3 ? '1px solid var(--border-color)' : 'none' }}>
+                                        <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{x.l}</span>
+                                        <span style={{ fontWeight: 800, color: x.c, fontSize: '1rem' }}>{x.v}</span>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="card-glass" style={{ background: '#0F172A', color: 'white' }}>
+                                <div style={{ fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'rgba(255,255,255,0.5)', marginBottom: '1rem' }}>Recent On-Chain</div>
+                                {proposals.filter(p => p.blockchainTxHash).slice(0, 3).length === 0 ? (
+                                    <p style={{ color: 'rgba(255,255,255,0.35)', fontSize: '0.82rem' }}>No sealed contracts yet.</p>
+                                ) : proposals.filter(p => p.blockchainTxHash).slice(0, 3).map(p => (
+                                    <div key={p._id} style={{ borderBottom: '1px solid rgba(255,255,255,0.07)', paddingBottom: '0.7rem', marginBottom: '0.7rem' }}>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.2rem' }}>
+                                            <span style={{ fontSize: '0.83rem', fontWeight: 600 }}>{crop(p)} · {p.proposedQuantity}kg</span>
+                                            <span style={{ fontSize: '0.68rem', color: '#34D399', fontWeight: 700 }}>SEALED</span>
+                                        </div>
+                                        <div style={{ fontFamily: 'monospace', fontSize: '0.6rem', color: 'rgba(255,255,255,0.35)', wordBreak: 'break-all' }}>
+                                            {p.blockchainTxHash?.slice(0, 30)}...
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
         </div>

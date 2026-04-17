@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛒 D2Farm — Buyer Dashboard (Frontend)
 
-## Getting Started
+The buyer-facing procurement dashboard built with **Next.js 14 (App Router)**.
 
-First, run the development server:
+This is where restaurants, cloud kitchens, and small industries place forward demand orders (3–7 days ahead), view real-time market insights, and manage their procurement.
 
+---
+
+## ✨ Key Features
+
+- **Procurement Interface** — Place forward orders with crop selection, quantity, and delivery date
+- **AI Market Insights Ledger** — Real-time "stock-market" style price tracker with historical, live, and AI-forecast data
+- **ML-Powered Pricing** — Prices driven by supply/demand ratio, weather, and government policy via the Python ML engine
+- **Deposit System** — 10% commitment on order placement (smart contract ready)
+- **Glassmorphic UI** — Premium CSS design with transparency and gradient effects
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+
+- Backend API running on port 4000 (see `../backend/`)
+
+### Install & Run
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to access the dashboard.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🏗️ Project Structure
 
-## Learn More
+```
+frontend/
+├── src/
+│   ├── app/           → Next.js App Router pages
+│   └── components/    → Reusable React components
+├── public/            → Static assets
+├── next.config.ts     → Next.js configuration
+├── tsconfig.json      → TypeScript config
+└── package.json       → Dependencies
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🔗 API Dependencies
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This frontend connects to:
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Service | Port | Purpose |
+|---|---|---|
+| Backend API | `:4000` | Orders, market data, crop info |
+| ML Engine | `:5000` | AI pricing predictions (via backend) |

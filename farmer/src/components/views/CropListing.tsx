@@ -96,7 +96,6 @@ export default function CropListing({ farmerId }: CropListingProps) {
   const [moqMax, setMoqMax] = useState('');
   const [harvestStart, setHarvestStart] = useState('');
   const [harvestEnd, setHarvestEnd] = useState('');
-  const [pricePerUnit, setPricePerUnit] = useState('');
 
   useEffect(() => {
     fetchListings();
@@ -123,11 +122,10 @@ export default function CropListing({ farmerId }: CropListingProps) {
     setMoqMax('');
     setHarvestStart('');
     setHarvestEnd('');
-    setPricePerUnit('');
   };
 
   const handleSubmit = async () => {
-    if (!cropName || !totalQuantity || !harvestStart || !harvestEnd || !pricePerUnit) {
+    if (!cropName || !totalQuantity || !harvestStart || !harvestEnd) {
       alert('Please fill all required fields');
       return;
     }
@@ -142,8 +140,7 @@ export default function CropListing({ farmerId }: CropListingProps) {
       totalQuantity: parseInt(totalQuantity),
       unit: 'kg',
       moqRange: { min: parseInt(moqMin) || 1, max: parseInt(moqMax) || parseInt(totalQuantity) },
-      harvestDateRange: { start: new Date(harvestStart).toISOString(), end: new Date(harvestEnd).toISOString() },
-      pricePerUnit: parseFloat(pricePerUnit),
+      harvestDateRange: { start: new Date(harvestStart).toISOString(), end: new Date(harvestEnd).toISOString() }
     };
 
     const res = await apiPost('/api/listings', listingData, 'cropListings');
@@ -221,7 +218,7 @@ export default function CropListing({ farmerId }: CropListingProps) {
   const methodColor = (m: string) => {
     if (m === 'ORGANIC') return { bg: '#DCFCE7', color: '#15803D' };
     if (m === 'HYDROPONIC') return { bg: '#DBEAFE', color: '#1D4ED8' };
-    return { bg: '#F1F5F9', color: '#475569' };
+    return { bg: 'var(--surface-bg)', color: 'var(--text-muted)' };
   };
 
   return (
@@ -274,15 +271,15 @@ export default function CropListing({ farmerId }: CropListingProps) {
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.5rem', marginBottom: '0.65rem' }}>
-                  <div style={{ background: '#F8FAFC', padding: '0.5rem', borderRadius: 'var(--radius-sm)', textAlign: 'center' }}>
+                  <div style={{ background: 'var(--surface-bg)', padding: '0.5rem', borderRadius: 'var(--radius-sm)', textAlign: 'center' }}>
                     <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Quantity</div>
                     <div style={{ fontWeight: 700, fontSize: '0.95rem' }}>{listing.totalQuantity.toLocaleString()} {listing.unit}</div>
                   </div>
-                  <div style={{ background: '#F8FAFC', padding: '0.5rem', borderRadius: 'var(--radius-sm)', textAlign: 'center' }}>
+                  <div style={{ background: 'var(--surface-bg)', padding: '0.5rem', borderRadius: 'var(--radius-sm)', textAlign: 'center' }}>
                     <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Price</div>
-                    <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--primary-dark)' }}>₹{listing.pricePerUnit}/{listing.unit}</div>
+                    <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--primary-dark)' }}>{listing.pricePerUnit ? `₹${listing.pricePerUnit}/${listing.unit}` : 'Live Rate'}</div>
                   </div>
-                  <div style={{ background: '#F8FAFC', padding: '0.5rem', borderRadius: 'var(--radius-sm)', textAlign: 'center' }}>
+                  <div style={{ background: 'var(--surface-bg)', padding: '0.5rem', borderRadius: 'var(--radius-sm)', textAlign: 'center' }}>
                     <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>MOQ</div>
                     <div style={{ fontWeight: 700, fontSize: '0.95rem' }}>{listing.moqRange?.min || 1}{listing.unit}</div>
                   </div>
@@ -456,16 +453,10 @@ export default function CropListing({ farmerId }: CropListingProps) {
               </div>
             </div>
 
-            {/* Quantity + Price */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
-              <div className="form-group">
-                <label className="form-label">Total Quantity (kg)</label>
-                <input type="number" className="form-input" placeholder="e.g. 5000" value={totalQuantity} onChange={(e) => setTotalQuantity(e.target.value)} inputMode="numeric" id="crop-quantity" />
-              </div>
-              <div className="form-group">
-                <label className="form-label">Price (₹/kg)</label>
-                <input type="number" className="form-input" placeholder="e.g. 22" value={pricePerUnit} onChange={(e) => setPricePerUnit(e.target.value)} inputMode="decimal" id="crop-price" />
-              </div>
+            {/* Quantity */}
+            <div className="form-group">
+              <label className="form-label">Total Quantity (kg)</label>
+              <input type="number" className="form-input" placeholder="e.g. 5000" value={totalQuantity} onChange={(e) => setTotalQuantity(e.target.value)} inputMode="numeric" id="crop-quantity" />
             </div>
 
             {/* MOQ Range */}

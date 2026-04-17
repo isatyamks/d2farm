@@ -36,3 +36,6 @@ env/
 frontend/node_modules/
 frontend-old/node_modules/
 backend/node_modules/
+farmer/node_modules/
+.mypy_cache/
+pyrightconfig.json

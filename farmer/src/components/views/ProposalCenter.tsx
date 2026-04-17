@@ -163,11 +163,11 @@ export default function ProposalCenter({ farmerId }: ProposalCenterProps) {
 
                     {/* Order Details */}
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '0.75rem' }}>
-                      <div style={{ background: '#F8FAFC', padding: '0.6rem', borderRadius: 'var(--radius-sm)' }}>
+                      <div style={{ background: 'var(--surface-bg)', padding: '0.6rem', borderRadius: 'var(--radius-sm)' }}>
                         <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Quantity Needed</div>
                         <div style={{ fontWeight: 700, fontSize: '1rem' }}>{order.quantityRequired.toLocaleString()} {order.unit}</div>
                       </div>
-                      <div style={{ background: '#F8FAFC', padding: '0.6rem', borderRadius: 'var(--radius-sm)' }}>
+                      <div style={{ background: 'var(--surface-bg)', padding: '0.6rem', borderRadius: 'var(--radius-sm)' }}>
                         <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Total Value</div>
                         <div style={{ fontWeight: 700, fontSize: '1rem', color: 'var(--primary-dark)' }}>₹{order.priceOffered.toLocaleString('en-IN')}</div>
                       </div>

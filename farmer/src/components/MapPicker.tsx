@@ -69,7 +69,7 @@ export default function MapPicker({ onLocationSelect, initialLat, initialLng }: 
 
       // Custom green marker
       const icon = L.divIcon({
-        html: `<div style="width:32px;height:32px;background:linear-gradient(135deg,#10B981,#059669);border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 3px 10px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;">
+        html: `<div style="width:32px;height:32px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 3px 10px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;">
           <div style="width:10px;height:10px;background:white;border-radius:50%;transform:rotate(45deg);"></div>
         </div>`,
         iconSize: [32, 32],
@@ -127,8 +127,8 @@ export default function MapPicker({ onLocationSelect, initialLat, initialLng }: 
         const L = window.L;
         L.circle([pos.latitude, pos.longitude], {
           radius: pos.accuracy,
-          color: '#10B981',
-          fillColor: '#10B981',
+          color: 'var(--primary)',
+          fillColor: 'var(--primary)',
           fillOpacity: 0.1,
           weight: 2,
         }).addTo(map);
@@ -145,7 +145,7 @@ export default function MapPicker({ onLocationSelect, initialLat, initialLng }: 
     <div>
       <div ref={mapRef} className="map-container" style={{ marginBottom: '0.75rem' }}>
         {!mapReady && (
-          <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#F1F5F9', color: '#64748B', fontSize: '0.9rem' }}>
+          <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--surface-bg)', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
             Loading map...
           </div>
         )}

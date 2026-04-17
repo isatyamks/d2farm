@@ -132,7 +132,7 @@ router.put('/:id/status', async (req, res) => {
           type:       'ESCROW_RELEASE',
           amount:     proposal.totalValue,
           proposalId: proposal._id,
-          note:       `Full payment received. Escrow ₹${escrowAmount} unlocked + remaining ₹${remainingAmount} credited. Total ₹${proposal.totalValue} now withdrawable.`
+          note:       `Payment received. ₹${proposal.totalValue} credited.`
         });
         await farmer.save();
         console.log(`💰 Payment settled: ₹${proposal.totalValue} | Farmer ${farmer.fullName} wallet: withdrawable=₹${farmer.wallet.withdrawableBalance}`);
@@ -188,7 +188,7 @@ router.put('/:id/accept-contract', async (req, res) => {
       type:       'ESCROW_CREDIT',
       amount:     escrowAmount,
       proposalId: proposal._id,
-      note:       `2% escrow from buyer for ${proposal.orderId?.crop || 'crop'} contract (${proposal.proposedQuantity}kg @ ₹${proposal.proposedPricePerUnit}/kg). LOCKED until delivery.`
+      note:       `2% escrow (₹${escrowAmount}) locked for order.`
     });
 
     farmer.metrics.acceptedProposals = (farmer.metrics.acceptedProposals || 0) + 1;
@@ -200,7 +200,7 @@ router.put('/:id/accept-contract', async (req, res) => {
     proposal.timeline.push({
       status:    'ACCEPTED',
       timestamp: new Date(),
-      note:      `Smart contract locked. ₹${escrowAmount} (2%) debited from buyer → credited to farmer escrow. Cannot withdraw until delivery confirmed.`
+      note:      `Accepted. ₹${escrowAmount} escrow locked.`
     });
     await proposal.save();
 
@@ -246,7 +246,7 @@ router.put('/:id/cancel-contract', async (req, res) => {
         type:       'ESCROW_PENALTY',
         amount:     -escrowAmount,
         proposalId: proposal._id,
-        note:       `Farmer-cancelled contract. ₹${escrowAmount} escrow forfeited as trust penalty. Trust score reduced by 10.`
+        note:       `Contract cancelled. ₹${escrowAmount} forfeited.`
       });
       await farmer.save();
     }
@@ -256,7 +256,7 @@ router.put('/:id/cancel-contract', async (req, res) => {
     proposal.timeline.push({
       status:    'REJECTED',
       timestamp: new Date(),
-      note:      `Farmer cancelled contract. ₹${escrowAmount} escrow forfeited as trust penalty. Trust score -10.`
+      note:      `Cancelled. ₹${escrowAmount} escrow forfeited.`
     });
     await proposal.save();
 

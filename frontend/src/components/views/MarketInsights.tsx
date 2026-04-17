@@ -1,6 +1,9 @@
 "use client";
 import { useState, useEffect } from 'react';
 
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+
+
 export default function MarketInsights() {
     const [summaries, setSummaries] = useState<any[]>([]);
     const [rows, setRows] = useState<any[]>([]);
@@ -23,7 +26,7 @@ export default function MarketInsights() {
 
         const fetchLedger = async () => {
             try {
-                const res = await fetch('http://localhost:4000/api/market-insights/ledger');
+                const res = await fetch(`${API_BASE}/api/market-insights/ledger`);
                 if (!active) return;
                 if (res.ok) {
                     const data = await res.json();

@@ -26,69 +26,56 @@ interface TrackedProposal {
   createdAt: string;
 }
 
-const LIFECYCLE_STAGES = [
-  { key: 'SENT', label: 'Proposal Sent', icon: '📩', description: 'Your proposal was submitted to the buyer' },
-  { key: 'ACCEPTED', label: 'Accepted', icon: '✅', description: 'Buyer accepted your proposal' },
-  { key: 'LOGISTICS_DISPATCHED', label: 'Dispatched', icon: '🚚', description: 'Shipment picked up from your farm' },
-  { key: 'DELIVERED', label: 'Delivered', icon: '📦', description: 'Goods delivered to buyer warehouse' },
-  { key: 'PAYMENT_RECEIVED', label: 'Payment Received', icon: '💰', description: 'Full payment credited to your wallet' },
+const STAGES = [
+  { key: 'SENT', label: 'Sent', desc: 'Proposal submitted' },
+  { key: 'ACCEPTED', label: 'Accepted', desc: 'Buyer confirmed' },
+  { key: 'LOGISTICS_DISPATCHED', label: 'In Transit', desc: 'Picked up from farm' },
+  { key: 'DELIVERED', label: 'Delivered', desc: 'Received by buyer' },
+  { key: 'PAYMENT_RECEIVED', label: 'Paid', desc: 'Payment complete' },
 ];
 
 export default function TransactionTracker({ farmerId }: TransactionTrackerProps) {
   const [proposals, setProposals] = useState<TrackedProposal[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedProposal, setSelectedProposal] = useState<TrackedProposal | null>(null);
+  const [selected, setSelected] = useState<TrackedProposal | null>(null);
 
   useEffect(() => {
-    const fetchProposals = async () => {
+    const fetch = async () => {
       const res = await apiGet(`/api/proposals?farmerId=${farmerId}`);
       if (res.success && res.data) {
         const data = res.data as { proposals: TrackedProposal[] };
-        const active = data.proposals || [];
-        setProposals(active);
-        if (active.length > 0 && !selectedProposal) {
-          setSelectedProposal(active[0]);
-        }
+        const list = data.proposals || [];
+        setProposals(list);
+        if (list.length > 0 && !selected) setSelected(list[0]);
       }
       setLoading(false);
     };
-    fetchProposals();
+    fetch();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [farmerId]);
 
   const getStages = (status: string) => {
     if (status === 'REJECTED') {
       return [
-        { key: 'SENT', label: 'Proposal Sent', icon: '📩', description: 'Your proposal was submitted to the buyer' },
-        { key: 'REJECTED', label: 'Rejected', icon: '❌', description: 'Buyer declined your proposal. Limits refunded.' },
+        { key: 'SENT', label: 'Sent', desc: 'Proposal submitted' },
+        { key: 'REJECTED', label: 'Rejected', desc: 'Buyer declined' },
       ];
     }
-    return LIFECYCLE_STAGES;
+    return STAGES;
   };
 
-  const getStageIndex = (status: string, stages: typeof LIFECYCLE_STAGES) => {
-    return stages.findIndex(s => s.key === status);
-  };
+  const stageIdx = (status: string, list: typeof STAGES) => list.findIndex(s => s.key === status);
 
-  const getTimeForStage = (timeline: TimelineEntry[], stageKey: string) => {
-    const entry = timeline.find(t => t.status === stageKey);
-    if (!entry) return null;
-    return new Date(entry.timestamp);
-  };
-
-  const formatDate = (date: Date) => {
-    return date.toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' });
-  };
-
-  const formatTime = (date: Date) => {
-    return date.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+  const stageTime = (timeline: TimelineEntry[], key: string) => {
+    const e = timeline.find(t => t.status === key);
+    return e ? new Date(e.timestamp) : null;
   };
 
   if (loading) {
     return (
       <div style={{ textAlign: 'center', padding: '4rem 0' }}>
         <div className="spinner spinner-dark" style={{ margin: '0 auto 0.75rem' }} />
-        <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Loading transactions...</div>
+        <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Loading...</div>
       </div>
     );
   }
@@ -98,115 +85,172 @@ export default function TransactionTracker({ farmerId }: TransactionTrackerProps
       <div className="empty-state">
         <div style={{ fontSize: '3rem', marginBottom: '0.75rem' }}>📦</div>
         <h3>No transactions yet</h3>
-        <p>Your proposal-to-payment journey will appear here once you send proposals to buyers.</p>
+        <p>Send proposals to buyers to start tracking deliveries here.</p>
       </div>
     );
   }
 
-  const stages = selectedProposal ? getStages(selectedProposal.status) : [];
-  const currentStageIdx = selectedProposal ? getStageIndex(selectedProposal.status, stages) : -1;
+  const stages = selected ? getStages(selected.status) : [];
+  const curIdx = selected ? stageIdx(selected.status, stages) : -1;
+  const paid = selected?.paymentStatus === 'COMPLETED';
 
   return (
     <div>
-      <h2 className="section-title" style={{ marginBottom: '0.25rem' }}>Transaction Tracker</h2>
-      <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '1rem' }}>Proposal → Payment journey</p>
+      {/* Header */}
+      <h2 className="section-title" style={{ marginBottom: '0.15rem' }}>Transactions</h2>
+      <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '1rem' }}>
+        {proposals.length} total
+      </p>
 
-      {/* Proposal Selector (if multiple) */}
+      {/* Tabs */}
       {proposals.length > 1 && (
-        <div style={{ display: 'flex', gap: '0.5rem', overflowX: 'auto', paddingBottom: '0.75rem', marginBottom: '0.75rem' }}>
-          {proposals.map((p) => (
-            <button
-              key={p._id}
-              onClick={() => setSelectedProposal(p)}
-              className={selectedProposal?._id === p._id ? 'btn-big btn-primary btn-sm' : 'btn-big btn-secondary btn-sm'}
-              style={{ whiteSpace: 'nowrap', flex: '0 0 auto' }}
-            >
-              {p.orderId?.crop || p.cropListingId?.cropName || 'Order'} • ₹{(p.totalValue || 0).toLocaleString('en-IN')}
-            </button>
-          ))}
+        <div style={{ display: 'flex', gap: '0.5rem', overflowX: 'auto', marginBottom: '1rem', paddingBottom: '0.25rem' }}>
+          {proposals.map((p) => {
+            const active = selected?._id === p._id;
+            return (
+              <button
+                key={p._id}
+                onClick={() => setSelected(p)}
+                style={{
+                  whiteSpace: 'nowrap',
+                  padding: '0.5rem 0.85rem',
+                  borderRadius: 'var(--radius-full)',
+                  fontSize: '0.8rem',
+                  fontWeight: 600,
+                  border: active ? '1.5px solid var(--primary)' : '1.5px solid var(--border-color)',
+                  background: active ? 'var(--primary-light)' : 'white',
+                  color: active ? 'var(--primary-dark)' : 'var(--text-muted)',
+                  cursor: 'pointer',
+                  transition: 'var(--transition)',
+                  fontFamily: 'inherit',
+                }}
+              >
+                {p.orderId?.crop || p.cropListingId?.cropName || 'Order'}
+              </button>
+            );
+          })}
         </div>
       )}
 
-      {selectedProposal && (
-        <div className="fade-slide-up" key={selectedProposal._id}>
-          {/* Payment Hero Card */}
-          <div className={selectedProposal.paymentStatus === 'COMPLETED' ? 'card-hero' : 'card-dark'} style={{ marginBottom: '1rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem', position: 'relative', zIndex: 1 }}>
+      {selected && (
+        <div className="fade-slide-up" key={selected._id}>
+
+          {/* Summary */}
+          <div className="card-solid" style={{ marginBottom: '0.75rem', padding: '1.25rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
               <div>
-                <div style={{ fontSize: '0.75rem', opacity: 0.8, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                  {selectedProposal.paymentStatus === 'COMPLETED' ? '💰 Payment Received' : selectedProposal.status === 'DELIVERED' ? '⏳ Awaiting Payment' : '📋 Transaction Value'}
+                <div style={{ fontSize: '0.95rem', fontWeight: 700 }}>
+                  {selected.orderId?.crop || selected.cropListingId?.cropName || 'Crop'}
+                  <span style={{ fontWeight: 500, color: 'var(--text-muted)' }}> · {selected.orderId?.variety || selected.cropListingId?.variety || ''}</span>
                 </div>
-                <div style={{ fontSize: '2.4rem', fontWeight: 800, lineHeight: 1.1, marginTop: '0.35rem' }}>
-                  ₹{(selectedProposal.totalValue || 0).toLocaleString('en-IN')}
+                <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '0.15rem' }}>
+                  {selected.orderId?.buyerName || 'Buyer'} · {selected.proposedQuantity} kg
                 </div>
               </div>
-              <span className={`badge ${selectedProposal.paymentStatus === 'COMPLETED' ? 'badge-success' : 'badge-warning'}`} style={{ fontSize: '0.7rem' }}>
-                {selectedProposal.paymentStatus === 'COMPLETED' ? 'PAID' : 'PENDING'}
+              <span className={`badge ${paid ? 'badge-success' : 'badge-warning'}`}>
+                {paid ? 'Paid' : 'Pending'}
               </span>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', opacity: 0.8, position: 'relative', zIndex: 1 }}>
-              <span>{selectedProposal.orderId?.buyerName || 'Buyer'}</span>
-              <span>{selectedProposal.proposedQuantity}kg @ ₹{selectedProposal.proposedPricePerUnit}/kg</span>
+
+            {/* Amount row */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'baseline',
+              padding: '0.85rem 1rem',
+              background: 'var(--surface-bg)',
+              borderRadius: 'var(--radius-md)',
+            }}>
+              <div>
+                <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', marginBottom: '0.15rem' }}>Amount</div>
+                <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.02em' }}>
+                  ₹{(selected.totalValue || 0).toLocaleString('en-IN')}
+                </div>
+              </div>
+              <div style={{ textAlign: 'right' }}>
+                <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', marginBottom: '0.15rem' }}>Rate</div>
+                <div style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-main)' }}>
+                  ₹{selected.proposedPricePerUnit}/kg
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Order Details Card */}
-          <div className="card-solid" style={{ marginBottom: '1rem', padding: '1rem' }}>
-            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-              <div style={{ width: 44, height: 44, borderRadius: 'var(--radius-sm)', background: 'var(--primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.3rem' }}>
-                🌾
-              </div>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontWeight: 700, fontSize: '1rem' }}>
-                  {selectedProposal.orderId?.crop || selectedProposal.cropListingId?.cropName || 'Crop'} ({selectedProposal.orderId?.variety || selectedProposal.cropListingId?.variety || ''})
-                </div>
-                <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-                  {selectedProposal.orderId?.buyerName || 'Buyer'} • Qty: {selectedProposal.proposedQuantity}kg
-                </div>
-              </div>
-            </div>
-          </div>
+          {/* Progress bar - horizontal steps */}
+          <div className="card-solid" style={{ marginBottom: '0.75rem', padding: '1.25rem' }}>
+            <div style={{ fontSize: '0.85rem', fontWeight: 700, marginBottom: '1.25rem' }}>Status</div>
 
-          {/* Timeline */}
-          <div className="card-solid" style={{ padding: '1.25rem' }}>
-            <div style={{ fontWeight: 700, fontSize: '0.95rem', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-              </svg>
-              Delivery Timeline
+            {/* Mini progress bar */}
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1.5rem', gap: '0.25rem' }}>
+              {stages.map((s, i) => {
+                const done = i <= curIdx;
+                return (
+                  <div key={s.key} style={{ flex: 1, height: '4px', borderRadius: '2px', background: done ? 'var(--primary)' : 'var(--border-color)', transition: 'background 0.4s ease' }} />
+                );
+              })}
             </div>
 
-            <div className="timeline">
+            {/* Steps */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
               {stages.map((stage, idx) => {
-                const isCompleted = idx < currentStageIdx;
-                const isActive = idx === currentStageIdx;
-                const isPending = idx > currentStageIdx;
-                const isRejected = stage.key === 'REJECTED';
-                const stageTime = getTimeForStage(selectedProposal.timeline, stage.key);
-                const timelineEntry = selectedProposal.timeline.find(t => t.status === stage.key);
+                const done = idx < curIdx;
+                const active = idx === curIdx;
+                const pending = idx > curIdx;
+                const rejected = stage.key === 'REJECTED';
+                const time = stageTime(selected.timeline, stage.key);
+                const entry = selected.timeline.find(t => t.status === stage.key);
+                const last = idx === stages.length - 1;
 
                 return (
-                  <div key={stage.key} className="timeline-item">
-                    <div className={`timeline-dot ${isCompleted ? 'completed' : isActive ? (isRejected ? 'rejected' : 'active') : 'pending'}`} />
-                    <div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.15rem' }}>
-                        <span style={{ fontSize: '1rem' }}>{stage.icon}</span>
-                        <span className={`timeline-title ${isActive ? (isRejected ? 'rejected-text' : 'active') : isPending ? 'pending' : ''}`}>
-                          {stage.label}
-                        </span>
+                  <div key={stage.key} style={{ display: 'flex', gap: '0.85rem' }}>
+                    {/* Dot + line */}
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '24px', flexShrink: 0 }}>
+                      <div style={{
+                        width: done ? '20px' : '24px',
+                        height: done ? '20px' : '24px',
+                        borderRadius: '50%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        background: done ? 'var(--primary)' : active ? 'white' : 'white',
+                        border: done ? 'none' : active ? '2px solid var(--primary)' : `2px solid var(--border-color)`,
+                        color: done ? 'white' : active ? 'var(--primary)' : 'var(--text-muted)',
+                        transition: 'all 0.3s ease',
+                        marginTop: done ? '2px' : '0',
+                      }}>
+                        {done && (
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                        )}
+                        {active && <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: rejected ? 'var(--danger)' : 'var(--primary)' }} />}
                       </div>
-                      {stageTime ? (
-                        <div className="timeline-meta">
-                          {formatDate(stageTime)} at {formatTime(stageTime)}
-                          {timelineEntry?.note && (
-                            <span style={{ display: 'block', marginTop: '0.15rem' }}>{timelineEntry.note}</span>
-                          )}
+                      {!last && (
+                        <div style={{
+                          width: '2px',
+                          flexGrow: 1,
+                          minHeight: '1.75rem',
+                          background: done ? 'var(--primary)' : 'var(--border-color)',
+                        }} />
+                      )}
+                    </div>
+
+                    {/* Text */}
+                    <div style={{ paddingBottom: last ? '0' : '1.25rem', flex: 1, paddingTop: '0.1rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div style={{
+                          fontSize: '0.88rem',
+                          fontWeight: done || active ? 700 : 500,
+                          color: pending ? 'var(--text-muted)' : rejected ? 'var(--danger)' : 'var(--text-main)',
+                          textDecoration: rejected ? 'line-through' : 'none',
+                        }}>
+                          {stage.label}
                         </div>
-                      ) : isPending ? (
-                        <div className="timeline-meta" style={{ fontStyle: 'italic' }}>
-                          {stage.description}
-                        </div>
-                      ) : null}
+                        {time && (
+                          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
+                            {time.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
+                          </div>
+                        )}
+                      </div>
+                      <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', opacity: pending ? 0.5 : 0.8, marginTop: '0.1rem' }}>{stage.desc}</div>
                     </div>
                   </div>
                 );
@@ -214,23 +258,18 @@ export default function TransactionTracker({ farmerId }: TransactionTrackerProps
             </div>
           </div>
 
-          {/* Blockchain Proof */}
-          {selectedProposal.blockchainTxHash && (
-            <div className="card-solid" style={{ marginTop: '0.75rem', padding: '1rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                <span style={{ fontSize: '1rem' }}>🔗</span>
-                <span style={{ fontWeight: 700, fontSize: '0.85rem' }}>Blockchain Proof</span>
-              </div>
-              <div style={{ background: '#0F172A', color: 'white', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px dashed var(--primary)' }}>
-                <div style={{ fontSize: '0.68rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.25rem', fontWeight: 600, textTransform: 'uppercase' }}>
-                  Transaction Hash
-                </div>
-                <div style={{ fontFamily: 'monospace', fontSize: '0.72rem', wordBreak: 'break-all', lineHeight: 1.4 }}>
-                  {selectedProposal.blockchainTxHash}
+          {/* Blockchain */}
+          {selected.blockchainTxHash && (
+            <div className="card-solid" style={{ padding: '1rem' }}>
+              <div style={{ fontSize: '0.8rem', fontWeight: 700, marginBottom: '0.5rem' }}>Blockchain Record</div>
+              <div style={{ background: 'var(--surface-bg)', padding: '0.75rem', borderRadius: 'var(--radius-sm)' }}>
+                <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', marginBottom: '0.2rem' }}>Tx Hash</div>
+                <div style={{ fontFamily: 'monospace', fontSize: '0.72rem', color: 'var(--text-main)', wordBreak: 'break-all', lineHeight: 1.5 }}>
+                  {selected.blockchainTxHash}
                 </div>
               </div>
-              <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '0.5rem', textAlign: 'center' }}>
-                Immutably recorded on Polygon Network
+              <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '0.4rem' }}>
+                Verified on Polygon
               </div>
             </div>
           )}

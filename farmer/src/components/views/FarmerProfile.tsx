@@ -67,120 +67,108 @@ export default function FarmerProfile({ farmerId, farmerData, setFarmerData }: F
   };
 
   return (
-    <div className="stagger">
+    <div style={{ paddingTop: '1rem' }}>
       {/* Profile Header */}
-      <div className="card-hero" style={{ marginBottom: '1rem', textAlign: 'center' }}>
-        <div style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{
-            width: 72, height: 72, borderRadius: '50%', margin: '0 auto 0.75rem',
-            background: 'rgba(255,255,255,0.2)', border: '3px solid rgba(255,255,255,0.5)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '1.8rem', fontWeight: 800
+      <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
+        <div style={{
+          width: 64, height: 64, borderRadius: '50%', margin: '0 auto 0.75rem',
+          background: 'var(--primary)', color: 'white',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontSize: '1.5rem', fontWeight: 700
+        }}>
+          {((farmerData.fullName as string) || 'F').charAt(0)}
+        </div>
+        <div style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--text-main)' }}>{farmerData.fullName as string}</div>
+        <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.15rem' }}>{farmerData.phone as string}</div>
+        <div style={{ marginTop: '0.5rem' }}>
+          <span style={{
+            fontSize: '0.68rem', fontWeight: 600,
+            padding: '0.2rem 0.65rem', borderRadius: 'var(--radius-full)',
+            background: farmerData.onboardingStatus === 'VERIFIED' ? 'var(--success-light)' : 'var(--warning-light)',
+            color: farmerData.onboardingStatus === 'VERIFIED' ? 'var(--success)' : 'var(--warning)',
           }}>
-            {((farmerData.fullName as string) || 'F').charAt(0)}
-          </div>
-          <div style={{ fontSize: '1.3rem', fontWeight: 800 }}>{farmerData.fullName as string}</div>
-          <div style={{ fontSize: '0.85rem', opacity: 0.85, marginTop: '0.15rem' }}>📱 {farmerData.phone as string}</div>
-          <div style={{ marginTop: '0.5rem' }}>
-            <span className="badge badge-success" style={{ background: 'rgba(255,255,255,0.2)', color: 'white', fontSize: '0.7rem' }}>
-              {farmerData.onboardingStatus === 'VERIFIED' ? '✅ Blockchain Verified' : '⏳ Verification Pending'}
-            </span>
-          </div>
+            {farmerData.onboardingStatus === 'VERIFIED' ? 'Verified' : 'Pending'}
+          </span>
         </div>
       </div>
 
       {/* Trust Score */}
-      <div className="card-solid" style={{ marginBottom: '0.75rem', padding: '1.25rem' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-          <div style={{ fontWeight: 700, fontSize: '0.95rem' }}>Trust Score</div>
-          <div style={{ fontWeight: 800, fontSize: '1.5rem', color: trustColor(metrics.trustScore || 80) }}>
-            {metrics.trustScore || 80}/100
+      <div className="card-solid" style={{ marginBottom: '0.75rem', padding: '1rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+          <div style={{ fontWeight: 600, fontSize: '0.85rem' }}>Trust Score</div>
+          <div style={{ fontWeight: 700, fontSize: '1.1rem', color: trustColor(metrics.trustScore || 80) }}>
+            {metrics.trustScore || 80}
           </div>
         </div>
-        <div style={{ height: 8, background: '#E2E8F0', borderRadius: 4, overflow: 'hidden', marginBottom: '0.5rem' }}>
+        <div style={{ height: 6, background: 'var(--surface-bg)', borderRadius: 3, overflow: 'hidden', marginBottom: '0.35rem' }}>
           <div style={{
-            height: '100%', borderRadius: 4,
+            height: '100%', borderRadius: 3,
             width: `${metrics.trustScore || 80}%`,
-            background: `linear-gradient(90deg, ${trustColor(metrics.trustScore || 80)}, ${trustColor(metrics.trustScore || 80)}dd)`,
-            transition: 'width 1s ease'
+            background: trustColor(metrics.trustScore || 80),
+            transition: 'width 0.8s ease'
           }} />
         </div>
-        <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-          {trustLevel(metrics.trustScore || 80)} — Based on delivery history and buyer feedback
+        <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
+          {trustLevel(metrics.trustScore || 80)}
         </div>
       </div>
 
       {/* Stats */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '0.75rem' }}>
-        <div className="card-solid" style={{ textAlign: 'center', padding: '1rem' }}>
-          <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--primary)' }}>{metrics.totalProposals || 0}</div>
-          <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', marginTop: '0.15rem' }}>Total Proposals</div>
-        </div>
-        <div className="card-solid" style={{ textAlign: 'center', padding: '1rem' }}>
-          <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--success)' }}>{metrics.acceptedProposals || 0}</div>
-          <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', marginTop: '0.15rem' }}>Accepted</div>
-        </div>
-        <div className="card-solid" style={{ textAlign: 'center', padding: '1rem' }}>
-          <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--warning)' }}>{metrics.completedDeliveries || 0}</div>
-          <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', marginTop: '0.15rem' }}>Deliveries</div>
-        </div>
-        <div className="card-solid" style={{ textAlign: 'center', padding: '1rem' }}>
-          <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--danger)' }}>{metrics.rejectedProposals || 0}</div>
-          <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', marginTop: '0.15rem' }}>Rejected</div>
-        </div>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '0.75rem' }}>
+        {[
+          { label: 'Proposals', value: metrics.totalProposals || 0, color: 'var(--primary)' },
+          { label: 'Accepted', value: metrics.acceptedProposals || 0, color: 'var(--success)' },
+          { label: 'Deliveries', value: metrics.completedDeliveries || 0, color: 'var(--warning)' },
+          { label: 'Rejected', value: metrics.rejectedProposals || 0, color: 'var(--danger)' }
+        ].map(s => (
+          <div key={s.label} className="card-solid" style={{ textAlign: 'center', padding: '1rem' }}>
+            <div style={{ fontSize: '1.4rem', fontWeight: 700, color: s.color }}>{s.value}</div>
+            <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 500, marginTop: '0.1rem' }}>{s.label}</div>
+          </div>
+        ))}
       </div>
 
       {/* Wallet */}
-      <div className="card-dark" style={{ marginBottom: '0.75rem' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-          <div style={{ fontWeight: 700, fontSize: '0.9rem' }}>💳 Wallet</div>
-          <span className="badge badge-success" style={{ fontSize: '0.65rem', background: 'rgba(255,255,255,0.15)', color: 'white' }}>ACTIVE</span>
-        </div>
-
-        {/* Total balance */}
-        <div style={{ fontSize: '1.8rem', fontWeight: 800, lineHeight: 1, marginBottom: '0.25rem' }}>
-          ₹{((wallet.balance as number) || 0).toLocaleString('en-IN')}
-        </div>
-        <div style={{ fontSize: '0.72rem', opacity: 0.55, fontFamily: 'monospace', marginBottom: '1rem' }}>
-          {(wallet.custodialAddress as string || 'Not assigned').slice(0, 22)}...
-        </div>
-
-        {/* Locked vs Withdrawable breakdown */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
-          <div style={{ background: 'rgba(255,255,255,0.08)', padding: '0.75rem', borderRadius: '10px', borderLeft: '3px solid #F59E0B' }}>
-            <div style={{ fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase', color: '#FCD34D', marginBottom: '0.25rem', letterSpacing: '0.04em' }}>
-              🔒 Locked
+      <div className="card-solid" style={{ marginBottom: '0.75rem', padding: '1.25rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.25rem' }}>
+          <div>
+            <div style={{ fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-main)', marginBottom: '0.2rem' }}>Wallet</div>
+            <div style={{ fontSize: '1.8rem', fontWeight: 700, lineHeight: 1 }}>
+              ₹{((wallet.balance as number) || 0).toLocaleString('en-IN')}
             </div>
-            <div style={{ fontWeight: 800, fontSize: '1rem' }}>
+          </div>
+          <span style={{ fontSize: '0.65rem', fontWeight: 600, padding: '0.2rem 0.5rem', borderRadius: 'var(--radius-full)', background: 'var(--success-light)', color: 'var(--success)' }}>
+            Active
+          </span>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '0.75rem' }}>
+          <div style={{ background: 'var(--surface-bg)', padding: '0.75rem', borderRadius: 'var(--radius-sm)' }}>
+            <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginBottom: '0.1rem' }}>Locked</div>
+            <div style={{ fontWeight: 600, fontSize: '1rem', color: 'var(--warning)' }}>
               ₹{((wallet.lockedBalance as number) || 0).toLocaleString('en-IN')}
             </div>
-            <div style={{ fontSize: '0.65rem', opacity: 0.6, marginTop: '2px' }}>Escrow hold</div>
           </div>
-          <div style={{ background: 'rgba(255,255,255,0.08)', padding: '0.75rem', borderRadius: '10px', borderLeft: '3px solid #10B981' }}>
-            <div style={{ fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase', color: '#6EE7B7', marginBottom: '0.25rem', letterSpacing: '0.04em' }}>
-              ✅ Free
-            </div>
-            <div style={{ fontWeight: 800, fontSize: '1rem' }}>
+          <div style={{ background: 'var(--surface-bg)', padding: '0.75rem', borderRadius: 'var(--radius-sm)' }}>
+            <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginBottom: '0.1rem' }}>Available</div>
+            <div style={{ fontWeight: 600, fontSize: '1rem', color: 'var(--primary)' }}>
               ₹{((wallet.withdrawableBalance as number) || 0).toLocaleString('en-IN')}
             </div>
-            <div style={{ fontSize: '0.65rem', opacity: 0.6, marginTop: '2px' }}>Can withdraw</div>
           </div>
         </div>
 
-        {(wallet.lockedBalance as number) > 0 && (
-          <div style={{ marginTop: '0.75rem', fontSize: '0.72rem', color: 'rgba(255,255,255,0.55)', background: 'rgba(245,158,11,0.12)', padding: '0.5rem 0.6rem', borderRadius: '8px' }}>
-            ⚠️ Locked funds release automatically once the buyer confirms delivery. Cancelling forfeits your escrow.
-          </div>
-        )}
+        <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'monospace' }}>
+          {wallet.custodialAddress as string || 'Address assigning...'}
+        </div>
       </div>
 
       {/* Farm Location */}
-      <div className="card-solid" style={{ marginBottom: '0.75rem', padding: '1rem' }}>
-        <div style={{ fontWeight: 700, fontSize: '0.95rem', marginBottom: '0.5rem' }}>📍 Farm Location</div>
-        <div style={{ fontSize: '0.9rem', marginBottom: '0.25rem' }}>{farmerData.farmAddress as string || 'Location set via GPS'}</div>
-        <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-          Coordinates: {farmLocation.coordinates ? `${farmLocation.coordinates[1]?.toFixed(4)}, ${farmLocation.coordinates[0]?.toFixed(4)}` : 'N/A'}
-          {farmerData.farmSizeAcres ? ` • ${farmerData.farmSizeAcres} acres` : ''}
+      <div className="card-solid" style={{ marginBottom: '0.75rem', padding: '1.25rem' }}>
+        <div style={{ fontWeight: 600, fontSize: '0.85rem', marginBottom: '0.5rem' }}>Farm Location</div>
+        <div style={{ fontSize: '0.9rem', marginBottom: '0.25rem', color: 'var(--text-main)' }}>{farmerData.farmAddress as string || 'Location set via GPS'}</div>
+        <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+          {farmLocation.coordinates ? `${farmLocation.coordinates[1]?.toFixed(4)}, ${farmLocation.coordinates[0]?.toFixed(4)}` : 'Coordinates pending'}
+          {farmerData.farmSizeAcres ? ` · ${farmerData.farmSizeAcres} acres` : ''}
         </div>
       </div>
 
@@ -205,7 +193,7 @@ export default function FarmerProfile({ farmerId, farmerData, setFarmerData }: F
             )}
           </div>
           {Boolean(blockchainMeta.txHash) && (
-            <div style={{ background: '#F8FAFC', padding: '0.5rem', borderRadius: 'var(--radius-sm)', marginTop: '0.25rem' }}>
+            <div style={{ background: 'var(--surface-bg)', padding: '0.5rem', borderRadius: 'var(--radius-sm)', marginTop: '0.25rem' }}>
               <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', marginBottom: '0.15rem' }}>Tx Hash</div>
               <div style={{ fontFamily: 'monospace', fontSize: '0.68rem', color: 'var(--text-main)', wordBreak: 'break-all' }}>
                 {String(blockchainMeta.txHash)}
