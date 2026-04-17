@@ -17,9 +17,34 @@ app.use((req, res, next) => {
 });
 
 const DB_URI = process.env.MONGODB_URL || process.env.MONGODB_URI || 'mongodb://localhost:27017/d2farm';
-mongoose.connect(DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('✅ DATABASE LINKED: Secure connection to MongoDB established.'))
-    .catch((err) => console.error('❌ MONGODB ERROR:', err));
+
+// Serverless-friendly MongoDB connection cache
+let cachedDb = null;
+async function connectToDatabase() {
+    if (mongoose.connection.readyState >= 1) return;
+    if (cachedDb) return cachedDb;
+    try {
+        cachedDb = await mongoose.connect(DB_URI, { 
+            useNewUrlParser: true, 
+            useUnifiedTopology: true,
+            serverSelectionTimeoutMS: 5000 // Error out fast if unreachable
+        });
+        console.log('✅ DATABASE LINKED: Secure connection to MongoDB established.');
+    } catch (err) {
+        console.error('❌ MONGODB ERROR:', err.message);
+        throw err;
+    }
+}
+
+// Ensure DB is connected before hitting routes
+app.use(async (req, res, next) => {
+    try {
+        await connectToDatabase();
+        next();
+    } catch (err) {
+        return res.status(500).json({ success: false, message: 'Database connection failed. Please check MONGODB_URL in Vercel.', error: err.message });
+    }
+});
 
 const Order = require('./models/Order');
 const User = require('./models/User');
