@@ -9,6 +9,7 @@ import DemandPlanner from '@/components/views/DemandPlanner';
 import ProcurementAI from '@/components/views/ProcurementAI';
 import OrderPlacement from '@/components/views/OrderPlacement';
 import OrderTracking from '@/components/views/OrderTracking';
+import TransportLogistics from '@/components/views/TransportLogistics';
 import MarketInsights from '@/components/views/MarketInsights';
 import Wallet from '@/components/views/Wallet';
 import UserProfile from '@/components/views/UserProfile';
@@ -23,6 +24,7 @@ export default function App() {
             case 'predictions': return <ProcurementAI setCurrentView={setCurrentView} />;
             case 'orders': return <OrderPlacement />;
             case 'tracking': return <OrderTracking />;
+            case 'transport': return <TransportLogistics />;
             case 'market': return <MarketInsights />;
             case 'wallet': return <Wallet />;
             case 'profile': return <UserProfile />;

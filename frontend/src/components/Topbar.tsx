@@ -6,7 +6,7 @@ export default function Topbar({ currentView }: { currentView: string }) {
     return (
         <header className="topbar">
             <div className="greeting">
-                <h1>{viewTitle === 'Market' ? 'Market Insights' : viewTitle}</h1>
+                <h1>{viewTitle === 'Market' ? 'Market Insights' : viewTitle === 'Transport' ? 'Transport & Logistics' : viewTitle}</h1>
                 <p className="subtitle">Here is what you need to know today.</p>
             </div>
             <div className="topbar-actions">

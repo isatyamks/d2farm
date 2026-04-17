@@ -12,6 +12,7 @@ export default function Sidebar({ currentView, setCurrentView }: SidebarProps) {
         { id: 'predictions', icon: 'ph-brain', label: 'Procurement AI' },
         { id: 'orders', icon: 'ph-shopping-cart', label: 'Order Placement' },
         { id: 'tracking', icon: 'ph-truck', label: 'Order Tracking' },
+        { id: 'transport', icon: 'ph-path', label: 'Transport & Logistics' },
         { id: 'market', icon: 'ph-trend-up', label: 'Market Insights' },
         { id: 'wallet', icon: 'ph-wallet', label: 'Payments & Wallet' },
     ];
