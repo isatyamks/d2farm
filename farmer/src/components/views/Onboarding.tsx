@@ -9,6 +9,7 @@ interface OnboardingProps {
 
 export default function Onboarding({ onComplete }: OnboardingProps) {
   const [step, setStep] = useState(1);
+  const [isLoginMode, setIsLoginMode] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -69,6 +70,32 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
     setLoading(false);
   };
 
+  const handleLogin = async () => {
+    setLoading(true);
+    setError('');
+
+    const res = await apiPost('/api/farmer/login', { phone });
+
+    if (res.success && res.data) {
+      const data = res.data as { farmer: Record<string, unknown> };
+      
+      // Simple validation for name (if requested by user)
+      const registeredName = String(data.farmer.fullName || '').toLowerCase();
+      const inputName = fullName.toLowerCase().trim();
+      
+      if (inputName && !registeredName.includes(inputName) && !inputName.includes(registeredName)) {
+        setError("Name doesn't completely match the registered profile. Please try again.");
+        setLoading(false);
+        return;
+      }
+
+      onComplete(data.farmer);
+    } else {
+      setError((res.data as { message?: string })?.message || res.error || 'Login failed. Are you sure you are registered?');
+    }
+    setLoading(false);
+  };
+
   const canNext = () => {
     switch (step) {
       case 1: return String(fullName || '').trim().length >= 2 && String(phone || '').trim().length >= 10;
@@ -104,7 +131,7 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
 
       {/* Step Content */}
       <div style={{ flex: 1 }} className="fade-slide-up" key={step}>
-        {step === 1 && (
+        {!isLoginMode && step === 1 && (
           <div>
             <h2 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '0.25rem' }}>Welcome, Farmer! 🌾</h2>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
@@ -136,10 +163,58 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
                 inputMode="numeric"
               />
             </div>
+            
+            <div style={{ textAlign: 'center', marginTop: '1.5rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
+              Already registered? <button type="button" onClick={() => setIsLoginMode(true)} style={{ background: 'none', border: 'none', color: 'var(--primary)', fontWeight: 700, padding: '0.5rem', cursor: 'pointer' }}>Log In</button>
+            </div>
           </div>
         )}
 
-        {step === 2 && (
+        {isLoginMode && (
+          <div>
+            <h2 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '0.25rem' }}>Welcome Back! 🚜</h2>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
+              Verify your name and mobile number to log in.
+            </p>
+
+            <div className="form-group">
+              <label className="form-label">Your Initial Name</label>
+              <input
+                type="text"
+                className="form-input"
+                placeholder="e.g. Rajesh Kumar"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                id="login-name"
+              />
+            </div>
+
+            <div className="form-group" style={{ marginBottom: '0.5rem' }}>
+              <label className="form-label">Registered Phone</label>
+              <input
+                type="tel"
+                className="form-input"
+                placeholder="e.g. 9876543210"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                id="login-phone"
+                inputMode="numeric"
+              />
+            </div>
+            
+            {error && (
+              <div style={{ background: 'var(--danger-light)', color: '#B91C1C', padding: '0.75rem 1rem', borderRadius: 'var(--radius-sm)', marginBottom: '1rem', marginTop: '1rem', fontSize: '0.85rem', fontWeight: 600 }}>
+                {error}
+              </div>
+            )}
+
+            <div style={{ textAlign: 'center', marginTop: '1.5rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
+              Don&apos;t have an account? <button type="button" onClick={() => setIsLoginMode(false)} style={{ background: 'none', border: 'none', color: 'var(--primary)', fontWeight: 700, padding: '0.5rem', cursor: 'pointer' }}>Register</button>
+            </div>
+          </div>
+        )}
+
+        {!isLoginMode && step === 2 && (
           <div>
             <h2 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '0.25rem' }}>Government ID 🪪</h2>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
@@ -194,7 +269,7 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
           </div>
         )}
 
-        {step === 3 && (
+        {!isLoginMode && step === 3 && (
           <div>
             <h2 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '0.25rem' }}>Farm Location 📍</h2>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '1rem' }}>
@@ -230,7 +305,7 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
           </div>
         )}
 
-        {step === 4 && (
+        {!isLoginMode && step === 4 && (
           <div>
             <h2 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '0.25rem' }}>Review & Submit ✅</h2>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
@@ -293,26 +368,34 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
         gap: '0.75rem',
         zIndex: 100
       }}>
-        {step > 1 && (
-          <button type="button" className="btn-big btn-secondary" onClick={() => setStep(s => s - 1)} style={{ flex: '0 0 auto', width: 'auto', padding: '1rem 1.5rem' }}>
-            ←
-          </button>
-        )}
-        {step < totalSteps ? (
-          <button type="button" className="btn-big btn-primary" onClick={() => setStep(s => s + 1)} disabled={!canNext()} style={{ flex: 1 }} id="onboard-next-btn">
-            Continue →
+        {isLoginMode ? (
+          <button type="button" className="btn-big btn-primary" onClick={handleLogin} disabled={loading || String(phone).length < 10 || String(fullName).length < 2} style={{ flex: 1 }} id="login-submit-btn">
+            {loading ? <><span className="spinner" /> Logging In...</> : 'Secure Log In →'}
           </button>
         ) : (
-          <button type="button" className="btn-big btn-primary" onClick={handleSubmit} disabled={loading || !canNext()} style={{ flex: 1 }} id="onboard-submit-btn">
-            {loading ? (
-              <>
-                <span className="spinner" />
-                Registering...
-              </>
-            ) : (
-              'Register & Verify on Blockchain 🔗'
+          <>
+            {step > 1 && (
+              <button type="button" className="btn-big btn-secondary" onClick={() => setStep(s => s - 1)} style={{ flex: '0 0 auto', width: 'auto', padding: '1rem 1.5rem' }}>
+                ←
+              </button>
             )}
-          </button>
+            {step < totalSteps ? (
+              <button type="button" className="btn-big btn-primary" onClick={() => setStep(s => s + 1)} disabled={!canNext()} style={{ flex: 1 }} id="onboard-next-btn">
+                Continue →
+              </button>
+            ) : (
+              <button type="button" className="btn-big btn-primary" onClick={handleSubmit} disabled={loading || !canNext()} style={{ flex: 1 }} id="onboard-submit-btn">
+                {loading ? (
+                  <>
+                    <span className="spinner" />
+                    Registering...
+                  </>
+                ) : (
+                  'Register & Verify 🔗'
+                )}
+              </button>
+            )}
+          </>
         )}
       </div>
     </div>
