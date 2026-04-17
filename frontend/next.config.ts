@@ -1,8 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Allow Turbopack HMR websockets to connect originating from local IPs natively
-  allowedDevOrigins: ["localhost", "127.0.0.1", "172.23.64.1"],
+  // Remove dev-only origins for production
+  // API URL is injected at build time via NEXT_PUBLIC_API_URL env var
+  images: {
+    remotePatterns: [
+      { protocol: 'https', hostname: 'i.pravatar.cc' },
+    ],
+  },
 };
 
 export default nextConfig;

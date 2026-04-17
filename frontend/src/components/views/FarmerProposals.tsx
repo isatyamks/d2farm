@@ -28,7 +28,7 @@ interface MLForecast {
     spoilage: { risk_pct: number; risk_level: string; cold_chain_needed: boolean; stressor: string };
 }
 
-const API = 'http://localhost:4000';
+const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 
 const STATUS_MAP: Record<string, { label: string; cls: string; bar: string }> = {
     SENT:                 { label: 'New Proposal', cls: 'status-warn',  bar: '#3B82F6' },
@@ -405,23 +405,33 @@ export default function FarmerProposals() {
     return (
         <div>
             {/* Filter + Refresh bar */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.5rem' }}>
-                <div style={{ display: 'flex', flex: 1 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', background: 'white', borderRadius: 'var(--border-radius-md)', border: '1px solid var(--border-color)', padding: '0.35rem 0.5rem' }}>
+                <div style={{ display: 'flex', gap: '0.25rem', flex: 1 }}>
                     {FILTERS.map(f => {
                         const count = f === 'ALL' ? proposals.length : proposals.filter(p => p.status === f).length;
                         const isActive = filter === f;
                         return (
-                            <button key={f} onClick={() => setFilter(f)} style={{ background: 'none', border: 'none', padding: '0.5rem 1rem', cursor: 'pointer', fontWeight: 600, fontSize: '0.88rem', color: isActive ? 'var(--primary)' : 'var(--text-muted)', borderBottom: isActive ? '2px solid var(--primary)' : '2px solid transparent', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <button key={f} onClick={() => setFilter(f)} style={{
+                                background: isActive ? 'var(--primary)' : 'none',
+                                color: isActive ? 'white' : 'var(--text-muted)',
+                                border: 'none', padding: '0.45rem 0.9rem', cursor: 'pointer',
+                                fontWeight: 600, fontSize: '0.83rem', borderRadius: 'var(--border-radius-md)',
+                                whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: '5px',
+                                transition: 'var(--transition)',
+                            }}>
                                 {f === 'ALL' ? 'All' : STATUS_MAP[f]?.label || f}
-                                {f === 'SENT' && newCount > 0
-                                    ? <span style={{ background: 'var(--danger)', color: 'white', padding: '1px 6px', borderRadius: '12px', fontSize: '0.7rem' }}>{newCount}</span>
-                                    : <span style={{ fontSize: '0.75rem', color: isActive ? 'var(--primary)' : '#CBD5E1' }}>({count})</span>
-                                }
+                                <span style={{
+                                    background: isActive ? 'rgba(255,255,255,0.25)' : (f === 'SENT' && newCount > 0 ? 'var(--danger)' : 'var(--border-color)'),
+                                    color: isActive ? 'white' : (f === 'SENT' && newCount > 0 ? 'white' : 'var(--text-muted)'),
+                                    padding: '0 5px', borderRadius: '999px', fontSize: '0.68rem', fontWeight: 700, minWidth: '18px', textAlign: 'center',
+                                }}>
+                                    {count}
+                                </span>
                             </button>
                         );
                     })}
                 </div>
-                <button className="btn btn-outline" onClick={fetchProposals} style={{ gap: '0.4rem', fontSize: '0.85rem', flexShrink: 0 }}>
+                <button className="btn btn-outline" onClick={fetchProposals} style={{ gap: '0.35rem', fontSize: '0.82rem', flexShrink: 0, marginLeft: '0.5rem' }}>
                     <i className="ph ph-arrows-clockwise"></i> Refresh
                 </button>
             </div>
@@ -449,31 +459,54 @@ export default function FarmerProposals() {
                     {filtered.map(p => {
                         const meta = sm(p);
                         return (
-                            <div key={p._id} className="item-row" onClick={() => setSelected(p)}
-                                style={{ cursor: 'pointer', borderLeftWidth: '4px', borderLeftColor: meta.bar, borderLeftStyle: 'solid', flexDirection: 'column', alignItems: 'flex-start', gap: '0.75rem', transition: 'var(--transition)' }}
+                            <div key={p._id} className="card-glass"
+                                onClick={() => setSelected(p)}
+                                style={{
+                                    cursor: 'pointer',
+                                    marginBottom: '0.75rem',
+                                    borderLeft: `4px solid ${meta.bar}`,
+                                    transition: 'var(--transition)',
+                                }}
                             >
-                                <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'flex-start' }}>
-                                    <div className="item-main">
-                                        <div className="item-img" style={{ background: 'var(--primary-light)', fontSize: '1.25rem' }}>🌾</div>
+                                {/* Top row: icon + name + status */}
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.85rem' }}>
+                                    <div style={{ display: 'flex', gap: '0.85rem', alignItems: 'center' }}>
+                                        <div className="item-img" style={{ background: 'var(--primary-light)', fontSize: '1.2rem', flexShrink: 0 }}>🌾</div>
                                         <div>
-                                            <div className="item-title">{p.orderId?.crop || p.cropListingId?.cropName || 'Crop'} ({p.orderId?.variety || p.cropListingId?.variety || ''})</div>
-                                            <div className="item-sub">{p.farmerId?.fullName || 'Farmer'} &nbsp;·&nbsp; {p.proposedQuantity} kg @ ₹{p.proposedPricePerUnit}/kg</div>
+                                            <div className="item-title">
+                                                {p.orderId?.crop || p.cropListingId?.cropName || 'Crop'}
+                                                <span style={{ fontWeight: 400, color: 'var(--text-muted)', marginLeft: '4px' }}>
+                                                    ({p.orderId?.variety || p.cropListingId?.variety || ''})
+                                                </span>
+                                            </div>
+                                            <div className="item-sub" style={{ marginTop: '2px' }}>
+                                                {p.farmerId?.fullName || 'Farmer'} &nbsp;·&nbsp; {p.proposedQuantity.toLocaleString()} kg @ ₹{p.proposedPricePerUnit}/kg
+                                            </div>
                                         </div>
                                     </div>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                                        <span className={`item-status ${meta.cls}`}>{meta.label}</span>
-                                        <i className="ph ph-caret-right" style={{ color: 'var(--text-muted)' }}></i>
-                                    </div>
+                                    <span className={`item-status ${meta.cls}`}>{meta.label}</span>
                                 </div>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
-                                    <span style={{ fontWeight: 700, fontSize: '1.05rem' }}>₹{(p.totalValue || 0).toLocaleString('en-IN')}</span>
-                                    <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-                                        {p.blockchainTxHash && <span style={{ fontSize: '0.75rem', color: 'var(--primary)', fontWeight: 600 }}><i className="ph ph-link" style={{ marginRight: '3px' }}></i>On-chain</span>}
-                                        <span style={{ fontSize: '0.78rem', color: '#94A3B8' }}>{new Date(p.createdAt).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' })}</span>
-                                        <span style={{ fontSize: '0.8rem', color: 'var(--primary)', fontWeight: 600 }}>View Details →</span>
+
+                                {/* Bottom row: value + metadata */}
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '0.75rem', borderTop: '1px solid var(--border-color)' }}>
+                                    <div>
+                                        <div style={{ fontWeight: 800, fontSize: '1.1rem' }}>₹{(p.totalValue || 0).toLocaleString('en-IN')}</div>
+                                        <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '1px' }}>
+                                            {new Date(p.createdAt).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })}
+                                            {p.blockchainTxHash && <span style={{ marginLeft: '8px', color: 'var(--primary)', fontWeight: 600 }}><i className="ph ph-link"></i> On-chain</span>}
+                                        </div>
                                     </div>
+                                    <span style={{ fontSize: '0.82rem', color: 'var(--primary)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                        View Details <i className="ph ph-arrow-right"></i>
+                                    </span>
                                 </div>
-                                {p.message && <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontStyle: 'italic', paddingTop: '0.5rem', borderTop: '1px solid var(--border-color)', width: '100%' }}>"{p.message}"</div>}
+
+                                {/* Farmer note preview */}
+                                {p.message && (
+                                    <div style={{ marginTop: '0.65rem', fontSize: '0.8rem', color: 'var(--text-muted)', fontStyle: 'italic', paddingTop: '0.6rem', borderTop: '1px solid var(--border-color)' }}>
+                                        &ldquo;{p.message}&rdquo;
+                                    </div>
+                                )}
                             </div>
                         );
                     })}

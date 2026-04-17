@@ -1,6 +1,9 @@
 "use client";
 import { useState } from 'react';
 
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+
+
 const CROP_DATA: Record<string, string[]> = {
     "Tomato": ["Hybrid", "Cherry", "Roma", "Desi"],
     "Onion": ["Red Nashik", "White", "Yellow", "Spring Onion"],
@@ -31,35 +34,35 @@ export default function OrderPlacement() {
     };
 
     const placeOrder = async () => {
-        if(!quantity || !deliveryDate) {
-            alert("Please fill in quantity and delivery date!");
+        if (!quantity) {
+            alert('Please fill in the quantity.');
             return;
         }
 
         setLoading(true);
         setStatus(null);
         try {
-            const response = await fetch('http://localhost:4000/api/orders/deposit', {
+            const response = await fetch(`${API_BASE}/api/orders/deposit`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    crop: crop,
-                    variety: variety,
+                    crop,
+                    variety,
                     quantity: parseInt(quantity),
-                    deliveryDate: new Date(deliveryDate).toISOString().split('T')[0]
+                    ...(deliveryDate ? { deliveryDate } : {}),
                 })
             });
 
             const data = await response.json();
-            
+
             if (data.success) {
-                setStatus({ type: 'success', message: data.message, orderId: data.orderId });
+                setStatus({ type: 'success', message: data.message, orderId: data.orderId, pricePerKg: data.pricePerKg, totalValue: data.totalValue });
             } else {
-                throw new Error(data.message);
+                setStatus({ type: 'error', message: data.message || 'Order could not be saved.' });
             }
         } catch (error) {
-            console.error("API Error:", error);
-            setStatus({ type: 'error', message: 'Connection Error to API.' });
+            console.error('API Error:', error);
+            setStatus({ type: 'error', message: 'Cannot reach backend. Make sure the server is running.' });
         } finally {
             setLoading(false);
         }
@@ -71,16 +74,39 @@ export default function OrderPlacement() {
                 <div className="modal-overlay active">
                     <div className="modal active">
                         <div className="modal-header">
-                            <h3 style={{ color: 'var(--success)' }}>Payment Successful</h3>
+                            <h3 style={{ color: 'var(--success)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                <i className="ph-fill ph-check-circle"></i> Order Placed!
+                            </h3>
                             <button className="close-modal" onClick={() => setStatus(null)}><i className="ph ph-x"></i></button>
                         </div>
                         <div className="modal-body" style={{ padding: '0' }}>
                             <p style={{ marginBottom: '1rem', color: 'var(--text-muted)' }}>{status.message}</p>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '1rem' }}>
+                                {status.pricePerKg && (
+                                    <div style={{ background: 'var(--surface-bg)', padding: '0.75rem', borderRadius: '8px' }}>
+                                        <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '0.25rem' }}>Rate / kg</div>
+                                        <div style={{ fontWeight: 800, fontSize: '1.1rem' }}>₹{status.pricePerKg}</div>
+                                    </div>
+                                )}
+                                {status.totalValue && (
+                                    <div style={{ background: 'var(--surface-bg)', padding: '0.75rem', borderRadius: '8px' }}>
+                                        <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '0.25rem' }}>Total Value</div>
+                                        <div style={{ fontWeight: 800, fontSize: '1.1rem', color: 'var(--primary)' }}>₹{status.totalValue?.toLocaleString('en-IN')}</div>
+                                    </div>
+                                )}
+                            </div>
                             <div style={{ background: 'var(--surface-bg)', padding: '1rem', borderRadius: 'var(--border-radius-sm)', border: '1px dashed var(--border-color)' }}>
-                                <strong>Tracking ID:</strong> <span style={{ float: 'right', fontFamily: 'monospace' }}>{status.orderId}</span>
+                                <strong>Order ID:</strong> <span style={{ float: 'right', fontFamily: 'monospace', fontSize: '0.85rem' }}>{status.orderId}</span>
                             </div>
                         </div>
                     </div>
+                </div>
+            )}
+
+            {status && status.type === 'error' && (
+                <div className="alert alert-warning" style={{ marginBottom: '1rem' }}>
+                    <span className="alert-icon"><i className="ph ph-warning"></i></span>
+                    <div className="alert-text"><strong>Order Failed</strong><p>{status.message}</p></div>
                 </div>
             )}
 

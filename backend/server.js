@@ -1,14 +1,31 @@
-require('dotenv').config({ path: '../.env' }); // Points up to the root .env securely
+const path = require('path');
+// Load .env: backend/.env for local dev, root .env as fallback (monorepo), Vercel injects directly
+require('dotenv').config({ path: path.resolve(__dirname, '.env') });
+if (!process.env.MONGODB_URL && !process.env.MONGODB_URI) {
+    require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+}
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const path = require('path');
 
-// Initialize pure, modern Express app
 const app = express();
 
-// Security and utility middleware
-app.use(cors());
+// ── Dynamic CORS: allow localhost (dev) + deployed Vercel frontends (prod)
+const allowedOrigins = [
+    'http://localhost:3000',
+    'http://localhost:3001',
+    process.env.FRONTEND_URL,
+    process.env.FARMER_URL,
+].filter(Boolean);
+
+app.use(cors({
+    origin: (origin, callback) => {
+        // Allow server-to-server calls and whitelisted origins
+        if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
+        callback(new Error(`CORS blocked: ${origin}`));
+    },
+    credentials: true,
+}));
 app.use(express.json());
 
 // -------------------------------------------------------------
@@ -143,71 +160,54 @@ app.get('/api/system/health', (req, res) => {
 
 app.post('/api/orders/deposit', async (req, res) => {
     try {
-        const { crop, variety, quantity, deliveryDate } = req.body;
-        console.log(`[ORDER RECEIVED] Processing ${quantity}kg of ${crop} (${variety}) ...`);
-        
-        // 2. We skip DB foreign key checks because we migrated to the Flat Geo-Schema.
-        // --- REAL-TIME ML PRICING ENGINE INTEGRATION ---
-        let pricePerKg = 18.0; // Fail-safe default
-        try {
-            // For a dramatic simulation, we randomize the demand from 500-5000 to see fluid price shifts
-            const mlPayload = {
-                supply: 1500,             // Mock warehouse supply
-                demand: quantity * 2.5,   // Derived dynamic market demand
-                weather: 0,               // 0=Normal
-                cultivation_cost: 12.0,   // Base price
-                gov_policy: 1.0           // Neutral
-            };
-            // Ping our new Python AI Flask Server!
-            const mlResponse = await fetch('http://127.0.0.1:5000/api/ml/predict-price', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(mlPayload)
-            });
-            if(mlResponse.ok) {
-                const mlData = await mlResponse.json();
-                if(mlData.success) {
-                    pricePerKg = mlData.predicted_price_per_kg;
-                    console.log(`🧠 [ML Pricing Generated] ₹${pricePerKg}/kg (Ratio: ${mlData.factors.ratio})`);
-                }
-            } else {
-                console.log('⚠️ ML Server offline or failed; falling back to static 18/kg');
-            }
-        } catch (mlErr) {
-            console.log('⚠️ ML Flask Engine not running on port 5000; falling back to static 18/kg');
+        const { crop, variety, quantity, deliveryDate, buyerName, lat, lng } = req.body;
+
+        // ── Input validation
+        if (!crop || !quantity || isNaN(Number(quantity)) || Number(quantity) <= 0) {
+            return res.status(400).json({ success: false, message: 'crop and a positive quantity are required.' });
         }
 
-        const totalValue = quantity * pricePerKg; 
-        const deposit = totalValue * 0.10; // 10%
-        const remaining = totalValue - deposit;
+        const qty = Number(quantity);
 
-        // 3. SECURELY WRITE TO MONGODB (FLAT SCHEMA)
+        // ── Price from in-process market profiles (no external Flask dependency)
+        const profile = CROP_MARKET_PROFILES[crop] || { basePrice: 20 };
+        const pricePerKg = parseFloat(profile.basePrice.toFixed(2));
+        const totalValue = parseFloat((qty * pricePerKg).toFixed(2));
+
+        console.log(`[ORDER] ${qty}kg of ${crop} @ ₹${pricePerKg}/kg = ₹${totalValue}`);
+
+        // ── Create order — coordinates default to Mumbai if buyer location not provided
         const newOrder = await Order.create({
-            buyerName: "Grand Hotel Kitchens",
-            crop: crop,
-            variety: variety || "Standard",
-            quantityRequired: quantity,
-            unit: "kg",
-            priceOffered: totalValue,
+            buyerName:        buyerName || 'D2Farm Buyer',
+            crop:             crop,
+            variety:          variety || 'Standard',
+            quantityRequired: qty,
+            unit:             'kg',
+            priceOffered:     pricePerKg,
             location: {
-                type: "Point",
-                coordinates: [72.8777, 19.076] 
+                type:        'Point',
+                coordinates: [Number(lng) || 72.8777, Number(lat) || 19.0760]
             },
-            status: "Open"
+            status: 'Open'
         });
 
-        console.log(`✅ [DB WRITE SUCCESS] Order ${newOrder._id} saved to MongoDB!`);
+        console.log(`✅ Order ${newOrder._id} saved`);
 
-        // 4. Send the physical Database ObjectID back to the frontend receipt popup
-        res.status(200).json({ 
-            success: true, 
-            message: `Order firmly written to the database! We charged ₹${deposit} as a 10% deposit.`,
-            orderId: newOrder._id.toString()
+        res.status(200).json({
+            success:  true,
+            message:  `Order placed! ${qty}kg of ${crop} at ₹${pricePerKg}/kg. Total value: ₹${totalValue.toLocaleString('en-IN')}.`,
+            orderId:  newOrder._id.toString(),
+            pricePerKg,
+            totalValue
         });
 
     } catch (err) {
-        console.error('❌ DB Save Failed:', err);
-        res.status(500).json({ success: false, message: 'Payment/Database Action Failed', error: err.message });
+        console.error('❌ /api/orders/deposit failed:', err.message, err.errors || '');
+        res.status(500).json({
+            success: false,
+            message: err.message || 'Order could not be saved.',
+            detail:  process.env.NODE_ENV !== 'production' ? err.message : undefined
+        });
     }
 });
 
@@ -299,16 +299,19 @@ app.get('/api/market-insights/ledger', async (req, res) => {
     }
 });
 
-// -------------------------------------------------------------
-// START SERVER ENGINE
-// -------------------------------------------------------------
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
-    console.log(`🚀 PROCUREMENT CORE API ACTIVE: Launching on port ${PORT}`);
-    console.log(`⚙️  API Systems checking at: http://localhost:${PORT}/api/system/health`);
-}).on('error', (err) => {
-    if (err.code === 'EADDRINUSE') {
-        console.error(`❌ PORT CONFLICT: Port ${PORT} is busy. Please close the other program or change PORT in .env`);
-        process.exit(1);
-    }
-});
+// ── Start server locally (Vercel handles this in serverless mode)
+if (process.env.NODE_ENV !== 'production' || process.env.VERCEL !== '1') {
+    const PORT = process.env.PORT || 4000;
+    app.listen(PORT, () => {
+        console.log(`🚀 D2Farm API running on port ${PORT}`);
+        console.log(`⚙️  Health: http://localhost:${PORT}/api/system/health`);
+    }).on('error', (err) => {
+        if (err.code === 'EADDRINUSE') {
+            console.error(`❌ Port ${PORT} is busy.`);
+            process.exit(1);
+        }
+    });
+}
+
+// Export for Vercel serverless
+module.exports = app;
