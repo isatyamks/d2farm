@@ -11,6 +11,7 @@ export default function Sidebar({ currentView, setCurrentView }: SidebarProps) {
         { id: 'planner', icon: 'ph-chart-line-up', label: 'Demand Planner' },
         { id: 'predictions', icon: 'ph-brain', label: 'Procurement AI' },
         { id: 'orders', icon: 'ph-shopping-cart', label: 'Order Placement' },
+        { id: 'contracts', icon: 'ph-link', label: 'Smart Contracts' },
         { id: 'tracking', icon: 'ph-truck', label: 'Order Tracking' },
         { id: 'market', icon: 'ph-trend-up', label: 'Market Insights' },
         { id: 'wallet', icon: 'ph-wallet', label: 'Payments & Wallet' },

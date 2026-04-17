@@ -12,6 +12,7 @@ import OrderTracking from '@/components/views/OrderTracking';
 import MarketInsights from '@/components/views/MarketInsights';
 import Wallet from '@/components/views/Wallet';
 import UserProfile from '@/components/views/UserProfile';
+import SmartContracts from '@/components/views/SmartContracts';
 
 export default function App() {
     const [currentView, setCurrentView] = useState('dashboard');
@@ -22,6 +23,7 @@ export default function App() {
             case 'planner': return <DemandPlanner setCurrentView={setCurrentView} />;
             case 'predictions': return <ProcurementAI setCurrentView={setCurrentView} />;
             case 'orders': return <OrderPlacement />;
+            case 'contracts': return <SmartContracts />;
             case 'tracking': return <OrderTracking />;
             case 'market': return <MarketInsights />;
             case 'wallet': return <Wallet />;
