@@ -564,6 +564,11 @@ body {
   background: var(--success);
 }
 
+.timeline-dot.rejected {
+  background: var(--danger);
+  box-shadow: 0 0 0 4px var(--danger-light);
+}
+
 .timeline-dot.pending {
   background: var(--border-color);
 }
@@ -580,6 +585,11 @@ body {
 
 .timeline-title.pending {
   color: var(--text-muted);
+}
+
+.timeline-title.rejected-text {
+  color: var(--danger);
+  text-decoration: line-through;
 }
 
 .timeline-meta {

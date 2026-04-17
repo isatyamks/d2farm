@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const CropListing = require('../models/CropListing');
+const Proposal = require('../models/Proposal');
+const FarmerProfile = require('../models/FarmerProfile');
 
 // ─── POST /api/listings ───
 // Create a new crop listing (supports offline sync batch)
@@ -16,6 +18,17 @@ router.post('/', async (req, res) => {
         message: `${listings.length} listings synced successfully.`,
         listings
       });
+    }
+
+    // Constraint: Farmer can only have one active crop at a time
+    if (listingData.farmerId) {
+      const activeCount = await CropListing.countDocuments({ farmerId: listingData.farmerId, status: 'ACTIVE' });
+      if (activeCount > 0) {
+        return res.status(400).json({ 
+          success: false, 
+          message: 'You can only list one active crop at a time. Wait until your current crop is sold or delivered.' 
+        });
+      }
     }
 
     const listing = await CropListing.create(listingData);
@@ -75,10 +88,32 @@ router.put('/:id', async (req, res) => {
 // ─── DELETE /api/listings/:id ───
 router.delete('/:id', async (req, res) => {
   try {
-    const listing = await CropListing.findByIdAndDelete(req.params.id);
+    const listingId = req.params.id;
+    const listing = await CropListing.findById(listingId);
     if (!listing) return res.status(404).json({ success: false, message: 'Listing not found.' });
 
-    res.status(200).json({ success: true, message: 'Listing deleted.' });
+    // Fetch existing proposals connected to this crop
+    const proposals = await Proposal.find({ cropListingId: listingId });
+    
+    // Check if farmer had active proposals for this crop
+    const activeProposals = proposals.filter(p => p.status !== 'REJECTED');
+    if (activeProposals.length > 0) {
+      // Apply 10 point trust score penalty
+      await FarmerProfile.findByIdAndUpdate(listing.farmerId, {
+        $inc: { 'metrics.trustScore': -10 }
+      });
+      console.log(`⚠️ Farmer ${listing.farmerId} penalized for deleting crop with active proposals.`);
+    }
+
+    // Cascade delete proposals from buyer systems
+    if (proposals.length > 0) {
+      await Proposal.deleteMany({ cropListingId: listingId });
+      console.log(`🗑️ Deleted ${proposals.length} proposals associated with listing ${listingId}`);
+    }
+
+    await CropListing.findByIdAndDelete(listingId);
+
+    res.status(200).json({ success: true, message: 'Listing and associated proposals deleted.' });
   } catch (err) {
     res.status(500).json({ success: false, message: 'Delete failed.', error: err.message });
   }

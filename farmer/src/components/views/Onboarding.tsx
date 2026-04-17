@@ -71,8 +71,8 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
 
   const canNext = () => {
     switch (step) {
-      case 1: return fullName.trim().length >= 2 && phone.trim().length >= 10;
-      case 2: return govIdNumber.trim().length >= 4;
+      case 1: return String(fullName || '').trim().length >= 2 && String(phone || '').trim().length >= 10;
+      case 2: return String(govIdNumber || '').trim().length >= 4;
       case 3: return farmLat !== 0 && farmLng !== 0;
       case 4: return true;
       default: return false;
@@ -278,18 +278,32 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
       </div>
 
       {/* Navigation Buttons */}
-      <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1rem', paddingBottom: '1rem' }}>
+      <div style={{ 
+        position: 'fixed', 
+        bottom: 0, 
+        left: '50%', 
+        transform: 'translateX(-50%)',
+        width: '100%', 
+        maxWidth: '480px', 
+        padding: '1rem',
+        paddingBottom: 'calc(1rem + env(safe-area-inset-bottom, 0px))',
+        background: 'var(--surface-bg)',
+        borderTop: '1px solid var(--border-color)',
+        display: 'flex', 
+        gap: '0.75rem',
+        zIndex: 100
+      }}>
         {step > 1 && (
-          <button className="btn-big btn-secondary" onClick={() => setStep(step - 1)} style={{ flex: '0 0 auto', width: 'auto', padding: '1rem 1.5rem' }}>
+          <button type="button" className="btn-big btn-secondary" onClick={() => setStep(s => s - 1)} style={{ flex: '0 0 auto', width: 'auto', padding: '1rem 1.5rem' }}>
             ←
           </button>
         )}
         {step < totalSteps ? (
-          <button className="btn-big btn-primary" onClick={() => setStep(step + 1)} disabled={!canNext()} style={{ flex: 1 }} id="onboard-next-btn">
+          <button type="button" className="btn-big btn-primary" onClick={() => setStep(s => s + 1)} disabled={!canNext()} style={{ flex: 1 }} id="onboard-next-btn">
             Continue →
           </button>
         ) : (
-          <button className="btn-big btn-primary" onClick={handleSubmit} disabled={loading} style={{ flex: 1 }} id="onboard-submit-btn">
+          <button type="button" className="btn-big btn-primary" onClick={handleSubmit} disabled={loading || !canNext()} style={{ flex: 1 }} id="onboard-submit-btn">
             {loading ? (
               <>
                 <span className="spinner" />

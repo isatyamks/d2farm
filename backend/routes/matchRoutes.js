@@ -3,6 +3,7 @@ const router = express.Router();
 const Order = require('../models/Order');
 const CropListing = require('../models/CropListing');
 const FarmerProfile = require('../models/FarmerProfile');
+const Proposal = require('../models/Proposal');
 
 // ─── GET /api/match/orders?farmerId= ───
 // CORE MATCHING ENDPOINT
@@ -40,7 +41,12 @@ router.get('/orders', async (req, res) => {
     const varieties = [...new Set(farmerListings.map(l => l.variety))];
 
     // 4. Find matching open orders
+    // Exclude orders we've already proposed to
+    const existingProposals = await Proposal.find({ farmerId }).select('orderId');
+    const proposedOrderIds = existingProposals.map(p => p.orderId);
+
     let query = {
+      _id: { $nin: proposedOrderIds },
       status: 'Open',
       $or: [
         // Match by crop name (case-insensitive)
