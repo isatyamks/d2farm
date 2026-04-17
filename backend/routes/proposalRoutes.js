@@ -169,16 +169,23 @@ router.put('/:id/status', async (req, res) => {
 // ─── PUT /api/proposals/:id/accept-contract ───
 // Buyer accepts: 2% escrow held in farmer wallet as LOCKED (not withdrawable until delivery)
 router.put('/:id/accept-contract', async (req, res) => {
+  console.log(`📡 [API] PUT /api/proposals/${req.params.id}/accept-contract received`);
   try {
     const proposal = await Proposal.findById(req.params.id).populate('orderId');
-    if (!proposal) return res.status(404).json({ success: false, message: 'Proposal not found.' });
+    if (!proposal) {
+      console.log(`❌ [API] Proposal ${req.params.id} NOT FOUND in database`);
+      return res.status(404).json({ success: false, message: `Proposal ${req.params.id} not found in database.` });
+    }
     if (proposal.status === 'ACCEPTED') return res.status(400).json({ success: false, message: 'Already locked.' });
 
     const escrowAmount = parseFloat((proposal.totalValue * 0.02).toFixed(2));
 
-    // ── 1. Credit farmer wallet atomically (findById + save = triggers hooks + returns updated doc)
+    // ── 1. Credit farmer wallet atomically
     const farmer = await FarmerProfile.findById(proposal.farmerId);
-    if (!farmer) return res.status(404).json({ success: false, message: 'Farmer profile not found.' });
+    if (!farmer) {
+      console.log(`❌ [API] Farmer Profile ${proposal.farmerId} missing for proposal ${proposal._id}`);
+      return res.status(404).json({ success: false, message: 'Associated farmer profile not found. Contract cannot be locked.' });
+    }
 
     farmer.wallet.balance       = parseFloat(((farmer.wallet.balance || 0)       + escrowAmount).toFixed(2));
     farmer.wallet.lockedBalance = parseFloat(((farmer.wallet.lockedBalance || 0) + escrowAmount).toFixed(2));

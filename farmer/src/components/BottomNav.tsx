@@ -52,15 +52,6 @@ const tabs = [
       </svg>
     ),
   },
-  {
-    id: 'profile',
-    label: 'Profile',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="8" r="5" /><path d="M20 21a8 8 0 00-16 0" />
-      </svg>
-    ),
-  },
 ];
 
 export default function BottomNav({ currentView, setCurrentView }: BottomNavProps) {
