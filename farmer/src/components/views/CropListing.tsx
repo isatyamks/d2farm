@@ -123,7 +123,8 @@ export default function CropListing({ farmerId }: CropListingProps) {
       resetForm();
       alert('Saved offline! Will sync when you have internet.');
     } else {
-      alert('Failed to save. Please try again.');
+      const errMsg = (res.data as any)?.message || 'Failed to save. Please try again.';
+      alert(errMsg);
     }
     setSaving(false);
   };

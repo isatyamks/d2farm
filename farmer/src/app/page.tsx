@@ -15,9 +15,11 @@ export default function App() {
   const [isOnline, setIsOnline] = useState(true);
   const [farmerId, setFarmerId] = useState<string | null>(null);
   const [farmerData, setFarmerData] = useState<Record<string, unknown> | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   // Check for existing session
   useEffect(() => {
+    setIsMounted(true);
     const stored = localStorage.getItem('d2farm_farmer');
     if (stored) {
       try {
@@ -57,12 +59,15 @@ export default function App() {
 
   // Show onboarding if no farmer session
   if (!farmerId) {
+    if (!isMounted) return <div className="app-shell" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span className="spinner spinner-dark" /></div>;
     return (
       <div className="app-shell">
         <Onboarding onComplete={handleOnboardingComplete} />
       </div>
     );
   }
+
+  if (!isMounted) return <div className="app-shell" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span className="spinner spinner-dark" /></div>;
 
   const renderView = () => {
     switch (currentView) {
