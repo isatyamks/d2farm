@@ -18,6 +18,7 @@ export async function apiGet<T = unknown>(endpoint: string): Promise<ApiResponse
   try {
     const res = await fetch(`${API_BASE}${endpoint}`, {
       headers: { 'Content-Type': 'application/json' },
+      cache: 'no-store',
     });
     const data = await res.json();
     return { success: data.success !== false, data };
