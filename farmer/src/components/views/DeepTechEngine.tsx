@@ -36,7 +36,7 @@ export default function DeepTechEngine({ farmerId }: { farmerId: string }) {
             } catch {
                 // Fallback with demo data if no listings exist yet
                 const demo: Listing[] = [
-                    { _id: 'demo1', cropName: 'Tomato', variety: 'Hybrid', pricePerUnit: 22 },
+                    { _id: 'demo1', cropName: 'Tomato', variety: 'Hybrid', pricePerUnit: 0 },
                 ];
                 setListings(demo);
                 setSelectedCrop(demo[0]);
@@ -54,7 +54,6 @@ export default function DeepTechEngine({ farmerId }: { farmerId: string }) {
             try {
                 const params = new URLSearchParams({
                     crop: selectedCrop.cropName,
-                    basePrice: String(selectedCrop.pricePerUnit),
                     travelHours: '8',
                     temperature: '30',
                 });
@@ -69,7 +68,8 @@ export default function DeepTechEngine({ farmerId }: { farmerId: string }) {
         fetchForecast();
     }, [selectedCrop]);
 
-    const isBullish = mlData?.forecast.trend === 'BULLISH';
+    // Determine overall trend purely based on the mathematical outcome of the 7-day projection to explicitly prevent UI contradictions
+    const isBullish = mlData ? parseFloat(mlData.forecast.pct_change) >= 0 : false;
     const spoilageColor = mlData
         ? mlData.spoilage.risk_level === 'HIGH' ? 'var(--danger)' 
         : mlData.spoilage.risk_level === 'MEDIUM' ? 'var(--warning)' 
@@ -107,7 +107,7 @@ export default function DeepTechEngine({ farmerId }: { farmerId: string }) {
                     </div>
                     {selectedCrop && (
                         <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.5rem' }}>
-                            Your listed price: <strong style={{ color: 'var(--primary-dark)' }}>₹{selectedCrop.pricePerUnit}/kg</strong> · {selectedCrop.variety}
+                            Selected Details: <strong style={{ color: 'var(--primary-dark)' }}>{selectedCrop.variety}</strong>
                         </div>
                     )}
                 </div>
@@ -154,7 +154,7 @@ export default function DeepTechEngine({ farmerId }: { farmerId: string }) {
                                             {mlData.forecast.action}
                                         </div>
                                         <div style={{ fontSize: '0.85rem', opacity: 0.9 }}>
-                                            Expected {isBullish ? 'gain' : 'drop'} of <strong>{Math.abs(parseFloat(mlData.forecast.pct_change))}%</strong> over 7 days vs your ₹{mlData.farmerPrice}/kg
+                                            Expected {isBullish ? 'gain' : 'drop'} of <strong>{Math.abs(parseFloat(mlData.forecast.pct_change))}%</strong> over 7 days vs current market rate of ₹{mlData.farmerPrice}/kg
                                         </div>
                                     </div>
                                 </div>

@@ -39,7 +39,7 @@ const cropListingSchema = new mongoose.Schema({
   },
 
   // Pricing
-  pricePerUnit: { type: Number, required: true },
+  pricePerUnit: { type: Number, default: 0 },
   currency: { type: String, default: 'INR' },
 
   // Status

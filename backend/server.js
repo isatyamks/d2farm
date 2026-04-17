@@ -57,7 +57,7 @@ const INDIAN_CROP_DATA = {
     // ── VEGETABLES ──────────────────────────────────────────────────────────
 
     Tomato: {
-        basePricePerKg: 18,
+        basePricePerKg: 14.69,
         priceRangeMin: 6,
         priceRangeMax: 42,
         unit: 'kg',
@@ -88,7 +88,7 @@ const INDIAN_CROP_DATA = {
     },
 
     Onion: {
-        basePricePerKg: 22,
+        basePricePerKg: 16.5,
         priceRangeMin: 4,
         priceRangeMax: 85,
         unit: 'kg',
@@ -119,7 +119,7 @@ const INDIAN_CROP_DATA = {
     },
 
     Potato: {
-        basePricePerKg: 14,
+        basePricePerKg: 10.5,
         priceRangeMin: 5,
         priceRangeMax: 28,
         unit: 'kg',
@@ -429,6 +429,44 @@ const INDIAN_CROP_DATA = {
     },
 };
 
+// ── GENUINE INTERNET PRICE SCRAPER ───────────────────────────────────────────
+// Plugs directly into live market reports to fetch actual current values
+
+async function pullGenuineMarketPrices() {
+    try {
+        console.log('🌐 [MARKET ENGINE] Pulling authentic real-time wholesale numbers from internet...');
+        const res = await fetch('https://vegetablemarketprice.com/market/maharashtra/today');
+        const text = await res.text();
+        
+        const cropsToMap = [
+            { searchKey: 'Tomato', key: 'Tomato' },
+            { searchKey: 'Onion Big', key: 'Onion' },
+            { searchKey: 'Potato', key: 'Potato' },
+            { searchKey: 'Capsicum', key: 'Capsicum' },
+            { searchKey: 'Ginger', key: 'Ginger' },
+            { searchKey: 'Garlic', key: 'Garlic' }
+        ];
+
+        let updated = 0;
+        cropsToMap.forEach(({ searchKey, key }) => {
+            const regex = new RegExp(`<td scope="row">\\s*${searchKey}\\s*<\\/td>\\s*<td>\\s*₹([0-9]+)`, 'i');
+            const match = text.match(regex);
+            if (match && match[1] && INDIAN_CROP_DATA[key]) {
+                const genuinePrice = parseFloat(match[1]);
+                if (!isNaN(genuinePrice)) {
+                    INDIAN_CROP_DATA[key].basePricePerKg = genuinePrice;
+                    updated++;
+                }
+            }
+        });
+        console.log(`✅ [MARKET ENGINE] Sync complete! Genuine internet data acquired for ${updated} crops.`);
+    } catch (err) {
+        console.log('⚠️ [MARKET ENGINE] Genuine API unreachable. Retaining current known fallbacks.');
+    }
+}
+pullGenuineMarketPrices();
+setInterval(pullGenuineMarketPrices, 4 * 60 * 60 * 1000); // 4 times a day
+
 // MSP defaults for crops not above — covers edge cases
 const DEFAULT_CROP = {
     basePricePerKg: 20,
@@ -508,9 +546,9 @@ function generateForecast(cropData, farmerPrice, seasonalBias) {
     for (let i = 1; i <= 7; i++) {
         // Deterministic but crop-seeded noise (same crop = same forecast on same day)
         const seed = (cropData.basePricePerKg * i + farmerPrice) % 1000;
-        const noise = (Math.sin(seed * 0.31) * cropData.volatilityPct * 0.25
-            + Math.cos(seed * 0.17) * cropData.volatilityPct * 0.15) * price;
-        const drift = dailyDrift * price * (1 + 0.1 * Math.sin(i * 1.2));
+        // Significantly reduce noise multiplier so the seasonal drift always governs the 7-day trend
+        const noise = (Math.sin(seed * 0.31) * 0.005 + Math.cos(seed * 0.17) * 0.005) * price;
+        const drift = dailyDrift * price;
         price = Math.max(cropData.priceRangeMin,
             Math.min(cropData.priceRangeMax, price + noise + drift));
 
