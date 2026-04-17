@@ -1,6 +1,7 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { apiGet } from '@/lib/api';
 
 interface FarmerProfileProps {
   farmerId: string;
@@ -10,6 +11,27 @@ interface FarmerProfileProps {
 
 export default function FarmerProfile({ farmerId, farmerData, setFarmerData }: FarmerProfileProps) {
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+
+  // Fetch fresh farmer data from API every time profile is viewed
+  useEffect(() => {
+    if (!farmerId) return;
+    const fetchFresh = async () => {
+      const res = await apiGet(`/api/farmer/${farmerId}`);
+      if (res.success && res.data) {
+        const data = res.data as { farmer: Record<string, unknown> };
+        if (data.farmer) {
+          const fresh = {
+            ...data.farmer,
+            id: data.farmer._id || data.farmer.id || farmerId,
+          };
+          setFarmerData(fresh);
+          localStorage.setItem('d2farm_farmer', JSON.stringify(fresh));
+        }
+      }
+    };
+    fetchFresh();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [farmerId]);
 
   if (!farmerData) {
     return (
