@@ -110,16 +110,46 @@ export default function FarmerProfile({ farmerId, farmerData, setFarmerData }: F
 
       {/* Wallet */}
       <div className="card-dark" style={{ marginBottom: '0.75rem' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
           <div style={{ fontWeight: 700, fontSize: '0.9rem' }}>💳 Wallet</div>
-          <span className="badge badge-success" style={{ fontSize: '0.65rem' }}>ACTIVE</span>
+          <span className="badge badge-success" style={{ fontSize: '0.65rem', background: 'rgba(255,255,255,0.15)', color: 'white' }}>ACTIVE</span>
         </div>
-        <div style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '0.25rem' }}>
+
+        {/* Total balance */}
+        <div style={{ fontSize: '1.8rem', fontWeight: 800, lineHeight: 1, marginBottom: '0.25rem' }}>
           ₹{((wallet.balance as number) || 0).toLocaleString('en-IN')}
         </div>
-        <div style={{ fontSize: '0.75rem', opacity: 0.6, fontFamily: 'monospace', marginBottom: '0.5rem' }}>
-          {(wallet.custodialAddress as string || '').slice(0, 20)}...
+        <div style={{ fontSize: '0.72rem', opacity: 0.55, fontFamily: 'monospace', marginBottom: '1rem' }}>
+          {(wallet.custodialAddress as string || 'Not assigned').slice(0, 22)}...
         </div>
+
+        {/* Locked vs Withdrawable breakdown */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
+          <div style={{ background: 'rgba(255,255,255,0.08)', padding: '0.75rem', borderRadius: '10px', borderLeft: '3px solid #F59E0B' }}>
+            <div style={{ fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase', color: '#FCD34D', marginBottom: '0.25rem', letterSpacing: '0.04em' }}>
+              🔒 Locked
+            </div>
+            <div style={{ fontWeight: 800, fontSize: '1rem' }}>
+              ₹{((wallet.lockedBalance as number) || 0).toLocaleString('en-IN')}
+            </div>
+            <div style={{ fontSize: '0.65rem', opacity: 0.6, marginTop: '2px' }}>Escrow hold</div>
+          </div>
+          <div style={{ background: 'rgba(255,255,255,0.08)', padding: '0.75rem', borderRadius: '10px', borderLeft: '3px solid #10B981' }}>
+            <div style={{ fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase', color: '#6EE7B7', marginBottom: '0.25rem', letterSpacing: '0.04em' }}>
+              ✅ Free
+            </div>
+            <div style={{ fontWeight: 800, fontSize: '1rem' }}>
+              ₹{((wallet.withdrawableBalance as number) || 0).toLocaleString('en-IN')}
+            </div>
+            <div style={{ fontSize: '0.65rem', opacity: 0.6, marginTop: '2px' }}>Can withdraw</div>
+          </div>
+        </div>
+
+        {(wallet.lockedBalance as number) > 0 && (
+          <div style={{ marginTop: '0.75rem', fontSize: '0.72rem', color: 'rgba(255,255,255,0.55)', background: 'rgba(245,158,11,0.12)', padding: '0.5rem 0.6rem', borderRadius: '8px' }}>
+            ⚠️ Locked funds release automatically once the buyer confirms delivery. Cancelling forfeits your escrow.
+          </div>
+        )}
       </div>
 
       {/* Farm Location */}
