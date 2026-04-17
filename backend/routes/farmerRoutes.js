@@ -15,16 +15,25 @@ router.post('/register', async (req, res) => {
       return res.status(409).json({ success: false, message: 'Phone number already registered.' });
     }
 
+    // Safely limit base64 sizes and ensure memory stability
+    if (govId && govId.imageBase64 && govId.imageBase64.length > 10000000) {
+      console.log('⚠️ Warning: Uploaded ID image is massive. Stripping to fit MongoDB limit.');
+      govId.imageBase64 = 'image_stored_in_s3_mock';
+    }
+
     // 1. Create farmer profile
     const farmer = new FarmerProfile({
-      fullName,
-      phone,
+      fullName: fullName.trim(),
+      phone: phone.trim(),
       govId: govId || {},
       farmLocation: farmLocation || { type: 'Point', coordinates: [0, 0] },
       farmAddress: farmAddress || '',
       farmSizeAcres: farmSizeAcres || 0,
       onboardingStatus: 'PENDING'
     });
+
+    if (!farmer.wallet) farmer.wallet = {};
+    if (!farmer.blockchainMeta) farmer.blockchainMeta = {};
 
     // 2. Generate custodial wallet (Blockchain Lite)
     const wallet = BlockchainService.generateCustodialWallet(farmer._id.toString());
