@@ -33,16 +33,19 @@ mongoose.connect(DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 const Order = require('./models/Order');
 const User = require('./models/User');
 const Crop = require('./models/Crop');
+const Contract = require('./models/Contract');
 
-const farmerRoutes = require('./routes/farmerRoutes');
-const listingRoutes = require('./routes/listingRoutes');
+const farmerRoutes   = require('./routes/farmerRoutes');
+const listingRoutes  = require('./routes/listingRoutes');
 const proposalRoutes = require('./routes/proposalRoutes');
-const matchRoutes = require('./routes/matchRoutes');
+const matchRoutes    = require('./routes/matchRoutes');
+const contractRoutes = require('./routes/contractRoutes');
 
-app.use('/api/farmer', farmerRoutes);
-app.use('/api/listings', listingRoutes);
+app.use('/api/farmer',    farmerRoutes);
+app.use('/api/listings',  listingRoutes);
 app.use('/api/proposals', proposalRoutes);
-app.use('/api/match', matchRoutes);
+app.use('/api/match',     matchRoutes);
+app.use('/api/contracts', contractRoutes);
 
 // =============================================================================
 // INDIA AGRICULTURAL MARKET DATA ENGINE
@@ -710,6 +713,56 @@ app.get('/api/market-insights/ledger', async (req, res) => {
         console.error('Market Insights Error:', err);
         res.status(500).json({ success: false, message: 'Market data engine error.', rows: [], summaries: [] });
     }
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DASHBOARD STATISTICS
+// Aggregates real-time metrics from Orders, Proposals, and Contracts
+// ─────────────────────────────────────────────────────────────────────────────
+app.get('/api/dashboard/stats', async (req, res) => {
+    try {
+        const orderCount = await Order.countDocuments({ status: 'Open' });
+        const contractCount = await Contract.countDocuments({ status: 'ACTIVE' });
+        
+        // Next Delivery: Find earliest contract harvested in the future
+        const nextDelivery = await Contract.findOne({ 
+            status: 'ACTIVE' 
+        }).sort({ 'produce.expectedHarvestDate': 1 });
+
+        // Total Ordered (Demand): Sum of quantity in open orders
+        const demandStats = await Order.aggregate([
+            { $match: { status: 'Open' } },
+            { $group: { _id: null, totalQty: { $sum: "$quantityRequired" } } }
+        ]);
+
+        // Simulated Wallet (in a real app, this would be a separate Ledger model)
+        const walletBalance = 14500.00; 
+
+        res.status(200).json({
+            success: true,
+            activeProposals: await mongoose.model('Proposal').countDocuments({ status: 'SENT' }),
+            activeContracts: contractCount,
+            totalOpenOrders: orderCount,
+            totalWeeklyDemandKg: demandStats[0]?.totalQty || 0,
+            walletBalance,
+            nextDelivery: nextDelivery ? {
+                crop: nextDelivery.produce.cropName,
+                qty: nextDelivery.produce.quantityKg,
+                date: nextDelivery.produce.expectedHarvestDate || nextDelivery.contractDate,
+                status: nextDelivery.status
+            } : null
+        });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// WALLET & LEDGER
+// ─────────────────────────────────────────────────────────────────────────────
+app.get('/api/wallet/balance', (req, res) => {
+    // Return a semi-random fixed balance for demo
+    res.status(200).json({ success: true, balance: 14500.00, currency: 'INR' });
 });
 
 // ─────────────────────────────────────────────────────────────────────────────

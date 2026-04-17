@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback } from 'react';
+import ContractExport from './ContractExport';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 
@@ -35,6 +36,7 @@ export default function SmartContracts() {
     const [selected, setSelected] = useState<Proposal | null>(null);
     const [locking, setLocking] = useState<string | null>(null);
     const [txSuccess, setTxSuccess] = useState<{ hash: string; amount: number } | null>(null);
+    const [exportProposal, setExportProposal] = useState<Proposal | null>(null);
 
     const load = useCallback(async () => {
         try {
@@ -75,6 +77,15 @@ export default function SmartContracts() {
 
     return (
         <div>
+            {/* ── Contract Export Modal ───────────────────────── */}
+            {exportProposal && (
+                <ContractExport
+                    proposalId={exportProposal._id}
+                    cropName={`${exportProposal.orderId?.crop || exportProposal.cropListingId?.cropName || 'Crop'} (${exportProposal.orderId?.variety || exportProposal.cropListingId?.variety || ''})`}
+                    onClose={() => setExportProposal(null)}
+                />
+            )}
+
             {/* ── Success Modal ─────────────────────────────── */}
             {txSuccess && (
                 <div className="modal-overlay active" onClick={() => setTxSuccess(null)}>
@@ -317,6 +328,17 @@ export default function SmartContracts() {
                                         ? <><i className="ph ph-spinner ph-spin"></i> Locking...</>
                                         : <><i className="ph ph-lock-key"></i> Lock — Pay ₹{((selected.totalValue || 0) * 0.02).toFixed(0)} Escrow</>
                                     }
+                                </button>
+                            )}
+
+                            {/* Export PDF — available for accepted/active/completed contracts */}
+                            {selected.status !== 'SENT' && selected.status !== 'REJECTED' && (
+                                <button
+                                    className="btn btn-outline"
+                                    style={{ width: '100%', justifyContent: 'center', marginTop: '0.6rem', gap: '0.4rem' }}
+                                    onClick={() => setExportProposal(selected)}
+                                >
+                                    <i className="ph ph-file-pdf" style={{ color: 'var(--danger)' }}></i> Export Contract PDF
                                 </button>
                             )}
                         </div>

@@ -23,13 +23,31 @@ export default function Wallet() {
     const [txns, setTxns] = useState<TxEntry[]>([]);
     const [loading, setLoading] = useState(true);
     const [showAll, setShowAll] = useState(false);
+    const [funding, setFunding] = useState(false);
+
+    const addFunds = async () => {
+        setFunding(true);
+        // Simulate PG delay
+        setTimeout(() => {
+            setWallet(prev => ({ ...prev, balance: prev.balance + 10000 }));
+            setFunding(false);
+        }, 1500);
+    };
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Fetch all proposals to derive real wallet ledger
-                const res = await fetch(`${API_BASE}/api/proposals`);
-                const json = await res.json();
+                const [balRes, propRes] = await Promise.all([
+                    fetch(`${API_BASE}/api/wallet/balance`),
+                    fetch(`${API_BASE}/api/proposals`)
+                ]);
+
+                const balJson = await balRes.json();
+                if (balJson.success) {
+                    setWallet(prev => ({ ...prev, balance: balJson.balance }));
+                }
+
+                const json = await propRes.json();
                 if (json.success) {
                     setTxns(json.proposals || []);
 
@@ -69,10 +87,11 @@ export default function Wallet() {
                                 </div>
                             </div>
                             <button
-                                className="btn btn-primary"
-                                onClick={() => setWallet(prev => ({ ...prev, balance: prev.balance + 10000 }))}
+                                className={`btn btn-primary ${funding ? 'btn-loading' : ''}`}
+                                onClick={addFunds}
+                                disabled={funding}
                             >
-                                <i className="ph ph-plus"></i> Add ₹10,000
+                                {funding ? <><i className="ph ph-spinner"></i> Funding...</> : <><i className="ph ph-plus"></i> Add ₹10,000</>}
                             </button>
                         </div>
 

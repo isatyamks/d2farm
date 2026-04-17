@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback } from 'react';
+import ContractExport from './ContractExport';
 
 interface TimelineEntry { status: string; timestamp: string; note: string; }
 interface Proposal {
@@ -57,8 +58,9 @@ function ProposalDetail({ proposal, onBack, onAccept, onReject, acting }: {
     proposal: Proposal; onBack: () => void;
     onAccept: (id: string) => void; onReject: (id: string) => void; acting: string | null;
 }) {
-    const [forecast, setForecast] = useState<MLForecast | null>(null);
-    const [mlLoading, setMlLoading] = useState(true);
+    const [forecast, setForecast]     = useState<MLForecast | null>(null);
+    const [mlLoading, setMlLoading]   = useState(true);
+    const [exportOpen, setExportOpen] = useState(false);
 
     const cropName = proposal.orderId?.crop || proposal.cropListingId?.cropName || 'Tomato';
     const basePrice = proposal.proposedPricePerUnit;
@@ -86,10 +88,26 @@ function ProposalDetail({ proposal, onBack, onAccept, onReject, acting }: {
 
     return (
         <div className="fade-in">
-            {/* Back */}
-            <button className="btn btn-outline" onClick={onBack} style={{ marginBottom: '1.5rem' }}>
-                <i className="ph ph-arrow-left"></i> Back to Proposals
-            </button>
+            {exportOpen && (
+                <ContractExport
+                    proposalId={proposal._id}
+                    cropName={`${proposal.orderId?.crop || proposal.cropListingId?.cropName || 'Crop'} (${proposal.orderId?.variety || proposal.cropListingId?.variety || ''})`}
+                    onClose={() => setExportOpen(false)}
+                />
+            )}
+            {/* Back to Proposals Button */}
+            <div style={{ position: 'relative', zIndex: 10, marginBottom: '1.5rem' }}>
+                <button 
+                    className="btn btn-outline" 
+                    onClick={() => {
+                        console.log("Navigating back to proposals list");
+                        onBack();
+                    }}
+                    style={{ cursor: 'pointer' }}
+                >
+                    <i className="ph ph-arrow-left"></i> Back to Proposals
+                </button>
+            </div>
 
             {/* Hero — matches OrderTracking order card header */}
             <div className="card-glass mb-6">
@@ -275,11 +293,12 @@ function ProposalDetail({ proposal, onBack, onAccept, onReject, acting }: {
                     {/* Actions */}
                     {proposal.status === 'SENT' && (
                         <div className="card-glass" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                            <button className="btn btn-primary" disabled={acting === proposal._id}
+                            <button className={`btn btn-primary ${acting === proposal._id ? 'btn-loading' : ''}`} 
+                                disabled={Boolean(acting)}
                                 onClick={() => onAccept(proposal._id)}
                                 style={{ width: '100%', justifyContent: 'center', padding: '0.9rem' }}>
                                 {acting === proposal._id
-                                    ? <><i className="ph ph-spinner ph-spin"></i> Processing...</>
+                                    ? <><i className="ph ph-spinner"></i> Processing...</>
                                     : <><i className="ph-fill ph-check-circle"></i> Accept &amp; Lock 2% Escrow</>
                                 }
                             </button>
@@ -294,10 +313,21 @@ function ProposalDetail({ proposal, onBack, onAccept, onReject, acting }: {
                         </div>
                     )}
                     {proposal.status !== 'SENT' && (
-                        <div className="card-glass" style={{ textAlign: 'center', padding: '1.25rem', color: 'var(--text-muted)' }}>
-                            <i className={`ph ${proposal.status === 'ACCEPTED' ? 'ph-lock-key' : proposal.status === 'PAYMENT_RECEIVED' ? 'ph-check-circle' : 'ph-info'}`}
-                                style={{ fontSize: '1.5rem', display: 'block', marginBottom: '0.5rem', color: meta.bar }}></i>
-                            Status: <strong style={{ color: meta.bar }}>{meta.label}</strong>
+                        <div className="card-glass" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                            <div style={{ textAlign: 'center', padding: '0.5rem 0' }}>
+                                <i className={`ph ${proposal.status === 'ACCEPTED' ? 'ph-lock-key' : proposal.status === 'PAYMENT_RECEIVED' ? 'ph-check-circle' : 'ph-info'}`}
+                                    style={{ fontSize: '1.5rem', display: 'block', marginBottom: '0.4rem', color: meta.bar }}></i>
+                                Status: <strong style={{ color: meta.bar }}>{meta.label}</strong>
+                            </div>
+                            {proposal.status !== 'REJECTED' && (
+                                <button
+                                    className="btn btn-outline"
+                                    style={{ width: '100%', justifyContent: 'center', gap: '0.4rem' }}
+                                    onClick={() => setExportOpen(true)}
+                                >
+                                    <i className="ph ph-file-pdf" style={{ color: 'var(--danger)' }}></i> Export Contract PDF
+                                </button>
+                            )}
                         </div>
                     )}
                 </div>

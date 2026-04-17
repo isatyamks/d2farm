@@ -11,7 +11,7 @@ const ContractSchema = new mongoose.Schema({
     contractNumber: {
         type: String,
         unique: true,
-        required: true,
+        // Auto-generated in pre('validate') so it exists before Mongoose validation runs
         // Format: D2F-YYYYMM-XXXXX e.g. D2F-202604-00001
     },
     proposalId: {
@@ -134,8 +134,8 @@ const ContractSchema = new mongoose.Schema({
 
 }, { timestamps: true });
 
-// Auto-generate contract number before save
-ContractSchema.pre('save', async function (next) {
+// Auto-generate contract number in pre('validate') — runs BEFORE mongoose validation
+ContractSchema.pre('validate', async function (next) {
     if (!this.contractNumber) {
         const now = new Date();
         const ym = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}`;
