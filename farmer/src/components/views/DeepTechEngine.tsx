@@ -13,7 +13,7 @@ interface MLData {
 
 interface Listing { _id: string; cropName: string; variety: string; pricePerUnit: number; }
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+const API_BASE = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000').replace(/\/+$/, '');
 
 export default function DeepTechEngine({ farmerId }: { farmerId: string }) {
     const [listings, setListings] = useState<Listing[]>([]);
