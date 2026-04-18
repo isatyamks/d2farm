@@ -3,7 +3,7 @@
 // Network-first for API, Cache-first for static assets
 // ─────────────────────────────────────────────────────
 
-const CACHE_NAME = 'd2farm-farmer-v1';
+const CACHE_NAME = 'd2farm-farmer-v2';
 const STATIC_ASSETS = [
   '/',
   '/manifest.json',
