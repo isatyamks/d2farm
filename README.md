@@ -1,19 +1,42 @@
 # 🌾 D2Farm — Demand-Driven Agri Exchange
 
+<div align="center">
+
 > Connecting future demand with upcoming supply **before harvest** — so farmers get fair prices and buyers get reliable supply.
 
 **Target:** Madhya Pradesh, Uttar Pradesh, Bihar — where 80%+ farmers are small/marginal.
 
-🎥 **Watch the Demo Video:** [D2Farm Working Demo (YouTube)](https://www.youtube.com/watch?v=lvLU9a-PUEU&t=326s)
+<br/>
 
-### 🚀 Live Deployments
-- **Farmer App (PWA):** [https://d2farm-1r1z.vercel.app/](https://d2farm-1r1z.vercel.app/)
-- **Buyer Dashboard:** [https://d2farm-6384.vercel.app/](https://d2farm-6384.vercel.app/)
+## 🎬 Demo Video
 
-### ⚡ Core Technologies
-Powered by **Deep ML Forecasting**, **Blockchain Identity & Smart Contracts**, and integrated **IoT & Sensor Data Analytics**.
+[![D2Farm Demo — Watch on YouTube](https://img.youtube.com/vi/lvLU9a-PUEU/maxresdefault.jpg)](https://www.youtube.com/watch?v=lvLU9a-PUEU&t=326s)
+
+> ▶️ **Click the thumbnail above** to watch the full working demo on YouTube
+
+<br/>
+
+## 🚀 Live Deployments
+
+| App | URL | Stack |
+|:---:|:---:|:---:|
+| 🌾 **Farmer App (PWA)** | [d2farm-1r1z.vercel.app](https://d2farm-1r1z.vercel.app/) | Next.js · Mobile-first · Installable |
+| 🛒 **Buyer Dashboard** | [d2farm-6384.vercel.app](https://d2farm-6384.vercel.app/) | Next.js · Procurement · Analytics |
+| ⚙️ **Backend API** | [d2farm.vercel.app](https://d2farm.vercel.app/) | Node.js · Express · MongoDB |
+
+<br/>
+
+## ⚡ Core Technology Stack
+
+![ML](https://img.shields.io/badge/Deep%20ML-LSTM%20%7C%20Random%20Forest%20%7C%20ViT-4CAF50?style=for-the-badge&logo=pytorch)
+![Blockchain](https://img.shields.io/badge/Blockchain-Polygon%20%7C%20ERC--721%20%7C%20ZK%20Proofs-8247E5?style=for-the-badge&logo=ethereum)
+![IoT](https://img.shields.io/badge/IoT-MQTT%20%7C%20Cold%20Chain%20Sensors%20%7C%20Telemetry-FF6B35?style=for-the-badge&logo=raspberrypi)
+![Infra](https://img.shields.io/badge/Infra-Kafka%20%7C%20Redis%20%7C%20Prometheus-E53935?style=for-the-badge&logo=apachekafka)
+
+</div>
 
 ---
+
 
 ## 📸 Screenshots
 
