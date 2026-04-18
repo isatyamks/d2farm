@@ -4,6 +4,15 @@
 
 **Target:** Madhya Pradesh, Uttar Pradesh, Bihar — where 80%+ farmers are small/marginal.
 
+🎥 **Watch the Demo Video:** [D2Farm Working Demo (YouTube)](https://www.youtube.com/watch?v=lvLU9a-PUEU&t=326s)
+
+### 🚀 Live Deployments
+- **Farmer App (PWA):** [https://d2farm-1r1z.vercel.app/](https://d2farm-1r1z.vercel.app/)
+- **Buyer Dashboard:** [https://d2farm-6384.vercel.app/](https://d2farm-6384.vercel.app/)
+
+### ⚡ Core Technologies
+Powered by **Deep ML Forecasting**, **Blockchain Identity & Smart Contracts**, and integrated **IoT & Sensor Data Analytics**.
+
 ---
 
 ## 📸 Screenshots
