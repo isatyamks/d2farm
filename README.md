@@ -100,45 +100,112 @@ Buyers place demand → AI matches → Farmers fulfill → Logistics deliver →
 
 ```
 d2farm/
-├── frontend/          → Buyer Dashboard (Next.js 14 — Web)
+│
+├── frontend/                        → Buyer Dashboard (Next.js · Web)
+│   ├── vercel.json
 │   └── src/
-│       ├── app/       → Pages & layouts
-│       └── components/
-│           └── views/ → Dashboard, MarketInsights, SmartContracts,
-│                        OrderPlacement, OrderTracking, TransportLogistics,
-│                        Wallet, FarmerProposals, DemandPlanner, ProcurementAI
+│       ├── app/                     → Pages, layouts, global CSS
+│       └── components/views/
+│               ├── Dashboard.tsx
+│               ├── MarketInsights.tsx
+│               ├── SmartContracts.tsx
+│               ├── OrderPlacement.tsx
+│               ├── OrderTracking.tsx
+│               ├── TransportLogistics.tsx
+│               ├── Wallet.tsx
+│               ├── FarmerProposals.tsx
+│               ├── DemandPlanner.tsx
+│               ├── ContractExport.tsx
+│               └── ProcurementAI.tsx
 │
-├── farmer/            → Farmer App (Next.js — Mobile-first)
+├── farmer/                          → Farmer PWA (Next.js · Mobile-first · Installable)
+│   ├── vercel.json
+│   ├── public/
+│   │   ├── manifest.json            → PWA manifest
+│   │   ├── sw.js                    → Service Worker (offline support)
+│   │   └── icons/
 │   └── src/
-│       ├── app/       → Onboarding & main layout
-│       └── components/
-│           └── views/ → FarmerDashboard, CropListing, ProposalCenter,
-│                        FarmerProfile, Onboarding, DeepTechEngine,
-│                        TransactionTracker
+│       ├── app/                     → Root layout, global CSS
+│       ├── lib/
+│       │   ├── api.ts               → Centralised API client
+│       │   └── offlineStorage.ts    → IndexedDB offline queue
+│       └── components/views/
+│               ├── Onboarding.tsx
+│               ├── FarmerDashboard.tsx
+│               ├── CropListing.tsx
+│               ├── ProposalCenter.tsx
+│               ├── FarmerProfile.tsx
+│               ├── TransactionTracker.tsx
+│               └── DeepTechEngine.tsx   → Live ML forecast UI
 │
-├── backend/           → API Server (Node.js + Express + MongoDB)
-│   ├── server.js      → Core REST API
-│   ├── models/        → Order, User, Crop, CropListing, FarmerProfile,
-│   │                    Proposal, Transaction
-│   ├── routes/        → farmerRoutes, listingRoutes, matchRoutes,
-│   │                    proposalRoutes
-│   ├── contracts/     → D2FarmIdentity.sol (Solidity smart contract)
-│   └── services/      → blockchainService.js
+├── backend/                         → REST API (Node.js · Express · MongoDB)
+│   ├── server.js                    → Express app + CORS + route mounting
+│   ├── vercel.json                  → Serverless deployment config
+│   ├── seed.js                      → Database seeder
+│   ├── models/                      → Mongoose schemas
+│   │   ├── FarmerProfile.js
+│   │   ├── Order.js
+│   │   ├── Proposal.js
+│   │   ├── CropListing.js
+│   │   └── Transaction.js
+│   ├── routes/
+│   │   ├── farmerRoutes.js
+│   │   ├── listingRoutes.js
+│   │   ├── matchRoutes.js
+│   │   └── proposalRoutes.js
+│   ├── contracts/
+│   │   └── D2FarmIdentity.sol       → Soulbound ERC-721 smart contract
+│   └── services/
+│       └── blockchainService.js     → Polygon NFT minting + escrow calls
 │
-├── models/            → ML/AI Models (Python + scikit-learn)
-│   ├── price_prediction.py    → Ensemble price forecasting (RF + GBR)
-│   ├── crop_quality.py        → Multi-factor quality grading (A/B/C/Rejected)
-│   ├── demand_forecasting.py  → Buyer demand prediction (seasonal + events)
-│   ├── supply_confidence.py   → Farmer reliability scoring
-│   ├── spoilage_risk.py       → Transit spoilage predictor
-│   ├── route_optimizer.py     → Multi-stop transport optimizer
-│   ├── matching_engine.py     → Demand ↔ Supply allocation engine
-│   └── requirements.txt
-│
-└── screenshots/       → App screenshots for documentation
+└── models/                          → DeepTech Engine (Python · PyTorch · FastAPI)
+    ├── price_prediction.py          → Ensemble price forecasting (RF + GBR)
+    ├── crop_quality.py              → Multi-factor quality grading (A/B/C)
+    ├── demand_forecasting.py        → Seasonal buyer demand prediction
+    ├── supply_confidence.py         → Farmer reliability scoring
+    ├── spoilage_risk.py             → Transit spoilage risk model
+    ├── route_optimizer.py           → Multi-stop transport optimizer
+    ├── matching_engine.py           → Demand ↔ Supply allocation engine
+    │
+    ├── api/v1/router.py             → FastAPI route entrypoint
+    ├── core/inference/
+    │   └── temporal_lstm.py         → PyTorch LSTM for time-series pricing
+    ├── data_ingestion/
+    │   └── feature_store.py         → Redis-backed feature caching layer
+    ├── embeddings/
+    │   └── crop_encoder.py          → 64-dim crop vector encoder for FAISS
+    ├── event_bus/
+    │   └── kafka_producer.py        → Confluent-Kafka domain event publisher
+    ├── explainability/
+    │   └── shap_analyzer.py         → SHAP price driver explanations
+    ├── governance/
+    │   └── model_registry.py        → MLflow-style model version registry
+    ├── ledger/
+    │   └── polygon_rpc.py           → Async Web3 — NFT mint, escrow, audit hash
+    ├── monitoring/
+    │   └── prometheus_exporter.py   → Prometheus metrics for Grafana
+    ├── pipelines/
+    │   └── dag_orchestrator.py      → Airflow/Prefect DAG stubs
+    ├── rl_agents/
+    │   ├── ppo_routing_agent.py     → PPO agent for route optimisation
+    │   └── dqn_pricing_stratergy.py → DQN dynamic pricing agent
+    ├── security/
+    │   └── zk_proofs.py             → Pedersen commitment + Groth16 ZK proofs
+    ├── serving/
+    │   └── batch_predictor.py       → Cached batch inference for all crops
+    ├── telemetry/
+    │   ├── edge_validators.py       → Cold-chain IoT sensor validation
+    │   └── mqtt_bridge.py           → paho-mqtt fleet sensor bridge
+    ├── hyperparameters/
+    │   └── optuna_tuner.py          → Bayesian hyperparameter search
+    ├── caching/
+    │   └── redis_lru.py             → LRU cache for inference results
+    └── ci_cd/
+        └── docker-compose.yaml      → Local orchestration for all services
 ```
 
 ---
+
 
 ## 🔧 Tech Stack
 
